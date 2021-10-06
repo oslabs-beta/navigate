@@ -10,4 +10,4 @@
 <h1>Welcome to Navigate</h1>
 <p>Visit <a href="/podView">kit.svelte.dev</a> to read the documentation</p>
 
-<Deployment handleClick={handleClick} />
+<Deployment banana={handleClick} />

@@ -1,15 +1,17 @@
 <script lang="ts">
+import type { kObject } from "src/node_types/kObject";
+
 import {kDeployment} from "../node_types/kDeployment";
 
-  let testArray: kDeployment[] = [new kDeployment("broel", 1), new kDeployment("hemmy", 2), new kDeployment("bk", 3)];
+  let testArray: kDeployment[] = [new kDeployment("broel", "podName1",1), new kDeployment("hemmy", "podName2", 2), new kDeployment("bk","podName3", 3)];
   let radius= "40";
-  let centerX=40;
+  let centerX= 40;
   let centerY= "40";
   let fill= "pink";
   let strokeWidth= "3";
   let stroke= "green";
   let spacing = 10;
-  export let handleClick;
+  export let banana;
 </script>
 
 <style>
@@ -19,7 +21,7 @@ import {kDeployment} from "../node_types/kDeployment";
 </style>
 
 {#each testArray as test, index}
-<div on:click={handleClick(test)} class="container">
+<div on:click={banana(test)} class="container">
 <svg viewBox= "0 0 80 80" width="80" height="80">
   <!-- add node -->
   <circle cx={(centerX)} cy={centerY} r={radius}
