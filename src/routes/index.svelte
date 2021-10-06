@@ -1,6 +1,6 @@
 <script lang="ts">
   import Deployment from '../components/deployment.svelte';
-  import type {kObject} from '../node_types/kObject';
+  import type {kObject} from '../kObjects/kObject';
   function handleClick(x: kObject): void {
       console.log(x.getLabel);
   }
