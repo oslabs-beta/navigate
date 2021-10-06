@@ -27,7 +27,7 @@ import {kDeployment} from "../node_types/kDeployment";
   <!-- <path d="M {centerX} {centerY} L {centerX} {centerY+radius+spacing}" stroke="black" /> -->
   <!-- <line x1={centerX} y1={centerY} x2={centerX} y2={4*centerY} stroke="black" /> -->
   <!-- add label text -->
-  <text x={(centerX)} y={centerY} text-anchor="middle">{test.getLabel()}</text>
+  <text x={(centerX)} y={centerY} text-anchor="middle"><a href="/podView">{test.getLabel()}</a></text>
 <!-- <line x1={centerX} y1={centerY} x2={centerX+radius} y2={centerY} stroke="black" /> -->
 </svg>
 </div>
