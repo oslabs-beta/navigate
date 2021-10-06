@@ -6,7 +6,8 @@ const root = '../yaml_files';
 
 const raw: string[] = [];
 fs.readdirSync(root).forEach(file => {
-  if(file.includes('.yaml')) raw.push(file);
+  if(file.match(/ya?ml/)) 
+    raw.push(file);
 });
 
 const yamlObjs: string[] = [];
