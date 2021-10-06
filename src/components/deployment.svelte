@@ -1,9 +1,7 @@
 <script lang="ts">
-import type { kObject } from "src/node_types/kObject";
+  import {kDeployment} from "../kObjects/kDeployment";
 
-import {kDeployment} from "../node_types/kDeployment";
-
-  let testArray: kDeployment[] = [new kDeployment("broel", "podName1",1), new kDeployment("hemmy", "podName2", 2), new kDeployment("bk","podName3", 3)];
+  export let testArray: kDeployment[] = [new kDeployment("broel", "", 1), new kDeployment("hemmy", "", 2), new kDeployment("bk", "", 3)];
   let radius= "40";
   let centerX= 40;
   let centerY= "40";

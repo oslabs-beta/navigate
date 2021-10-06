@@ -4,7 +4,6 @@ export class kDeployment implements kObject {
   label: string;
   podLabel: string;
   replicas: number;
-
   
   constructor(label: string, podLabel: string, replicas: number)
   {
@@ -12,6 +11,7 @@ export class kDeployment implements kObject {
     this.replicas = replicas;
     this.podLabel = podLabel;
   }
+  
   getLabel(): string
   {
     return this.label;

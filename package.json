@@ -25,5 +25,9 @@
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "js-yaml": "^4.1.0"
+  }
 }
