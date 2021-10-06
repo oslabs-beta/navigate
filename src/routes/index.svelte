@@ -1,6 +1,8 @@
 <script lang="ts">
   import Deployment from '../components/deployment.svelte';
   import type {kObject} from '../kObjects/kObject';
+  import * as data from '../../server/yaml.json';
+
   function handleClick(x: kObject): void {
       console.log(x.getLabel);
   }

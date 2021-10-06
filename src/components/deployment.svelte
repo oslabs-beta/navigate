@@ -1,12 +1,7 @@
 <script lang="ts">
-  import * as fs from 'fs';
-  import * as path from 'path';
-
   import {kDeployment} from "../kObjects/kDeployment";
-  const __dirname = path.resolve(path.dirname('')); 
-  let data = fs.readFileSync(path.resolve(__dirname, '../../server/yaml.json'), 'utf-8');
 
-  let testArray: kDeployment[] = [new kDeployment("broel", "", 1), new kDeployment("hemmy", "", 2), new kDeployment("bk", "", 3)];
+  export let testArray: kDeployment[] = [new kDeployment("broel", "", 1), new kDeployment("hemmy", "", 2), new kDeployment("bk", "", 3)];
   let radius= "40";
   let centerX=40;
   let centerY= "40";
