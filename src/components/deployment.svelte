@@ -9,7 +9,7 @@
   let strokeWidth= "3";
   let stroke= "green";
   let spacing = 10;
-  export let banana;
+  export let handleClick;
 </script>
 
 <style>
@@ -19,7 +19,7 @@
 </style>
 
 {#each testArray as test, index}
-<div on:click={banana(test)} class="container">
+<div on:click={handleClick(test)} class="container">
 <svg viewBox= "0 0 80 80" width="80" height="80">
   <!-- add node -->
   <circle cx={(centerX)} cy={centerY} r={radius}

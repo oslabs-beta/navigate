@@ -1,10 +1,15 @@
 import json from '@rollup/plugin-json';
- 
+import svelte from 'rollup-plugin-svelte';
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import livereload from 'rollup-plugin-livereload';
+import { terser } from 'rollup-plugin-terser';
+
 export default {
-  input: 'src/index.js',
+  input: '/index.js',
   output: {
     dir: 'output',
-    format: 'cjs'
+    format: 'iife'
   },
   plugins: [json({
     compat: true
