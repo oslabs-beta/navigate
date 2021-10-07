@@ -1,30 +1,45 @@
 <script lang="ts">
-import {kDeployment} from "../../kObjects/kDeployment"
-let testArray: kDeployment[] = [new kDeployment("broel", "podName1",3), new kDeployment("hemmy", "podName2", 2), new kDeployment("bk","podName3", 3)];
-let testNode = testArray[0];
-let replicaArray = ['podName1','podName2','podName3']
+	import { kDeployment } from '../../kObjects/kDeployment';
+	import Graph from '../../components/Graph.svelte';
+	import GraphNode from '../../components/GraphNode.svelte';
+	import GraphEdge from '../../components/GraphEdge.svelte';
+	//include service node that makes a one to many connection from deployment node to all its pods
+	const nodes = [
+		{ id: 'N1', label: 'thisisalongassname' },
+		{ id: 'N2', label: '4' },
+		{ id: 'N4', label: '8' },
+		{ id: 'N5', label: '15' },
+		{ id: 'N3', label: '16' },
+		{ id: 'N6', label: '23' },
+		{ id: 'N7', label: '42' },
+		{ id: 'N8', label: 'End' }
+	];
 
+	const edges = [
+		//owner objs have owner reference prop
+		//dependents have a prop that states who their owner is
+		//make edge owner source, dependent target
+		//consider labels/selectors
+		{ id: 'E1', source: 'N1', target: 'N2' },
+		{ id: 'E2', source: 'N2', target: 'N3' },
+		{ id: 'E3', source: 'N3', target: 'N6' },
+		{ id: 'E4', source: 'N2', target: 'N4' },
+		{ id: 'E5', source: 'N4', target: 'N5' },
+		{ id: 'E6', source: 'N5', target: 'N4'},
+		{ id: 'E7', source: 'N5', target: 'N6' },
+		{ id: 'E8', source: 'N6', target: 'N7' },
+		{ id: 'E9', source: 'N7', target: 'N7'},
+		{ id: 'E10', source: 'N7', target: 'N8' }
+	];
 </script>
 
+<Graph>
+    <!-- <h1>tem smol moves</h1> -->
+	{#each nodes as node}
+		<GraphNode node={node} />
+	{/each}
 
-
-<h1>Pod View</h1>
-<p><a href="/">Home</a></p>
-<svg  width="100%" height="500">
-    <!-- Deployment node -->
-    <!-- Pods -->
-    {#each replicaArray as replica, index}
-    <!-- Lines -->
-    <!-- <line x1={25+index*100} y1={25+index*150} x2=50% y2=50% stroke="black"></line> -->
-    <line x1={25+index*100} y1=70% x2=50% y2=50% stroke="black"></line>
-    <!-- Pods -->
-    <!-- <circle id={replica} cx={25+index*100} cy={25+index*150} r=40 stroke="purple" stroke-width=3 fill="yellow" /> -->
-    <circle id={replica} cx={25+index*100} cy=70% r=40 stroke="purple" stroke-width=3 fill="yellow" />
-    <!-- Text -->
-    <!-- <text x={25+index*100} y=50% text-anchor="middle">{replica}</text> -->
-    <text x={25+index*100} y=70% text-anchor="middle">{replica}</text>
-    {/each}
-     <!-- Deployment node -->
-    <circle cx=50% cy=50% r=80 stroke="blue" stroke-width=3 fill="green" />
-    <text x=50% y=50% text-anchor="middle">{testNode.getLabel()}</text>
-</svg>
+	{#each edges as edge}
+		<GraphEdge edge={edge} />
+	{/each}
+</Graph>
