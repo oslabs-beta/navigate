@@ -1,0 +1,1 @@
+{"version":3,"file":"bundle.js","sources":["../index.js"],"sourcesContent":["import App from  'src/routes/index.svelte'\n\nconst app = new App({\n    target: document.getElementById('svelte')\n})\n\nexport default app"],"names":[],"mappings":";;;;;;;IAEA,MAAM,GAAG,GAAG,IAAI,GAAG,CAAC;IACpB,IAAI,MAAM,EAAE,QAAQ,CAAC,cAAc,CAAC,QAAQ,CAAC;IAC7C,CAAC;;;;;;;;"}

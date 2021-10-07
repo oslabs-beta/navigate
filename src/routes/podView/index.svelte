@@ -1,5 +1,5 @@
 <script lang="ts">
-import {kDeployment} from "../../node_types/kDeployment"
+import {kDeployment} from "../../kObjects/kDeployment"
 let testArray: kDeployment[] = [new kDeployment("broel", "podName1",3), new kDeployment("hemmy", "podName2", 2), new kDeployment("bk","podName3", 3)];
 let testNode = testArray[0];
 let replicaArray = ['podName1','podName2','podName3']
