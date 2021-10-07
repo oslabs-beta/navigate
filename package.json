@@ -28,6 +28,9 @@
   "type": "module",
   "dependencies": {
     "@rollup/plugin-json": "^4.1.0",
+    "@types/cytoscape": "^3.14.19",
+    "cytoscape": "^3.19.1",
+    "cytoscape-dagre": "^2.3.2",
     "js-yaml": "^4.1.0"
   }
 }
