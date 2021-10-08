@@ -28,7 +28,7 @@ function App(props: any) {
     });
 
     kDeployArray.forEach((ele: kDeployment) => {
-      deploymentArray.push(<Deployment deployment={ele}/>);
+      deploymentArray.push(<Deployment deployment={ele} handleClick={handleClick}/>);
     })
   }
 
@@ -37,7 +37,7 @@ function App(props: any) {
   }
 
   return(
-      <div> hi </div>
+      <div>{deploymentArray}</div>
   )
 }
 
