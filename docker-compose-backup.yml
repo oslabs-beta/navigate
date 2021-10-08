@@ -1,7 +1,9 @@
 version: "3.8"
 services: 
   osp-navigate:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - "4000:4000"
     volumes:
