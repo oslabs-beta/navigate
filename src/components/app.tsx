@@ -13,13 +13,13 @@ function App(props: any) {
   React.useEffect(getDeployments, []);
 
   function getDeployments(): void {
-    let relevantData;
+    let relevantData: any[] = [];
 
     try{
-      relevantData = data["default"];
+      // relevantData = data["default"];
     }
     catch{
-      relevantData = YAML.getYAMLData()["default"];
+      // relevantData = YAML.getYAMLData()["default"];
     }
    
     relevantData.forEach((ele: any) => {
