@@ -14,15 +14,15 @@ function getYAMLFiles(): void {
       raw.push(file);
   });
 
-  const yamlObjs: string[] = [];
+  const yamlObjs: any[] = [];
   raw.forEach(file => {
-    yamlObjs.push(YAML.load(fs.readFileSync(path.join(root, file))));
+    yamlObjs.push(YAML.load(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
 
   fs.writeFileSync('./yaml.json', JSON.stringify(yamlObjs, null, 2));
 }
 
-function getYAMLData(): string {
+export function getYAMLData(): string {
   try{
     data = fs.readFileSync(outputFilePath, 'utf-8');
     if(data === "")
@@ -36,5 +36,3 @@ function getYAMLData(): string {
   }
   return data;
 }
-
-getYAMLData();
