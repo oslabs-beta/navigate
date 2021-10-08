@@ -9,14 +9,14 @@ Use it:
   -  to visualize the decisions your node scheduler has made, for a customizable period of time
 
 
-**Technologies used:**
-TypeScript
-Docker
-React (Router, Hooks)
-Webpack
-Babel
-YAML
-JSON
-Kubernetes
-SCSS
-HTML
+**Technologies Used**
+- TypeScript
+- Docker
+- Kubernetes
+- React (Router, Hooks)
+- Webpack
+- Babel
+- YAML
+- JSON
+- SCSS
+- HTML
