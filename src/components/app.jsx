@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-function App(props) {
-  return(
-    render(
-      <p> hi </p>
-    )
-  )
-}
+const App = ({props}) => (
+  <div>
+    HELLO
+  </div>
+)
 
 
 export default App;

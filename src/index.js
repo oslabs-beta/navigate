@@ -4,6 +4,6 @@ import App from './components/app';
 import styles from './scss/styles.scss';
 
 render (
-  <App />, 
+  <App />,
   document.getElementById('root')
 );
