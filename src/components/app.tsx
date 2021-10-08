@@ -1,6 +1,8 @@
 import * as React from "react";
 import {FC} from 'react';
 import {kObject} from '../kObjects/kObject';
+import {kDeployment} from '../kObjects/kDeployment';
+import Deployment from './Deployment';
 
 function App(props: any) {
   const kDeployArray: kDeployment[] = [];
