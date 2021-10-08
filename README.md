@@ -1,4 +1,4 @@
-###NAVIGATE
+### NAVIGATE
 
 An all-in-one Kubernetes visualizer.
 
