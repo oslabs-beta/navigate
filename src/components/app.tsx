@@ -1,10 +1,6 @@
 import * as React from "react";
 import {FC} from 'react';
-import { kDeployment } from "../kObjects/kDeployment";
 import {kObject} from '../kObjects/kObject';
-import * as YAML from '../../server/yamlParser';
-import * as data from '../../server/yaml.json';
-import Deployment from './Deployment';
 
 function App(props: any) {
   const kDeployArray: kDeployment[] = [];
@@ -33,11 +29,11 @@ function App(props: any) {
   }
 
   function handleClick(obj: kObject): void {
-    console.log(obj.getLabel());
+
   }
 
   return(
-      <div>{deploymentArray}</div>
+      <div> hi </div>
   )
 }
 
