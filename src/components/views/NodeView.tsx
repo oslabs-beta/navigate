@@ -3,7 +3,6 @@ import * as React from "react";
 import {FC} from 'react';
 import {kObject} from '../../kObjects/kObject';
 import {kDeployment} from '../../kObjects/kDeployment';
-import Deployment from '../Deployment';
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
