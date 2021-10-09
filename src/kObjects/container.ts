@@ -4,6 +4,7 @@ export default class Container {
   env: env;
   containerPort: number;
 
+
   constructor(name: string, image: string, env: env, port: number){
     this.name = name;
     this.image = image;

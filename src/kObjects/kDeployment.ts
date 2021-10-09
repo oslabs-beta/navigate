@@ -5,14 +5,14 @@ export class kDeployment implements kObject {
   label: string;
   podLabel: string;
   replicas: number;
-  container: container;
+  // container: container;
   
-  constructor(label: string, podLabel: string, replicas: number, container: container)
+  constructor(label: string, podLabel: string, replicas: number)
   {
     this.label = label;
     this.replicas = replicas;
     this.podLabel = podLabel;
-    this.container = container;
+  //   this.container = container;
   }
   
   getLabel(): string
