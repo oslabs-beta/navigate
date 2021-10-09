@@ -13,9 +13,9 @@ function getYAMLFiles(): void {
     if(file.match(/ya?ml/)) 
       raw.push(file);
   });
-  const yamlObjs: string[] = [];
+  const yamlObjs: any[] = [];
   raw.forEach(file => {
-    yamlObjs.push(YAML.load(fs.readFileSync(path.join(root, file))));
+    yamlObjs.push(YAML.load(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
   fs.writeFileSync('./yaml.json', JSON.stringify(yamlObjs, null, 2));
 }

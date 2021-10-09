@@ -3,7 +3,8 @@ import ClusterView from './views/ClusterView';
 import NodeView from "./views/NodeView";
 //fetch data from backend
 
-fetch('http://localhost:3000/api/getData')
+fetch('http://localhost:3000/getData')
+  .then((data: any) => data.json())
   .then((data: any) => {
     console.log('GET request data response: ', data);
   })
