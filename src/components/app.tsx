@@ -1,25 +1,40 @@
 import * as React from "react";
 import ClusterView from './views/ClusterView';
 import NodeView from "./views/NodeView";
-//fetch data from backend
+import { kDeployment } from "../kObjects/kDeployment";
 
-fetch('http://localhost:3000/getData')
-  .then((data: any) => data.json())
-  .then((data: any) => {
-    console.log('GET request data response: ', data);
-  })
-  .catch((error) => {
-    console.log('GET request error: ',error);
-  });
+function App() {
+  const kDeployArray: kDeployment[] = [];
+  const [dataIsReady, setReady] = React.useState(false);
+  const [dataProp, SetDataProp] = React.useState<typeof kDeployArray | undefined>([]);
+  React.useEffect(getData, []);
+  
+  //fetch data from backend, push to kDeployArray
+  function getData(): void {
+    fetch('http://localhost:3000/getData')
+      .then((data: any) => data.json())
+      .then((data: any) => {
+        parseData(JSON.parse(data));
+        setReady(true);
+      })
+      .catch((error) => console.log('GET request error: ',error));
+  }
 
-function App(props: any) {
-    return(
-      <div className="Tabs">
-        <div className="ClusterView">
-          <ClusterView />
-        </div>
+  function parseData(relevantData: any[]) 
+  {
+    relevantData.forEach((ele: any) => {
+      const newDeployment = new kDeployment(ele.metadata.name, ele.spec.template.metadata.labels.name, ele.spec.replicas);
+      kDeployArray.push(newDeployment);
+    });
+    SetDataProp(kDeployArray);
+  }
+  return( dataIsReady ? 
+    <div className="Tabs">
+      <div className="ClusterView">
+        <ClusterView dataArray={dataProp}/>
       </div>
-    )
+    </div> : ""
+  )
 }
 
 export default App;

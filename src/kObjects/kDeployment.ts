@@ -10,6 +10,7 @@ export class kDeployment implements kObject {
     this.label = label;
     this.replicas = replicas;
     this.podLabel = podLabel;
+    
   }
   
   getLabel(): string
