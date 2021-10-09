@@ -5,7 +5,7 @@ import * as path from 'path';
 const root = '../yaml_files';
 const outputFilePath = './yaml.json';
 
-export let data: string;
+let data: string;
 
 function getYAMLFiles(): void {
   const raw: string[] = [];
@@ -13,16 +13,14 @@ function getYAMLFiles(): void {
     if(file.match(/ya?ml/)) 
       raw.push(file);
   });
-
   const yamlObjs: string[] = [];
   raw.forEach(file => {
     yamlObjs.push(YAML.load(fs.readFileSync(path.join(root, file))));
   })
-
   fs.writeFileSync('./yaml.json', JSON.stringify(yamlObjs, null, 2));
 }
 
-function getYAMLData(): string {
+export default function getYAMLData(): string {
   try{
     data = fs.readFileSync(outputFilePath, 'utf-8');
     if(data === "")
@@ -37,4 +35,4 @@ function getYAMLData(): string {
   return data;
 }
 
-getYAMLData();
+ 

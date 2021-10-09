@@ -2,8 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
-  entry: './src/index.js',
+  mode: 'development',
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
@@ -31,12 +31,11 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/'
   },
   devServer: {
-    static: path.join(__dirname, "src"),
-    compress: true,
-    port: 4000,
+    proxy: {'/api': 'http://localhost:3000'},
   },
   plugins: [
     new HtmlWebpackPlugin({
