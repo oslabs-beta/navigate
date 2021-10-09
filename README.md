@@ -15,6 +15,7 @@ Use it:
 - Kubernetes
 - React (Router, Hooks)
 - Cytoscape
+- NodeJS
 - Webpack
 - Babel
 - YAML
