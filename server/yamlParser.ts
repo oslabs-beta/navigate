@@ -3,7 +3,7 @@ import * as YAML from 'js-yaml';
 import * as path from 'path';
 
 const root = '../yaml_files';
-const outputFilePath = './yaml.json';
+const outputFilePath = './server/yaml.json';
 
 let data: string;
 
@@ -28,9 +28,11 @@ export default function getYAMLData(): string {
       getYAMLFiles();
       data = fs.readFileSync(outputFilePath, 'utf-8');
     }
+    
   } catch{
     getYAMLFiles();
     data = fs.readFileSync(outputFilePath, 'utf-8');
+    
   }
   return data;
 }
