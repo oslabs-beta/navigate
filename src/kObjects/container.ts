@@ -10,12 +10,12 @@ export default class Container {
     this.env = env;
     this.containerPort = port;
   }
-
 }
 
 export class env {
   name: string;
   value: string;
+
   constructor(name: string, value: string){
     this.name = name; 
     this.value = value;
