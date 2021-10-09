@@ -14,7 +14,6 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 });
 
 app.get("/getData", databaseController.getData, (req: Request, res: Response) => {
-  console.log("hi from bk?");
   return res.status(200).json(res.locals.data);
 });
 
@@ -37,7 +36,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 //////////
 
 app.listen(PORT, () => {
-  console.log(`listeneninginign on port: ${PORT}`);
+  console.log(`listening on port: ${PORT}`);
 });
 
 export default app;
