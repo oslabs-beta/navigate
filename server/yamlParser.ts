@@ -32,7 +32,6 @@ export default function getYAMLData(): string {
   } catch{
     getYAMLFiles();
     data = fs.readFileSync(outputFilePath, 'utf-8');
-    
   }
   return data;
 }
