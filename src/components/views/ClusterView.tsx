@@ -5,6 +5,10 @@ import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
+import dagre from 'cytoscape-dagre';
+import cola from 'cytoscape-cola';
+Cytoscape.use(dagre);
+Cytoscape.use(cola);
 
 function ClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -12,7 +16,7 @@ function ClusterView(props: any) {
   const relevantData: any[] = [
     {
       data: { id: "master", label: "Control Plane" },
-      position: { x: 200, y: 150 },
+      // position: { x: 200, y: 150 },
     },
   ];
 
@@ -24,10 +28,10 @@ function ClusterView(props: any) {
           id: array[i].label,
           label: array[i].podLabel,
         },
-        position: {
-          x: Math.floor(Math.random() * (100 * i)),
-          y: Math.floor(Math.random() * (100 * i)),
-        },
+        // position: {
+        //   x: Math.floor(Math.random() * (100 * i)),
+        //   y: Math.floor(Math.random() * (100 * i)),
+        // },
       };
       let edge = {
         data: {
@@ -42,40 +46,54 @@ function ClusterView(props: any) {
   useEffect(() => {
     console.log('dataArray',props.dataArray);
     populateArray(props.dataArray);
-
     console.log('relevantData',relevantData);
     const config = {
       container: containerRef.current,
       style: [
         {
           selector: "node",
-          style: { 
-            'content': "data(label)",
-            'background-color': 'green',
+          style: {
+            width: "30%",
+            height: "30%",
+            "font-size": "18",
+            "font-weight": "bold",
+            content: 'data(label)',
+            "text-valign": "center",
+            "text-wrap": "wrap",
+            "text-max-width": "140",
+            "background-color": "lightgreen",
+            "border-color": "green",
+            "border-width": "2",
+            color: "black",
           },
         },
         {
-          selector: 'edge',
+          selector: "edge",
           style: {
-            'curve-style': 'bezier',
-            'color': 'blue',
-            'text-background-color': '#ffffff',
-            'text-background-opacity': '1',
-            'text-background-padding': '3',
-            'width': '3',
-            'target-arrow-shape': 'triangle',
-            'line-color': 'green',
-            'target-arrow-color': 'darkgreen',
-            'font-weight': 'bold'
-          }
+            "curve-style": "bezier",
+            color: "blue",
+            "text-background-color": "#ffffff",
+            "text-background-opacity": "1",
+            "text-background-padding": "3",
+            width: "3",
+            "target-arrow-shape": "triangle",
+            "line-color": "green",
+            "target-arrow-color": "darkgreen",
+            "font-weight": "bold",
+          },
         },
       ],
       //write logic based on relevant data
       elements: relevantData,
     };
     let cy = Cytoscape(config);
+    let layout = cy.layout({name:'cola'});
+    layout.run();
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);
+      if(event.target._private.data.label !== undefined){
+        props.setTrigger(true);
+      }
 
     })
   }, [props.dataArray]);
@@ -85,7 +103,7 @@ function ClusterView(props: any) {
       <h1>Cluster View</h1>
       <div
         ref={containerRef}
-        style={ { width: '600px', height: '600px' }}
+        style={ { width: '1000px', height: '1000px' }}
       />   
     </div>
     
