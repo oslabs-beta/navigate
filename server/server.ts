@@ -15,7 +15,8 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 
 app.get("/getData", databaseController.getData, (req: Request, res: Response) => {
   console.log('hi from bk?')
-  return res.status(200).json(res.locals.data);
+  console.log(res.locals.data);
+  return res.status(200).send(res.locals.data);
 });
 
 ///////////

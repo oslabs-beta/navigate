@@ -16,7 +16,9 @@ function App() {
     fetch('http://localhost:3000/getData')
       .then((data: any) => data.json())
       .then((data: any) => {
-        parseData(JSON.parse(data));
+        console.log('frontend',data);
+        parseData(data);
+        console.log('finished parseData');
         setReady(true);
       })
       .catch((error) => console.log('GET request error: ',error));
@@ -24,11 +26,17 @@ function App() {
 
   function parseData(relevantData: any[]) 
   {
-    relevantData.forEach((ele: any) => {
+    // relevantData.forEach((ele: any) => {
+      for(let i = 0; i < relevantData.length; i++){
+      console.log('element', relevantData[i])
+      let ele = relevantData[i][0];
+      console.log('ele is', ele)
       const newEnv = new env(
         ele.spec.template.spec.containers[0].env[0].name,
         ele.spec.template.spec.containers[0].env[0].value,
       );
+      console.log(ele.spec.template.spec.containers[0].env[0].name)
+      console.log(ele.spec.template.spec.containers[0].env[0].value)
       const newContainer = new Container(
         ele.spec.template.spec.containers[0].name,
         ele.spec.template.spec.containers[0].image,
@@ -42,7 +50,7 @@ function App() {
         newContainer,
       );
       kDeployArray.push(newDeployment);
-    });
+    };
     SetDataProp(kDeployArray);
   }
   return( !nodeViewPage ? 
