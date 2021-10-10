@@ -7,7 +7,6 @@ const root = './yaml_files';
 let data: object;
 
 function getYAMLFiles(): object {
-  console.log('entered getYAMLFiles() function')
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
     if(file.match(/ya?ml/)) 

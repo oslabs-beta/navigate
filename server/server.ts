@@ -19,6 +19,12 @@ app.get("/getData", databaseController.getData, (req: Request, res: Response) =>
   return res.status(200).send(res.locals.data);
 });
 
+app.get("/getLiveData", databaseController.getLiveData, (req: Request, res: Response) => {
+  console.log('hi from joel?')
+  console.log(res.locals.pollingData)
+  return res.status(200).json(res.locals.pollingData);
+});
+
 ///////////
 
 app.use("*", (req: Request, res: Response) => {

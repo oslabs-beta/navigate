@@ -9,6 +9,7 @@ function App() {
   const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kDeployArray | undefined>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
+  let statusArray: any[] = [];
   React.useEffect(getData, []);
   
   //fetch data from backend, push to kDeployArray
@@ -16,17 +17,30 @@ function App() {
     fetch('http://localhost:3000/getData')
       .then((data: any) => data.json())
       .then((data: any) => {
-        console.log('frontend',data);
+        // Data will be an array of objects. Each object represents a different YAML file.
         parseData(data);
-        console.log('finished parseData');
         setReady(true);
       })
-      .catch((error) => console.log('GET request error: ',error));
+      .catch((error) => console.log('GET /getData response error: ', error));
   }
+
+  async function fetchLiveData() {
+    await fetch('http://localhost:3000/getLiveData')
+      .then((data: any) => data.json())
+      .then((data: any) => {
+        data.forEach((element: any) => {
+          statusArray.push(element);
+      })
+    })
+    .catch((error) => console.log('GET /getLiveData response error: ', error));
+  }
+
+  fetchLiveData();
 
   function parseData(relevantData: any[]) 
   {
       for(let i = 0; i < relevantData.length; i++){
+      // Since each YAML file can have multiple objects, [0] assumes that there is only one object per file.
       let ele = relevantData[i][0];
 
       // Checks to see if kubernetes object is a deployment 
@@ -35,8 +49,6 @@ function App() {
         ele.spec.template.spec.containers[0].env[0].name,
         ele.spec.template.spec.containers[0].env[0].value,
       );
-      console.log(ele.spec.template.spec.containers[0].env[0].name)
-      console.log(ele.spec.template.spec.containers[0].env[0].value)
       const newContainer = new Container(
         ele.spec.template.spec.containers[0].name,
         ele.spec.template.spec.containers[0].image,
@@ -53,6 +65,7 @@ function App() {
     };
     SetDataProp(kDeployArray);
   }
+
   return( !nodeViewPage ? 
     <div className="Tabs">
       <div className="ClusterView">
@@ -60,6 +73,7 @@ function App() {
         trigger={nodeViewPage}
         setTrigger={setNodeViewPage}
         dataArray={dataProp}
+        getLiveData={statusArray}
         />
       </div>
       

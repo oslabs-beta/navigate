@@ -106,7 +106,7 @@ function ClusterView(props: any) {
         ref={containerRef}
         style={ { display:'inline-block', float: 'right', width: '600px', height: '600px' }}
       />   
-      <SidebarClusterView />
+      <SidebarClusterView getLiveData={props.getLiveData}/>
     </div>
     
 )
