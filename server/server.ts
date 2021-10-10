@@ -2,7 +2,7 @@ import express, {Request, Response, NextFunction} from 'express';
 import databaseController from './databaseController';
 
 const app = express();
-const PORT = 3000;
+export const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,8 +36,10 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 //////////
 
-app.listen(PORT, () => {
-  console.log(`listening on port: ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`listening on port: ${PORT}`);
+  });
+}
 
 export default app;

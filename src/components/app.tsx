@@ -8,6 +8,7 @@ function App() {
   const kDeployArray: kDeployment[] = [];
   const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kDeployArray | undefined>([]);
+  const [nodeViewPage, setNodeViewPage] = React.useState(false);
   React.useEffect(getData, []);
   
   //fetch data from backend, push to kDeployArray
@@ -15,7 +16,6 @@ function App() {
     fetch('http://localhost:3000/getData')
       .then((data: any) => data.json())
       .then((data: any) => {
-        console.log(data)
         parseData(JSON.parse(data));
         setReady(true);
       })
@@ -45,12 +45,25 @@ function App() {
     });
     SetDataProp(kDeployArray);
   }
-  return( dataIsReady ? 
+  return( !nodeViewPage ? 
     <div className="Tabs">
       <div className="ClusterView">
-        <ClusterView dataArray={dataProp}/>
+        <ClusterView 
+        trigger={nodeViewPage}
+        setTrigger={setNodeViewPage}
+        dataArray={dataProp}
+        />
       </div>
-    </div> : ""
+      
+    </div> 
+    : 
+    <div>
+    <NodeView
+        trigger={nodeViewPage}
+        setTrigger={setNodeViewPage}
+        dataArray={dataProp}
+      />
+    </div>
   )
 }
 
