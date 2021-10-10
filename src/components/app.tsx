@@ -26,11 +26,11 @@ function App() {
 
   function parseData(relevantData: any[]) 
   {
-    // relevantData.forEach((ele: any) => {
       for(let i = 0; i < relevantData.length; i++){
-      console.log('element', relevantData[i])
       let ele = relevantData[i][0];
-      console.log('ele is', ele)
+
+      // Checks to see if kubernetes object is a deployment 
+      if(ele.kind !== 'Deployment') continue;
       const newEnv = new env(
         ele.spec.template.spec.containers[0].env[0].name,
         ele.spec.template.spec.containers[0].env[0].value,
