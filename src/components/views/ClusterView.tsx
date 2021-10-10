@@ -42,10 +42,8 @@ function ClusterView(props: any) {
     }
   }
   useEffect(() => {
-    console.log('dataArray',props.dataArray);
     populateArray(props.dataArray);
-    console.log('relevantData',relevantData);
-    const config = {
+    const config: Cytoscape.CytoscapeOptions = {
       container: containerRef.current,
       style: [
         {
@@ -71,7 +69,7 @@ function ClusterView(props: any) {
             "curve-style": "bezier",
             color: "blue",
             "text-background-color": "#ffffff",
-            "text-background-opacity": "1",
+            "text-background-opacity": 1,
             "text-background-padding": "3",
             width: "3",
             "target-arrow-shape": "triangle",
