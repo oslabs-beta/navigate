@@ -13,8 +13,10 @@ Use it:
 - TypeScript
 - Docker
 - Kubernetes
-- React (Router, Hooks)
+- React
 - Cytoscape
+- Jest
+- Supertest
 - NodeJS
 - Webpack
 - Babel
