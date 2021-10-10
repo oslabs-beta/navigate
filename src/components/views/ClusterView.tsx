@@ -1,12 +1,10 @@
 import * as React from "react";
 import {FC} from 'react';
-import {kObject} from '../../kObjects/kObject';
-import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
-import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
 import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
+
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 
