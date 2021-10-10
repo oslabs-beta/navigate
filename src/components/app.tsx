@@ -7,6 +7,7 @@ function App() {
   const kDeployArray: kDeployment[] = [];
   const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kDeployArray | undefined>([]);
+  const [nodeViewPage, setNodeViewPage] = React.useState(false);
   React.useEffect(getData, []);
   
   //fetch data from backend, push to kDeployArray
@@ -49,6 +50,11 @@ function App() {
       <div className="ClusterView">
         <ClusterView dataArray={dataProp}/>
       </div>
+      <NodeView
+        trigger={nodeViewPage}
+        setTrigger={setNodeViewPage}
+        dataArray={dataProp}
+      />
     </div> : ""
   )
 }

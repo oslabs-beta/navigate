@@ -6,6 +6,8 @@ import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
+import cola from 'cytoscape-cola';
+Cytoscape.use(cola);
 
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);;
@@ -15,9 +17,18 @@ function NodeView(props: any) {
       style: [
         {
           selector: "node",
-          style: { 
-            'content': "data(label)",
-            'background-color': 'green',
+          style: {
+            width: "30%",
+            height: "30%",
+            "font-size": "14",
+            content: 'data(label)',
+            "text-valign": "center",
+            "text-wrap": "wrap",
+            "text-max-width": "140",
+            "background-color": "green",
+            "border-color": "black",
+            "border-width": "1",
+            color: "black",
           },
         },
         {
@@ -30,10 +41,10 @@ function NodeView(props: any) {
             'text-background-padding': '3',
             'width': '3',
             'target-arrow-shape': 'triangle',
-            'line-color': 'darkgreen',
-            'target-arrow-color': 'darkgreen',
+            'line-color': 'lightgreen',
+            'target-arrow-color': 'lightgreen',
             'font-weight': 'bold'
-          }
+          },
         },
       ],
       //write logic based on relevant data
@@ -53,13 +64,17 @@ function NodeView(props: any) {
       ],
     };
     let cy = Cytoscape(config);
+    let layout = cy.layout({name:'cola'});
+    layout.run();
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);
-
+      if(event.target._private.data.label !== undefined){
+        props.setTrigger(true);
+      }
     })
   }, []);
 
-  return(
+  return true ? (
     <div> 
       <h1>Cluster View</h1>
       <div
@@ -68,7 +83,7 @@ function NodeView(props: any) {
       />   
     </div>
     
-)
+) : ""
 }
 
 export default NodeView;
