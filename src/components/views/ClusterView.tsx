@@ -91,6 +91,9 @@ function ClusterView(props: any) {
     layout.run();
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);
+      if(event.target._private.data.label !== undefined){
+        props.setTrigger(true);
+      }
 
     })
   }, [props.dataArray]);

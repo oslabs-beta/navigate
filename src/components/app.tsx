@@ -45,17 +45,25 @@ function App() {
     });
     SetDataProp(kDeployArray);
   }
-  return( dataIsReady ? 
+  return( !nodeViewPage ? 
     <div className="Tabs">
       <div className="ClusterView">
-        <ClusterView dataArray={dataProp}/>
+        <ClusterView 
+        trigger={nodeViewPage}
+        setTrigger={setNodeViewPage}
+        dataArray={dataProp}
+        />
       </div>
-      <NodeView
+      
+    </div> 
+    : 
+    <div>
+    <NodeView
         trigger={nodeViewPage}
         setTrigger={setNodeViewPage}
         dataArray={dataProp}
       />
-    </div> : ""
+    </div>
   )
 }
 

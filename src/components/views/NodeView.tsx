@@ -68,22 +68,20 @@ function NodeView(props: any) {
     layout.run();
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);
-      if(event.target._private.data.label !== undefined){
-        props.setTrigger(true);
-      }
     })
   }, []);
 
-  return true ? (
+  return (
     <div> 
-      <h1>Cluster View</h1>
-      <div
+      <h1>Node View</h1>
+      <button onClick={() => props.setTrigger(false)}>Back</button>
+      <div id='nodeView'
         ref={nodeViewRef}
         style={ { width: '600px', height: '600px' }}
       />   
     </div>
     
-) : ""
+ )
 }
 
 export default NodeView;
