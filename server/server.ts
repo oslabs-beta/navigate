@@ -1,11 +1,14 @@
 import express, {Request, Response, NextFunction} from 'express';
 import databaseController from './databaseController';
+import path from 'path';
 
 const app = express();
 export const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(express.static(path.resolve(__dirname, './'))); 
 
 app.use(function (req: Request, res: Response, next: NextFunction) {
   res.header("Access-Control-Allow-Origin", "http://localhost:8080"); // update to match the domain you will make the request from
