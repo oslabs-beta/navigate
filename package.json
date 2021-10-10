@@ -16,6 +16,8 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
     "cytoscape": "^3.19.1",
+    "cytoscape-cola": "^2.5.0",
+    "cytoscape-dagre": "^2.3.2",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "html-webpack-plugin": "^5.3.2",
