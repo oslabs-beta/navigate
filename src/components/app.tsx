@@ -24,10 +24,21 @@ function App() {
   function parseData(relevantData: any[]) 
   {
     relevantData.forEach((ele: any) => {
+      const newEnv = new env(
+        ele.spec.template.spec.containers[0].env[0].name,
+        ele.spec.template.spec.containers[0].env[0].value,
+      );
+      const newContainer = new Container(
+        ele.spec.template.spec.containers[0].name,
+        ele.spec.template.spec.containers[0].image,
+        newEnv,
+        ele.spec.template.spec.containers[0].ports[0].containerPort,
+      );
       const newDeployment = new kDeployment(
         ele.metadata.name,
         ele.spec.template.metadata.labels.name,
         ele.spec.replicas,
+        newContainer,
       );
       kDeployArray.push(newDeployment);
     });
@@ -43,26 +54,3 @@ function App() {
 }
 
 export default App;
-
-
-// function parseData(relevantData: any[]) 
-// {
-//   relevantData.forEach((ele: any) => {
-//     const newDeployment = new kDeployment(
-//       ele.metadata.name,
-//       ele.spec.template.metadata.labels.name,
-//       ele.spec.replicas,
-//       new Container(
-//         ele.spec.template.spec.containers.name,
-//         ele.spec.template.spec.containers.image,
-//         new env(
-//           ele.spec.template.spec.containers.env[0].name,
-//           ele.spec.template.spec.containers.env[0].value
-//         ),
-//         ele.spec.template.spec.containers.ports.containerPort,
-//       )
-//     );
-//     kDeployArray.push(newDeployment);
-//   });
-//   SetDataProp(kDeployArray);
-// }
