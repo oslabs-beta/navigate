@@ -3,9 +3,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 
 function SidebarClusterView(props: any) {
     const containerRef = React.useRef<HTMLDivElement>(null);
-    let getLiveData = props.getLiveData;
-    console.log('inside of SidebarClusterView: ',getLiveData)
-    console.log('inside of SidebarClusterView getLiveData[0]: ',getLiveData[0])
+    let deploymentStatus = props.deploymentStatus;
     
     return(
         <div style={ { display:'inline-block', float: 'left',  width: '300px', height: '600px', backgroundColor:'gainsboro' }}>

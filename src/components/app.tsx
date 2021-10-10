@@ -9,7 +9,7 @@ function App() {
   const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kDeployArray | undefined>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
-  let statusArray: any[] = [];
+  const deploymentStatus: any[] = [];
   React.useEffect(getData, []);
   
   //fetch data from backend, push to kDeployArray
@@ -29,12 +29,11 @@ function App() {
       .then((data: any) => data.json())
       .then((data: any) => {
         data.forEach((element: any) => {
-          statusArray.push(element);
+          deploymentStatus.push(element);
       })
     })
     .catch((error) => console.log('GET /getLiveData response error: ', error));
   }
-
   fetchLiveData();
 
   function parseData(relevantData: any[]) 
@@ -73,7 +72,7 @@ function App() {
         trigger={nodeViewPage}
         setTrigger={setNodeViewPage}
         dataArray={dataProp}
-        getLiveData={statusArray}
+        deploymentStatus={deploymentStatus}
         />
       </div>
       
