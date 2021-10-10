@@ -5,6 +5,7 @@ import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
+import SidebarClusterView from "./SidebarClusterView";
 
 function ClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -85,8 +86,9 @@ function ClusterView(props: any) {
       <h1>Cluster View</h1>
       <div
         ref={containerRef}
-        style={ { width: '600px', height: '600px' }}
+        style={ { display:'inline-block', float: 'right', width: '600px', height: '600px' }}
       />   
+      <SidebarClusterView />
     </div>
     
 )
