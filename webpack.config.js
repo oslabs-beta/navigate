@@ -29,10 +29,11 @@ module.exports = {
     maxEntrypointSize: 512000,
     maxAssetSize: 512000
   },
+  // publicPath is causing 404 errors if incorrect
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/'
+    path: path.resolve(__dirname, 'build'),
+    publicPath: 'auto'
   },
   devServer: {
     proxy: {'/api': 'http://localhost:3000'},
