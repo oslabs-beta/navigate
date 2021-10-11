@@ -12,7 +12,7 @@ Cytoscape.use(cola);
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);;
   useEffect(() => {
-    const config = {
+    const config: Cytoscape.CytoscapeOptions = {
       container: nodeViewRef.current,
       style: [
         {
@@ -37,7 +37,7 @@ function NodeView(props: any) {
             'curve-style': 'bezier',
             'color': 'blue',
             'text-background-color': '#ffffff',
-            'text-background-opacity': '1',
+            'text-background-opacity': 1,
             'text-background-padding': '3',
             'width': '3',
             'target-arrow-shape': 'triangle',

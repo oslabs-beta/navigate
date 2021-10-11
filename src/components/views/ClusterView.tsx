@@ -1,13 +1,11 @@
 import * as React from "react";
 import {FC} from 'react';
-import {kObject} from '../../kObjects/kObject';
-import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
-import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
 import SidebarClusterView from "./SidebarClusterView";
 import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
+
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 
@@ -45,10 +43,8 @@ function ClusterView(props: any) {
     }
   }
   useEffect(() => {
-    console.log('dataArray',props.dataArray);
     populateArray(props.dataArray);
-    console.log('relevantData',relevantData);
-    const config = {
+    const config: Cytoscape.CytoscapeOptions = {
       container: containerRef.current,
       style: [
         {
@@ -74,7 +70,7 @@ function ClusterView(props: any) {
             "curve-style": "bezier",
             color: "blue",
             "text-background-color": "#ffffff",
-            "text-background-opacity": "1",
+            "text-background-opacity": 1,
             "text-background-padding": "3",
             width: "3",
             "target-arrow-shape": "triangle",
