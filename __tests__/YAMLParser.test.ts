@@ -8,6 +8,6 @@ describe("unit tests for YAML parser", () =>{
   });
 
   it("should return a JSON with k8s-specific fields", () => {
-    expect(!data[0].kind).toBeFalsy();
+    expect(data[0].kind && data[0].api).toBeTruthy();
   });
 });
