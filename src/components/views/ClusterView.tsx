@@ -11,10 +11,9 @@ Cytoscape.use(cola);
 
 function ClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
-
   const relevantData: any[] = [
     {
-      data: { id: "master", label: "Control Plane" },
+      data: { id: "master", label: props.masterNode },
     },
   ];
 
@@ -84,9 +83,9 @@ function ClusterView(props: any) {
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);
       if(event.target._private.data.label !== undefined){
+        props.setMasterNode(event.target._private.data.label)
         props.setTrigger(true);
       }
-
     })
   }, [props.dataArray]);
 

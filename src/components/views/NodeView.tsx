@@ -10,7 +10,12 @@ import cola from 'cytoscape-cola';
 Cytoscape.use(cola);
 
 function NodeView(props: any) {
-  const nodeViewRef = React.useRef<HTMLDivElement>(null);;
+  const nodeViewRef = React.useRef<HTMLDivElement>(null);
+  const relevantData: any[] = [
+    {
+      data: { id: "master", label: props.masterNode },
+    },
+  ];
   useEffect(() => {
     const config: Cytoscape.CytoscapeOptions = {
       container: nodeViewRef.current,
@@ -51,7 +56,7 @@ function NodeView(props: any) {
       elements: [
         //how to make a node
         //id: anything unique ,label: name
-        { data: { id: 'master', label: 'Deployment Node' }, position: { x: 200, y: 150 } },
+        { data: { id: 'master', label: props.masterNode }, position: { x: 200, y: 150 } },
         { data: { id: 'one', label: 'Pod 1' }, position: { x: 150, y: 150 } },
         { data: { id: 'two', label: 'Pod 2' }, position: { x: 250, y: 150 } },
         { data: { id: 'three', label: 'Pod 3' }, position: { x: 50, y: 300 } },
@@ -69,12 +74,15 @@ function NodeView(props: any) {
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);
     })
-  }, []);
+    }, []);
 
   return (
     <div> 
       <h1>Node View</h1>
-      <button onClick={() => props.setTrigger(false)}>Back</button>
+      <button onClick={() =>{
+        props.setTrigger(false)
+        props.setMasterNode('Control Plane')
+      }}>Back</button>
       <div id='nodeView'
         ref={nodeViewRef}
         style={ { width: '600px', height: '600px' }}
