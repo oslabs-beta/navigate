@@ -2,12 +2,11 @@ import * as fs from 'fs';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
 
-const root = '../yaml_files';
-const outputFilePath = './server/yaml.json';
+const root = './yaml_files';
 
-let data: string;
+let data: object;
 
-function getYAMLFiles(): void {
+function getYAMLFiles(): object {
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
     if(file.match(/ya?ml/)) 
@@ -15,25 +14,17 @@ function getYAMLFiles(): void {
   });
   const yamlObjs: any[] = [];
   raw.forEach(file => {
-    yamlObjs.push(YAML.load(fs.readFileSync(path.join(root, file), 'utf-8')));
+    yamlObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
-  fs.writeFileSync('./yaml.json', JSON.stringify(yamlObjs, null, 2));
+  return yamlObjs;
 }
 
-export default function getYAMLData(): string {
+export default function getYAMLData(): object {
   try{
-    data = fs.readFileSync(outputFilePath, 'utf-8');
-    if(data === "")
-    {
-      getYAMLFiles();
-      data = fs.readFileSync(outputFilePath, 'utf-8');
+      data =  getYAMLFiles();
     }
-    
-  } catch{
-    getYAMLFiles();
-    data = fs.readFileSync(outputFilePath, 'utf-8');
+  catch (error) {
+    console.log(error);
   }
   return data;
 }
-
- 

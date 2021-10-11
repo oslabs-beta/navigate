@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mafia-ui-service
+  namespace: mafia
+spec:
+  selector:
+    app: mafia
+    name: mafia-ui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
