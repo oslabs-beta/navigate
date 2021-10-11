@@ -1,0 +1,13 @@
+FROM node
+WORKDIR /newNavigate
+COPY package.json .
+RUN npm install
+COPY . .
+EXPOSE 4000
+CMD ["npm", "run", "dev"]
+
+# To use "Dockerfile.dev" you now need to specify
+# the name, using "-f Dockerfile.dev"
+# also change the docker compose "build: ." section
+
+# docker build  -f Dockerfile.dev

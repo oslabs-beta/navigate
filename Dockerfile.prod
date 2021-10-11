@@ -1,0 +1,14 @@
+# Stage one
+FROM node as build
+WORKDIR /newNavigate
+COPY package.json .
+RUN npm install
+COPY . .
+
+RUN npm run build
+
+# Stage two (NGINX)
+FROM nginx
+# need to copy the output of stage one
+# "/usr/share/nginx/html" is inside  the NGINX container
+COPY --from=build /newNavigate/build /usr/share/nginx/html
