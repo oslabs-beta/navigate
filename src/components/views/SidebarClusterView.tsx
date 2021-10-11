@@ -5,6 +5,7 @@ function SidebarClusterView(props: any) {
     const containerRef = React.useRef<HTMLDivElement>(null);
     let deploymentStatus = props.deploymentStatus;
     
+    //onmount exec(schedulerLogs.js)
     return(
         <div style={ { display:'inline-block', float: 'left',  width: '300px', height: '600px', backgroundColor:'gainsboro' }}>
             <h1>Control Plane</h1>

@@ -50,7 +50,7 @@
     "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "start": "ts-node server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack serve --open",
