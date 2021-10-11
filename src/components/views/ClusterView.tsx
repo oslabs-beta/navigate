@@ -16,7 +16,6 @@ function ClusterView(props: any) {
   const relevantData: any[] = [
     {
       data: { id: "master", label: "Control Plane" },
-      // position: { x: 200, y: 150 },
     },
   ];
 
@@ -28,10 +27,6 @@ function ClusterView(props: any) {
           id: array[i].label,
           label: array[i].podLabel,
         },
-        // position: {
-        //   x: Math.floor(Math.random() * (100 * i)),
-        //   y: Math.floor(Math.random() * (100 * i)),
-        // },
       };
       let edge = {
         data: {
