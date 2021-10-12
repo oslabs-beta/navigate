@@ -10,7 +10,7 @@ describe("run sh scripts from node", () => {
   });
 
   exportObj.runCommand(`${exportObj.command} -n mafia &> ./navigate_logs/${exportObj.fileName}`);
-  it("should create a txt file in a directory", (done) => {
+  it("should create a txt file", (done) => {
     expect(fs.promises.access('../navigate_logs/'+exportObj.fileName, fs.constants.R_OK | fs.constants.W_OK)).toBeTruthy();
     done();
   });
