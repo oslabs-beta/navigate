@@ -21,7 +21,7 @@ function getYAMLFiles(): Array<object> {
 
 export default function getYAMLData(): object[] {
   try{
-      data =  getYAMLFiles();
+      data = getYAMLFiles();
     }
   catch (error) {
     console.log(error);

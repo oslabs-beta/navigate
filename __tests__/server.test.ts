@@ -3,7 +3,7 @@ import request from 'supertest';
 
 const server = `http://localhost:${PORT}`;
 
-xdescribe("router unit tests", () => {
+describe("router unit tests", () => {
 
   describe("GET", () => {
     it("should return with a status code of 200", (done) => {
