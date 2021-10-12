@@ -3,12 +3,19 @@ import ClusterView from './views/ClusterView';
 import NodeView from "./views/NodeView";
 import { kDeployment } from "../kObjects/kDeployment";
 import Container, {env} from "../kObjects/container";
-
+import kService from "../kObjects/kService";
+import {kObject} from "../kObjects/kObject"
+import statefulContainer, {volumeMount} from "../kObjects/statefulContainer";
+import { kStatefulSet } from "../kObjects/kStatefulSet";
+import volumeClaimTemplates from "../kObjects/volumeClaimTemplates";
 function App() {
-  const kDeployArray: kDeployment[] = [];
+  const kObjArray: kObject[] = [];
   const [dataIsReady, setReady] = React.useState(false);
-  const [dataProp, SetDataProp] = React.useState<typeof kDeployArray | undefined>([]);
+  const [dataProp, SetDataProp] = React.useState<typeof kObjArray | undefined>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
+  const [masterNode, setMasterNode] = React.useState('default')
+  const [namespace, setNamespace] = React.useState('default')
+  
   const deploymentStatus: any[] = [];
   React.useEffect(getData, []);
   
@@ -41,28 +48,71 @@ function App() {
       for(let i = 0; i < relevantData.length; i++){
       // Since each YAML file can have multiple objects, [0] assumes that there is only one object per file.
       let ele = relevantData[i][0];
-
       // Checks to see if kubernetes object is a deployment 
-      if(ele.kind !== 'Deployment') continue;
-      const newEnv = new env(
-        ele.spec.template.spec.containers[0].env[0].name,
-        ele.spec.template.spec.containers[0].env[0].value,
-      );
-      const newContainer = new Container(
-        ele.spec.template.spec.containers[0].name,
-        ele.spec.template.spec.containers[0].image,
-        newEnv,
-        ele.spec.template.spec.containers[0].ports[0].containerPort,
-      );
-      const newDeployment = new kDeployment(
-        ele.metadata.name,
-        ele.spec.template.metadata.labels.name,
-        ele.spec.replicas,
-        newContainer,
-      );
-      kDeployArray.push(newDeployment);
+      if(ele.kind === 'Deployment') {
+        const newEnv = new env(
+          ele.spec.template.spec.containers[0].env[0].name,
+          ele.spec.template.spec.containers[0].env[0].value,
+        );
+        const newContainer = new Container(
+          ele.spec.template.spec.containers[0].name,
+          ele.spec.template.spec.containers[0].image,
+          newEnv,
+          ele.spec.template.spec.containers[0].ports[0].containerPort,
+        );
+        const newDeployment = new kDeployment(
+          ele.metadata.namespace,
+          ele.kind,
+          ele.metadata.name,
+          ele.spec.template.metadata.labels.name,
+          ele.spec.replicas,
+          newContainer,
+        );
+        kObjArray.push(newDeployment);
+      }
+      else if(ele.kind === 'StatefulSet') {
+        const newVolumeMount = new volumeMount(
+          ele.spec.template.spec.containers[0].volumeMounts[0].mountPath,
+          ele.spec.template.spec.containers[0].volumeMounts[0].name,
+        )
+        const newStatefulContainer = new statefulContainer(
+          ele.spec.template.spec.containers[0].name,
+          ele.spec.template.spec.containers[0].image,
+          ele.spec.template.spec.containers[0].ports[0].containerPort,
+          newVolumeMount
+        )
+        const newVolumeClaimTemplates = new volumeClaimTemplates(
+          ele.spec.volumeClaimTemplates[0].metadata.name,
+          ele.spec.volumeClaimTemplates[0].spec.accessModes,
+          ele.spec.volumeClaimTemplates[0].spec.resources.requests.storage
+        )
+        const newKStatefulSet = new kStatefulSet(
+          ele.metadata.namespace,
+          ele.kind,
+          ele.metadata.name,
+          ele.spec.replicas,
+          ele.spec.serviceName,
+          newStatefulContainer,
+          newVolumeClaimTemplates
+        )
+        kObjArray.push(newKStatefulSet)
+      }
+      else if(ele.kind === 'Service'){
+        // console.log(ele)
+        const newkSerivce = new kService(
+          ele.metadata.namespace,
+          ele.metadata.name,
+          ele.kind,
+          ele.spec.ports[0].port,
+          ele.spec.ports[0].targetPort,
+          ele.spec.selector.name ? ele.spec.selector.name : ele.spec.selector['app.kubernetes.io/name'],
+          ele.spec.type,
+        )
+        kObjArray.push(newkSerivce)
+      }
     };
-    SetDataProp(kDeployArray);
+    SetDataProp(kObjArray)
+    
   }
 
   return( !nodeViewPage ? 
@@ -73,6 +123,10 @@ function App() {
         setTrigger={setNodeViewPage}
         dataArray={dataProp}
         deploymentStatus={deploymentStatus}
+        masterNode={masterNode}
+        setMasterNode={setMasterNode}
+        namespace={namespace}
+        setNamespace={setNamespace}
         />
       </div>
       
@@ -83,9 +137,14 @@ function App() {
         trigger={nodeViewPage}
         setTrigger={setNodeViewPage}
         dataArray={dataProp}
+        masterNode={masterNode}
+        setMasterNode={setMasterNode}
+        namespace={namespace}
+        setNamespace={setNamespace}
       />
     </div>
   )
 }
 
 export default App;
+

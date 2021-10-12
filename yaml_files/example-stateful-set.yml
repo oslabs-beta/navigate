@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: example-stateful-set
+  namespace: example
+spec:
+  selector:
+    matchLabels:
+      app: example
+  replicas: 1
+  serviceName: "exampleRedis"
+  template:
+    metadata:
+      labels:
+        name: example
+        app: example
+    spec:
+      securityContext:
+        fsGroup: 999
+      containers:
+        - name: example-container
+          image: example:5.0.8-buster
+          command: ["redis-server", "--bind", "0.0.0.0"]
+          ports:
+          - containerPort: 6379
+          volumeMounts:
+          - mountPath: "/data"
+            name: example-data
+  volumeClaimTemplates:
+    - metadata:
+        name: example-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 32Gi
