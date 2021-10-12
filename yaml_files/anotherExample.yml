@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anotherExample-ui
+  namespace: anotherExample
+  labels:
+    name: anotherExample-ui
+    app: anotherExample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anotherExample
+  template:
+    metadata:
+      labels:
+        name: anotherExample-ui
+        app: anotherExample
+    spec:
+      containers:
+      - name: anotherExample-ui-container
+        image: taleodor/anotherExample-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2
+        env:
+        - name: HUB_HOST
+          value: anotherExample-backend-service.example
+        - name: HUB_PORT
+          value: "3000"
+        ports:
+        - containerPort: 80
