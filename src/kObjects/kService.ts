@@ -1,6 +1,5 @@
 import type {kObject} from './kObject'
 export default class kService implements kObject {
-  //spec.type
   namespace: string;
   label: string;
   kind: string;

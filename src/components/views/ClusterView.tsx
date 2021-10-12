@@ -128,7 +128,6 @@ function ClusterView(props: any) {
     let layout = cy.layout({name:'dagre'});
     layout.run();
     cy.on('click',(event)=> {
-      // console.log('event',event.target._private.data);
       if(event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){
         props.setNamespace(getNamespace(event.target._private.data.id))
         props.setMasterNode(event.target._private.data.id)

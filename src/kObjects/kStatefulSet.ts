@@ -2,7 +2,6 @@ import type {kObject} from './kObject';
 import statefulContainer from './statefulContainer'
 import volumeClaimTemplates from './volumeClaimTemplates';
 export class kStatefulSet implements kObject {
-  //name: redis-stateful-set
   namespace: string;
   kind :string;
   label: string;
@@ -10,7 +9,6 @@ export class kStatefulSet implements kObject {
   serviceName: string;
   container: statefulContainer;
   volumeClaimTemplates: volumeClaimTemplates;
-  //points to namespace and namespace points to statefulset
   constructor(namespace= "",kind: string, label: string, replicas: number, serviceName: string, container: statefulContainer, volumeClaimTemplates: volumeClaimTemplates)
   {
     this.namespace = namespace;

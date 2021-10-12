@@ -46,7 +46,6 @@ function NodeView(props: any) {
       }
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
-          //&& ele.label.includes('redis')
           if(ele.kind === "Deployment" && ele.label === props.masterNode){
             console.log('ele',ele.namespace)
             console.log('master',props.masterNode);
@@ -131,7 +130,6 @@ function NodeView(props: any) {
   }
 
   useEffect(() => {
-    // console.log('dataArray',props.dataArray)
     populateArray(props.dataArray);
     const config: Cytoscape.CytoscapeOptions = {
       container: nodeViewRef.current,
@@ -168,17 +166,3 @@ function NodeView(props: any) {
 }
 
 export default NodeView;
-// elements: [
-//   //how to make a node
-//   //id: anything unique ,label: name
-//   { data: { id: 'master', label: props.masterNode }, position: { x: 200, y: 150 } },
-//   { data: { id: 'one', label: 'Pod 1' }, position: { x: 150, y: 150 } },
-//   { data: { id: 'two', label: 'Pod 2' }, position: { x: 250, y: 150 } },
-//   { data: { id: 'three', label: 'Pod 3' }, position: { x: 50, y: 300 } },
-//   { data: { id: 'four', label: 'Pod 4' }, position: { x: 250, y: 300 } },
-//   //how to make a connection
-//   { data: { source: 'master', target: 'one', label: 'Edge from Deployment Node to Pod 1' } },
-//   { data: { source: 'master', target: 'two', label: 'Edge from Deployment Node to Pod 2' } },
-//   { data: { source: 'master', target: 'three', label: 'Edge from Deployment Node to Pod 3' } },
-//   { data: { source: 'master', target: 'four', label: 'Edge from Deployment Node to Pod 4' } },
-// ],
