@@ -7,7 +7,6 @@ import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
 import { servicesVersion } from "typescript";
-
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 
@@ -28,7 +27,7 @@ function ClusterView(props: any) {
         {data: {
           source: "Kubernetes Cluster",
           target: namespace,
-        }})
+      }})
     })
   }
   const populateArray = (array:any[]): void => {
@@ -45,7 +44,7 @@ function ClusterView(props: any) {
           data: {
             source: array[i].namespace,
             target: array[i].label,
-            label: `Edge from master to ${array[i].label}`
+            label: `deployment`
           }
         }
         relevantData.push(newNode,edge);
@@ -65,16 +64,8 @@ function ClusterView(props: any) {
             label: `connection`
           }
         }
-        // let edge2 = {
-        //   data: {
-        //     source: array[i].label,
-        //     target: array[i].namespace,
-        //     label: `connection`
-        //   }
-        // }
         relevantData.push(newNode,edge);
         props.dataArray.forEach((ele: any) => {
-          //&& ele.label.includes('redis')
           if(ele.kind === "Service" && ele.namespace === array[i].namespace){
             let edge = {
               data: {
@@ -87,9 +78,7 @@ function ClusterView(props: any) {
           } 
         })
       }
-      // && array[i].label.includes('redis')
       else if(array[i].kind === 'Service'){
-        // console.log(array[i])
         let newNode = {
           data: {
             id: array[i].label,
@@ -138,8 +127,6 @@ function ClusterView(props: any) {
     let cy = Cytoscape(config);
     let layout = cy.layout({name:'dagre'});
     layout.run();
-    let test = cy.getElementById("Kubernetes Cluster");
-    test.addClass('test')
     cy.on('click',(event)=> {
       // console.log('event',event.target._private.data);
       if(event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){

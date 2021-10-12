@@ -82,7 +82,7 @@ function NodeView(props: any) {
         },
       };
       //line from new pod to master
-      let edge = {
+      let edge1 = {
         data: {
           source: 'master',
           target: targetNode.label + i,
@@ -90,7 +90,7 @@ function NodeView(props: any) {
         }
       }
       //line from service to pod
-      let edge4 = {
+      let edge2 = {
         data: {
           source: serviceNode,
           target: targetNode.container.name + i,
@@ -104,7 +104,7 @@ function NodeView(props: any) {
         },
       };
       //line from newPod to newContainer
-      let edge2 = {
+      let edge3 = {
         data: {
           source: targetNode.label + i,
           target: targetNode.container.name + i,
@@ -118,14 +118,14 @@ function NodeView(props: any) {
         },
       };
       //line from newContainer to image
-      let edge3 = {
+      let edge4 = {
         data: {
           source: targetNode.container.name + i,
           target: targetNode.container.image + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
-      relevantData.push(newPod,edge,newContainer,edge2,newImage,edge3,edge4);
+      relevantData.push(newPod,edge1,newContainer,edge2,newImage,edge3,edge4);
     }
 
   }

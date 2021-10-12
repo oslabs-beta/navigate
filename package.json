@@ -20,6 +20,7 @@
     "cytoscape": "^3.19.1",
     "cytoscape-avsdf": "^1.0.0",
     "cytoscape-cola": "^2.5.0",
+    "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-dagre": "^2.3.2",
     "cytoscape-elk": "^2.0.2",
     "cytoscape-spread": "^3.0.0",
