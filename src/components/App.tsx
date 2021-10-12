@@ -98,7 +98,7 @@ function App() {
         kObjArray.push(newKStatefulSet)
       }
       else if(ele.kind === 'Service'){
-        console.log(ele)
+        // console.log(ele)
         const newkSerivce = new kService(
           ele.metadata.namespace,
           ele.metadata.name,

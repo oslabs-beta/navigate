@@ -9,12 +9,15 @@ import { useEffect, useRef, useCallback, useState } from "react";
 import cola from 'cytoscape-cola';
 import SidebarClusterView from './SidebarClusterView'
 import {GraphStyles} from "../../scss/GraphStyles";
+import dagre from 'cytoscape-dagre'
 Cytoscape.use(cola);
+Cytoscape.use(dagre);
+
 
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);
   const relevantData: any[] = [
-    {data: { id: "master", label: props.masterNode }},
+    {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
   const populateArray = (array: any[]): void => {
     let targetNode;
@@ -24,32 +27,53 @@ function NodeView(props: any) {
         targetNode = array[i]
       } 
       if(array[i].kind === 'Service' && array[i].selectorName === props.masterNode){
-        console.log('service',[array[i]])
         serviceNode = array[i].label;
         let newPod = {
           data: {
             id: array[i].label,
             label: array[i].label,
+            class: "service",
           },
         };
         let edge = {
           data: {
             source: 'master',
             target: array[i].label,
-            // label: `Edge from master to ${array[i].label}`
+            label: `connection`
           }
         }
-        let edge2 = {
-          data: {
-            source: array[i].label,
-            target: 'master',
-            // label: `Edge from master to ${array[i].label}`
-          }
-        }
-        relevantData.push(newPod,edge,edge2)
+        relevantData.push(newPod,edge)
       }
-      // console.log('targetNode',targetNode)
+      if(array[i].kind === 'StatefulSet'){
+        props.dataArray.forEach((ele: any) => {
+          //&& ele.label.includes('redis')
+          if(ele.kind === "Deployment" && ele.label === props.masterNode){
+            console.log('ele',ele.namespace)
+            console.log('master',props.masterNode);
+            if(array[i].namespace === ele.namespace){
+              let newPod = {
+                data: {
+                  id: array[i].label,
+                  label: array[i].label,
+                  class: "stateful",
+                },
+              };
+              let edge = {
+                data: {
+                  source: 'master',
+                  target: array[i].label,
+                  label: "connection"
+                }
+              }
+              relevantData.push(newPod,edge)
+            }
+          } 
+        })
+        console.log('master',props.masterNode)
+        console.log('stateful',[array[i]])
+      }
     }
+    
     for(let i = 0; i < targetNode.replicas; i++){
       let newPod = {
         data: {
@@ -69,8 +93,8 @@ function NodeView(props: any) {
       let edge4 = {
         data: {
           source: serviceNode,
-          target: targetNode.label + i,
-          label: "service"
+          target: targetNode.container.name + i,
+          label: "connection"
         }
       }
       let newContainer = {
@@ -115,7 +139,7 @@ function NodeView(props: any) {
       elements: relevantData,
     };
     let cy = Cytoscape(config);
-    let layout = cy.layout({name:'cola'});
+    let layout = cy.layout({name:'dagre'});
     layout.run();
     cy.on('click',(event)=> {
       console.log(event.target._private.data.label);

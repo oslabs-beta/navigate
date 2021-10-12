@@ -6,9 +6,11 @@ import SidebarClusterView from "./SidebarClusterView";
 import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
+import { servicesVersion } from "typescript";
 
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
+
 
 function ClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -22,7 +24,7 @@ function ClusterView(props: any) {
     })
     namespacesArr.forEach(namespace => {
       relevantData.push({
-        data: { id: namespace, label: namespace}},
+        data: { id: namespace, label: namespace, class:"namespace"}},
         {data: {
           source: "Kubernetes Cluster",
           target: namespace,
@@ -36,6 +38,7 @@ function ClusterView(props: any) {
           data: {
             id: array[i].label,
             label: array[i].podLabel,
+            class: "deployment"
           },
         };
         let edge = {
@@ -52,23 +55,68 @@ function ClusterView(props: any) {
           data: {
             id: array[i].label,
             label: array[i].label,
+            class: "stateful",
           },
         };
         let edge = {
           data: {
             source: array[i].namespace,
             target: array[i].label,
-            label: `Edge from master to ${array[i].label}`
+            label: `connection`
           }
         }
-        let edge2 = {
+        // let edge2 = {
+        //   data: {
+        //     source: array[i].label,
+        //     target: array[i].namespace,
+        //     label: `connection`
+        //   }
+        // }
+        relevantData.push(newNode,edge);
+        props.dataArray.forEach((ele: any) => {
+          //&& ele.label.includes('redis')
+          if(ele.kind === "Service" && ele.namespace === array[i].namespace){
+            let edge = {
+              data: {
+                source: ele.label,
+                target: array[i].label,
+                label: `connection`
+              }
+            }
+            relevantData.push(edge)
+          } 
+        })
+      }
+      // && array[i].label.includes('redis')
+      else if(array[i].kind === 'Service'){
+        // console.log(array[i])
+        let newNode = {
           data: {
-            source: array[i].label,
-            target: array[i].namespace,
-            label: `Edge from master to ${array[i].label}`
+            id: array[i].label,
+            label: array[i].label,
+            class: "service",
+          },
+        };
+        let edge = {
+          data: {
+            source: array[i].namespace,
+            target: array[i].label,
+            label: `deployment`
           }
         }
-        relevantData.push(newNode,edge,edge2);
+        props.dataArray.forEach((ele: any) => {
+          if(ele.kind === "Deployment" && ele.namespace === array[i].namespace){
+            let edge = {
+              data: {
+                source: ele.label,
+                target: array[i].label,
+                label: `connection`
+              }
+            }
+            relevantData.push(edge)
+          } 
+        })
+        relevantData.push(newNode,edge);
       }
     }
   }
@@ -88,7 +136,7 @@ function ClusterView(props: any) {
       elements: relevantData,
     };
     let cy = Cytoscape(config);
-    let layout = cy.layout({name:'cola'});
+    let layout = cy.layout({name:'dagre'});
     layout.run();
     let test = cy.getElementById("Kubernetes Cluster");
     test.addClass('test')
