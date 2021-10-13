@@ -1,4 +1,4 @@
-import getYAMLData from '../yamlParser.js';
+import getYAMLData from '../yamlParser';
 import runCommand from '../runCommand';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -30,7 +30,3 @@ export function parsePodNames (filePath = path.join(__dirname, `../navigate_logs
 export function getAllPods(cmd: string, namespace: string): void {
   exportObj.runCommand(`${cmd} -n ${namespace} &> ../navigate_logs/${exportObj.fileName}`);
 }
-
-
-
-
