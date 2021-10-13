@@ -3,8 +3,8 @@ import runCommand from '../runCommand';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const deployments = getElements('Deployment');
-const namespaces = getElements('Namespace');
+export const deployments = getElements('Deployment');
+export const namespaces = getElements('Namespace');
 
 export default function getElements(kind: string): string[] {
   const data = getYAMLData();
