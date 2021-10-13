@@ -42,7 +42,6 @@ function App() {
     })
     .catch((error) => console.log('GET /getLiveData response error: ', error));
   }
-  fetchLiveData();
 
   function parseData(relevantData: any[]) 
   {
