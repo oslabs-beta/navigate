@@ -27,11 +27,12 @@ function NodeView(props: any) {
         targetNode = array[i]
       } 
       if(array[i].kind === 'Service' && array[i].selectorName === props.masterNode){
-        serviceNode = array[i].label;
+        serviceNode = array[i];
+        console.log("service",serviceNode)
         let newPod = {
           data: {
             id: array[i].label,
-            label: array[i].label,
+            label: array[i].label + "\n" + `Port: ${serviceNode.port}`,
             class: "service",
           },
         };
@@ -47,13 +48,12 @@ function NodeView(props: any) {
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
           if(ele.kind === "Deployment" && ele.label === props.masterNode){
-            console.log('ele',ele.namespace)
-            console.log('master',props.masterNode);
+            // console.log('ele', array[i])
             if(array[i].namespace === ele.namespace){
               let newPod = {
                 data: {
                   id: array[i].label,
-                  label: array[i].label,
+                  label: array[i].label + "\n" + "Port:" + array[i].container.containerPort,
                   class: "stateful",
                 },
               };
@@ -68,8 +68,6 @@ function NodeView(props: any) {
             }
           } 
         })
-        console.log('master',props.masterNode)
-        console.log('stateful',[array[i]])
       }
     }
     
@@ -91,15 +89,16 @@ function NodeView(props: any) {
       //line from service to pod
       let edge2 = {
         data: {
-          source: serviceNode,
+          source: serviceNode.label,
           target: targetNode.container.name + i,
           label: "connection"
         }
       }
+      console.log(targetNode.container)
       let newContainer = {
         data: {
           id: targetNode.container.name + i,
-          label: targetNode.container.name + i,
+          label: targetNode.container.name + "\n" + "Port:" + targetNode.container.containerPort,
         },
       };
       //line from newPod to newContainer
@@ -113,7 +112,8 @@ function NodeView(props: any) {
       let newImage = {
         data: {
           id: targetNode.container.image + i,
-          label: targetNode.container.image + i,
+          label: targetNode.container.image.split(":")[0],
+          class: "image"
         },
       };
       //line from newContainer to image
@@ -137,11 +137,16 @@ function NodeView(props: any) {
       elements: relevantData,
     };
     let cy = Cytoscape(config);
-    let layout = cy.layout({name:'dagre'});
+    let layout: Cytoscape.LayoutOptions = cy.layout({
+      name:'dagre',
+      nodeDimensionsIncludeLabels: true,
+    });
     layout.run();
     cy.on('click',(event)=> {
-      console.log(event.target._private.data.label);
-
+      if(event.target._private.data.class === "image"){
+        console.log(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
+      }
+      else console.log(event.target._private.data.id)
     })
     }, []);
 

@@ -9,7 +9,7 @@ import {GraphStyles} from "../../scss/GraphStyles";
 import { servicesVersion } from "typescript";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
-
+dagre(Cytoscape)
 
 function ClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -23,7 +23,7 @@ function ClusterView(props: any) {
     })
     namespacesArr.forEach(namespace => {
       relevantData.push({
-        data: { id: namespace, label: namespace, class:"namespace"}},
+        data: { id: namespace, label: namespace, class: "namespace"}},
         {data: {
           source: "Kubernetes Cluster",
           target: namespace,
@@ -125,7 +125,10 @@ function ClusterView(props: any) {
       elements: relevantData,
     };
     let cy = Cytoscape(config);
-    let layout = cy.layout({name:'dagre'});
+    let layout: Cytoscape.BaseLayoutOptions = cy.layout({
+      name:'dagre',
+      nodeDimensionsIncludeLabels: true,
+    });
     layout.run();
     cy.on('click',(event)=> {
       if(event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){
