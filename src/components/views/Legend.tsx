@@ -14,8 +14,8 @@ export default function Legend(props: object) {
         </div>
       <div id='legendCol'>
         <ul>
-        <li>△  = Service</li>
-        <li>▱  = Stateful Set</li>
+        <li>⯃  = Service</li>
+        <li>▭  = Stateful Set</li>
         <li style={{color:"light gray"}}>--- = Uses</li>
         <li style={{color:"purple"}}>--- = Deploys </li>
         </ul>
