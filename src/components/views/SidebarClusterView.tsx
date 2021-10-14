@@ -6,8 +6,9 @@ function SidebarClusterView(props: any) {
   let deploymentStatus = props.deploymentStatus;
 
   return props.namespace !== "Kubernetes Cluster" ? (
+    //Node view
     <div>
-      <h1>{props.masterNode}</h1>
+      {/* <h1>{props.masterNode}</h1> */}
       <div id="sidebar">
       <div id="legend">
           <h2>Legend</h2>
@@ -16,24 +17,25 @@ function SidebarClusterView(props: any) {
             <p>▭ = Namespace</p>
             <p>△  = Service</p>
             <p>▱  = Stateful Set</p>
-            <p style={{color:"light gray"}}>--- = Uses</p>
+            <p style={{color:"rgb(100, 100, 100)"}}>--- = Uses</p>
             <p style={{color:"purple"}}>--- = Deploys</p>
             <p style={{color:"orange"}}>⇢ = Deploys/Uses</p>
       </div>
     </div>
     </div>
   ) : (
+    // Cluster View
     <div>
-    <h1>{props.namespace}</h1>
+    {/* <h1>{props.namespace}</h1> */}
     <div id="sidebar">
       <div id="legend">
           <h2>Legend</h2>
             <p>◇ = Kubernetes Cluster</p>
             <p>○ = Deployment</p>
             <p>▭ = Namespace</p>
-            <p>△  = Service</p>
+            <p>⎔  = Service</p>
             <p>▱  = Stateful Set</p>
-            <p style={{color:"light gray"}}>--- = Uses</p>
+            <p style={{color:"rgb(100, 100, 100)"}}>--- = Uses</p>
             <p style={{color:"purple"}}>--- = Deploys</p>
             <p style={{color:"orange"}}>⇢ = Deploys/Uses</p>
       </div>

@@ -158,14 +158,23 @@ function NodeView(props: any) {
 
   return (
     <div id="nodeView"> 
-      <div id="nodeHeader">
-        <h1>Node View {props.masterNode}</h1>
+      <div >
+        <h1 id="nodeHeader">
+          <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
+          {props.view}
+        </h1>
       </div>
+       <div id="buttonDiv">
       <button onClick={() =>{
         props.setTrigger(false);
         props.setMasterNode('Kubernetes Cluster');
         props.setNamespace('Kubernetes Cluster');
-      }}>Back to Cluster View</button>
+        props.setView('Cluster View');
+      }}>Back to Cluster View
+      </button>
+      <h3>{`${props.masterNode}`}</h3>
+
+      </div>
       <div style={{display:'flex'}}>
         <SidebarClusterView masterNode={props.masterNode} namespace={props.namespace} imageName={imageName} deploymentStatus={props.deploymentStatus}/>
         <div id='nodeView'
