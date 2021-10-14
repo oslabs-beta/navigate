@@ -14,8 +14,9 @@ function App() {
   const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kObjArray | undefined>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
-  const [masterNode, setMasterNode] = React.useState('default')
-  const [namespace, setNamespace] = React.useState('default')
+  // const [view, setView] = React.useState('Cluster View')
+  const [masterNode, setMasterNode] = React.useState("Kubernetes Cluster")
+  const [namespace, setNamespace] = React.useState("Kubernetes Cluster")
   
   const deploymentStatus: any[] = [];
   React.useEffect(getData, []);
@@ -110,6 +111,9 @@ function App() {
         )
         kObjArray.push(newkSerivce)
       }
+      else{
+        console.log("ele",ele)
+      }
     };
     SetDataProp(kObjArray)
     
@@ -127,6 +131,8 @@ function App() {
         setMasterNode={setMasterNode}
         namespace={namespace}
         setNamespace={setNamespace}
+        // view={view}
+        // setView={setView}
         />
       </div>
       
@@ -141,6 +147,8 @@ function App() {
         setMasterNode={setMasterNode}
         namespace={namespace}
         setNamespace={setNamespace}
+        // view={view}
+        // setView={setView}
       />
     </div>
   )

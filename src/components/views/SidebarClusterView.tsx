@@ -5,70 +5,39 @@ function SidebarClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
 
-  return props.namespace !== "default" ? (
-    <div
-      style={{
-        display: "inline-block",
-        float: "left",
-        width: "300px",
-        height: "600px",
-        backgroundColor: "gainsboro",
-      }}
-    >
-      <h1>Control Plane</h1>
-      <h2>{`Namespace: ${props.namespace}`}</h2>
-      {/* <table>
-                <tbody>
-                    <tr> API Server 
-                        <td> column </td>
-                    </tr>
-                    <tr> Kube-Controller
-                        <td> column </td>
-                    </tr>
-                    <tr> Node Scheduler
-                        <td> column
-                            <table>
-                                <tr> Deployment Name
-                                    <td> inner table </td>
-                                </tr>
-                                <tr>LastCreated</tr>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table> */}
+  return props.namespace !== "Kubernetes Cluster" ? (
+    <div>
+      <h1>{props.masterNode}</h1>
+      <div id="sidebar">
+      <div id="legend">
+          <h2>Legend</h2>
+            <p>◇ = Kubernetes Cluster</p>
+            <p>○ = Deployment</p>
+            <p>▭ = Namespace</p>
+            <p>△  = Service</p>
+            <p>▱  = Stateful Set</p>
+            <p style={{color:"light gray"}}>--- = Uses</p>
+            <p style={{color:"purple"}}>--- = Deploys</p>
+            <p style={{color:"orange"}}>⇢ = Deploys/Uses</p>
+      </div>
+    </div>
     </div>
   ) : (
-    <div
-      style={{
-        display: "inline-block",
-        float: "left",
-        width: "300px",
-        height: "600px",
-        backgroundColor: "gainsboro",
-      }}
-    >
-      <h1>Control Plane</h1>
-      {/* <table>
-        <tbody>
-            <tr> API Server 
-                <td> column </td>
-            </tr>
-            <tr> Kube-Controller
-                <td> column </td>
-            </tr>
-            <tr> Node Scheduler
-                <td> column
-                    <table>
-                        <tr> Deployment Name
-                            <td> inner table </td>
-                        </tr>
-                        <tr>LastCreated</tr>
-                    </table>
-                </td>
-            </tr>
-        </tbody>
-    </table> */}
+    <div>
+    <h1>{props.namespace}</h1>
+    <div id="sidebar">
+      <div id="legend">
+          <h2>Legend</h2>
+            <p>◇ = Kubernetes Cluster</p>
+            <p>○ = Deployment</p>
+            <p>▭ = Namespace</p>
+            <p>△  = Service</p>
+            <p>▱  = Stateful Set</p>
+            <p style={{color:"light gray"}}>--- = Uses</p>
+            <p style={{color:"purple"}}>--- = Deploys</p>
+            <p style={{color:"orange"}}>⇢ = Deploys/Uses</p>
+      </div>
+    </div>
     </div>
   );
 }
