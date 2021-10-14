@@ -1,4 +1,4 @@
-const getYAMLData = require('../yamlParser');
+const getYAMLData = require('./yamlParser');
 const exportObj = require('../runCommand');
 const fs = require('fs');
 const fsPromises = require('fs').promises;
