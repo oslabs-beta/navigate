@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { stat } from 'fs/promises';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
 
@@ -58,6 +59,7 @@ function sortStatusConditions(statusConditions: any){
     statusConditions.sort(function(a: any,b: any){
       return a.time.localeCompare(b.time)
     })
+    return statusConditions;
   } catch (error) {
     console.log('Error in sortStatusConditions: ', error)
   }
