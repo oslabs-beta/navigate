@@ -16,7 +16,8 @@ Cytoscape.use(dagre);
 
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);
-  const [imageName, setImageName] = React.useState("");
+  const [target, setTarget] = React.useState("");
+  const [image, setImage] = React.useState("");
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
@@ -71,7 +72,6 @@ function NodeView(props: any) {
         })
       }
     }
-
     for(let i = 0; i < targetNode.replicas; i++){
       let newPod = {
         data: {
@@ -149,8 +149,13 @@ function NodeView(props: any) {
     });
     layout.run();
     cy.on('click',(event)=> {
-      if(event.target._private.data.class === "image"){
-        setImageName(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
+      if(event.target._private.data.class !== "undefined" && event.target._private.data.class !== "image"){
+        setTarget(event.target._private.data.id);
+        setImage("");
+      }
+      else if(event.target._private.data.class === "image"){
+        setTarget(event.target._private.data.label.split(":")[0]);
+        setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
       else console.log(event.target._private.data.id)
     })
@@ -158,16 +163,28 @@ function NodeView(props: any) {
 
   return (
     <div id="nodeView"> 
-      <div id="nodeHeader">
-        <h1>Node View {props.masterNode}</h1>
+      <div >
+        <h1 id="nodeHeader">
+          <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
+          {props.view}
+        </h1>
       </div>
+       <div id="buttonDiv">
       <button onClick={() =>{
         props.setTrigger(false);
         props.setMasterNode('Kubernetes Cluster');
         props.setNamespace('Kubernetes Cluster');
-      }}>Back to Cluster View</button>
+        props.setView('Cluster View');
+      }}>Back to Cluster View
+      </button>
+      <h3>{`${props.masterNode}`}</h3>
+
+      </div>
       <div style={{display:'flex'}}>
-        <SidebarNodeView/>
+        <SidebarNodeView 
+          target={target}
+          image={image}
+        />
         <div id='nodeView'
           ref={nodeViewRef}
           style={ { width: '100%', height: '600px' }}

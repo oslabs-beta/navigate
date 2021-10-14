@@ -140,7 +140,21 @@ function ClusterView(props: any) {
                 label: `deployment`,
               },
             };
-            relevantData.push(newNode, edge);
+            let newNode2 = {
+              data: {
+                id: `${array[i].label} invis`,
+                label: `${array[i].label} invis`,
+                class: "invis",
+              },
+            };
+            let edge2 = {
+              data: {
+                source: `${array[i].label} service`,
+                target: `${array[i].label} invis`,
+                label: "invis",
+              },
+            };
+            relevantData.push(newNode, edge,newNode2, edge2);
           }
         }
       }
@@ -172,9 +186,10 @@ function ClusterView(props: any) {
     });
     layout.run();
     cy.on('click',(event)=> {
-      if(event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){
-        props.setNamespace(getNamespace(event.target._private.data.id))
-        props.setMasterNode(event.target._private.data.id)
+      if(event.target._private.data.class === "deployment" && event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){
+        props.setView("Node View");
+        props.setNamespace(getNamespace(event.target._private.data.id));
+        props.setMasterNode(event.target._private.data.id);
         props.setTrigger(true);
       }
     })
@@ -182,10 +197,21 @@ function ClusterView(props: any) {
 
   return(
     <div>
-      <div id="clusterHeader">
-        <h1>{props.masterNode}</h1>
+      <div >
+        <h1 id="clusterHeader">
+        <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
+          {props.view}
+        </h1>
       </div>  
- 
+      <div id="buttonDiv">
+      <button onClick={() =>{
+        window.alert(namespacesArr)
+      }}>Namespaces
+      </button>
+      <h3>{`${props.masterNode}`}</h3>
+
+      </div>
+      
       <div style={{display:'flex'}}> 
         <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
         <div id="clusterView"
@@ -198,23 +224,3 @@ function ClusterView(props: any) {
 }
 
 export default ClusterView;
-
-// if (allLabels.includes(array[i].label)) {
-//   console.log("2", array[i].label);
-//   //for any duplicates
-//   let newNode = {
-//     data: {
-//       id: `${array[i].label} service`,
-//       label: `${array[i].label} service`,
-//       class: "service",
-//     },
-//   };
-//   let edge = {
-//     data: {
-//       source: array[i].label,
-//       target: `${array[i].label} service`,
-//       label: `deployment`,
-//     },
-//   };
-//   relevantData.push(newNode, edge);
-// }
