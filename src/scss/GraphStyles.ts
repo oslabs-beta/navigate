@@ -184,6 +184,24 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     }
   },
   {
+    selector: 'node[class = "invis"]',
+    style: {
+      shape: "ellipse",
+      width: "40%",
+      height: "40%",
+      "font-size": "14%",
+      "font-weight": "bold",
+      "font-family": "#1a1a1a",
+      content: 'data(label)',
+      "text-valign": "top",
+      "text-halign": "left",
+      "text-wrap": "wrap",
+      "text-max-width": "140",
+      "background-color": "#1a1a1a",
+      "color": "#1a1a1a"
+    },
+  },
+  {
     selector: 'edge',
     style: {
       "curve-style": "bezier",
@@ -195,6 +213,21 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "target-arrow-shape": "triangle",
       "line-color": arrowColor,
       "target-arrow-color": arrowColor,
+      "font-weight": "bold",
+    },
+  },
+  {
+    selector: 'edge[label = "invis"]',
+    style: {
+      "curve-style": "bezier",
+      color: "blue",
+      "text-background-color": "#ffffff",
+      "text-background-opacity": 1,
+      "text-background-padding": "3",
+      width: "3",
+      "target-arrow-shape": "triangle",
+      "line-color": "#1a1a1a",
+      "target-arrow-color": "#1a1a1a",
       "font-weight": "bold",
     },
   },

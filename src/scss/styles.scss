@@ -34,15 +34,21 @@ button:hover {
   justify-content: flex-start;
   align-items: center;
 }
-h3 {
+h4 {
+  margin-left: 1%;
+  margin-top: 2%;
+  color: #932af5;
+  font-size: 2em;
+}
+button + h3 {
   margin-left: 1%;
   color: #932af5;
   font-size: 2em;
 }
 #sidebar {
   display:flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 200px;
   height: 100%;
   border: 5px solid lightgray;
@@ -68,5 +74,11 @@ h3 {
 #legend {
   width:100%;
   height: 100%;
+}
+#nodeSidebar{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 

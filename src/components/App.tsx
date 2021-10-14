@@ -8,6 +8,7 @@ import {kObject} from "../kObjects/kObject"
 import statefulContainer, {volumeMount} from "../kObjects/statefulContainer";
 import { kStatefulSet } from "../kObjects/kStatefulSet";
 import volumeClaimTemplates from "../kObjects/volumeClaimTemplates";
+import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 
 function App() {
   const kObjArray: kObject[] = [];
@@ -19,7 +20,9 @@ function App() {
   const [namespace, setNamespace] = React.useState("Kubernetes Cluster")
   
   const deploymentStatus: any[] = [];
+  const [deploymentStat, setDeployment] = React.useState<typeof kObjArray | undefined>([]);
   React.useEffect(getData, []);
+  React.useEffect(fetchLiveData, []);
   
   //fetch data from backend, push to kDeployArray
   function getData(): void {
@@ -33,14 +36,15 @@ function App() {
       .catch((error) => console.log('GET /getData response error: ', error));
   }
 
-  async function fetchLiveData() {
-    await fetch('http://localhost:3000/getLiveData')
+  function fetchLiveData(): void {
+    fetch('http://localhost:3000/statusConditions')
       .then((data: any) => data.json())
       .then((data: any) => {
-        data.forEach((element: any) => {
-          deploymentStatus.push(element);
+        data.forEach((data: any) => {
+          deploymentStatus.push(data);
+        })
+        setDeployment(deploymentStatus)
       })
-    })
     .catch((error) => console.log('GET /getLiveData response error: ', error));
   }
 
@@ -126,7 +130,7 @@ function App() {
         trigger={nodeViewPage}
         setTrigger={setNodeViewPage}
         dataArray={dataProp}
-        deploymentStatus={deploymentStatus}
+        deploymentStatus={deploymentStat}
         masterNode={masterNode}
         setMasterNode={setMasterNode}
         namespace={namespace}
@@ -155,4 +159,3 @@ function App() {
 }
 
 export default App;
-

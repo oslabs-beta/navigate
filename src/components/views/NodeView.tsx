@@ -7,7 +7,7 @@ import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
 import cola from 'cytoscape-cola';
-import SidebarClusterView from './SidebarClusterView'
+import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
 Cytoscape.use(cola);
@@ -16,7 +16,8 @@ Cytoscape.use(dagre);
 
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);
-  const [imageName, setImageName] = React.useState("");
+  const [target, setTarget] = React.useState("");
+  const [image, setImage] = React.useState("");
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
@@ -71,7 +72,6 @@ function NodeView(props: any) {
         })
       }
     }
-
     for(let i = 0; i < targetNode.replicas; i++){
       let newPod = {
         data: {
@@ -149,8 +149,13 @@ function NodeView(props: any) {
     });
     layout.run();
     cy.on('click',(event)=> {
-      if(event.target._private.data.class === "image"){
-        setImageName(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
+      if(event.target._private.data.class !== "undefined" && event.target._private.data.class !== "image"){
+        setTarget(event.target._private.data.id);
+        setImage("");
+      }
+      else if(event.target._private.data.class === "image"){
+        setTarget(event.target._private.data.label.split(":")[0]);
+        setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
       else console.log(event.target._private.data.id)
     })
@@ -176,7 +181,10 @@ function NodeView(props: any) {
 
       </div>
       <div style={{display:'flex'}}>
-        <SidebarClusterView masterNode={props.masterNode} namespace={props.namespace} imageName={imageName} deploymentStatus={props.deploymentStatus}/>
+        <SidebarNodeView 
+          target={target}
+          image={image}
+        />
         <div id='nodeView'
           ref={nodeViewRef}
           style={ { width: '100%', height: '600px' }}
