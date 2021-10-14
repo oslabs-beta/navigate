@@ -1,7 +1,6 @@
 import exportObj from '../server/runCommand';
 import * as kubernetesData from '../server/GetLiveData/getKubernetesData';
 import fs from 'fs';
-import 'fs/promises';
 import * as path from 'path';
 
 describe("run sh scripts from node", () => {
