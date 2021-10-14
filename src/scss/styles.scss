@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 *{
   color: rgb(255, 255, 255);
   font-family: 'Calibri', sans-serif;
@@ -43,7 +45,24 @@ button {
   align-items: center;
   justify-content: space-around;
 }
-#legend {
-  width:100%;
+#legendContainer {
+  font-family: 'Bebas Neue', cursive;
+  width: 100%;
   height: 100%;
+  display: flex;
+  border: 2px solid lightgray;
+  padding: 10px;
+  #legendCol{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+#pageView {
+  display: flex;
+  flex-direction: row;
+  #pageCol{
+    display: flex;
+    flex-direction: column;
+  }
 }

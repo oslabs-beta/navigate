@@ -1,6 +1,5 @@
 //populate with relevant data
 import * as React from "react";
-import {FC} from 'react';
 import {kObject} from '../../kObjects/kObject';
 import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
@@ -10,6 +9,8 @@ import cola from 'cytoscape-cola';
 import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
+import Legend from './Legend';
+
 Cytoscape.use(cola);
 Cytoscape.use(dagre);
 
@@ -164,11 +165,16 @@ function NodeView(props: any) {
         props.setNamespace('Kubernetes Cluster');
       }}>Back to Cluster View</button>
       <div style={{display:'flex'}}>
-        <SidebarNodeView/>
-        <div id='nodeView'
-          ref={nodeViewRef}
-          style={ { width: '100%', height: '600px' }}
-        />   
+        <div id="pageView">
+          <div id="pageCol">
+            <SidebarNodeView/>
+            <Legend/>
+          </div>
+          <div id='nodeView'
+            ref={nodeViewRef}
+            style={ { width: '1500px', height: '600px' }}
+          />   
+        </div>
       </div>
     </div>
     

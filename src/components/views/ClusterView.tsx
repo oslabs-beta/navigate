@@ -1,5 +1,4 @@
 import * as React from "react";
-import {FC} from 'react';
 import Cytoscape from 'cytoscape';
 import { useEffect, useRef, useCallback, useState } from "react";
 import SidebarClusterView from "./SidebarClusterView";
@@ -7,6 +6,7 @@ import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
 import { servicesVersion } from "typescript";
+import Legend from './Legend';
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -185,13 +185,17 @@ function ClusterView(props: any) {
       <div id="clusterHeader">
         <h1>{props.masterNode}</h1>
       </div>  
- 
       <div style={{display:'flex'}}> 
-        <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
-        <div id="clusterView"
-          ref={containerRef}
-          style={ {width: '100%', height: '750px' }}
-        />   
+        <div id="pageView">
+          <div id="pageCol">
+            <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
+            <Legend/>
+          </div>
+          <div id="clusterView"
+            ref={containerRef}
+            style={ {width: '1500px', height: '750px' }}
+          />
+        </div>
     </div>
   </div> 
 )
