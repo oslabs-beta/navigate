@@ -22,6 +22,7 @@ function parseSchedulerInformation(jsonObjs: any){
   try {
     const statusConditions: any = [];
     for(let i = 0; i < jsonObjs.length; i++){
+      if(jsonObjs[i][0].status === undefined) continue;
       for(let j = 0; j < jsonObjs[i][0].status.conditions.length; j++){
         let conditionObject: any = {};
         conditionObject.name = jsonObjs[i][0].metadata.name;
