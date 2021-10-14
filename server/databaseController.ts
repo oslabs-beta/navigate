@@ -10,7 +10,6 @@ const databaseController: someObject = {};
 
 databaseController.getData = (req: Request, res: Response, next: NextFunction) => {
   const data = getYAMLData();
-  console.log(data);
   res.locals.data = data;
   return next();
 }
