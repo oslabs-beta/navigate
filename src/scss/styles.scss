@@ -1,3 +1,49 @@
+*{
+  color: rgb(255, 255, 255);
+  font-family: 'Calibri', sans-serif;
+}
+h3{
+  color: rgb(255, 255, 255);
+  font-family: 'Calibri', sans-serif;
+}
+html{
+  background-color: #1a1a1a;
+}
 p {
-  color: blue;
+  text-align: left;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-size: 1.5rem;
+}
+button {
+  color: rgba(58, 58, 58, 0.915);
+  // color:rgb(63, 63, 63))
+}
+#sidebar {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 100%;
+  border: 5px solid lightgray;
+  box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
+  font-family: 'Calibri', sans-serif;
+  
+}
+#clusterHeader {
+  display:flex;
+  justify-content: center;
+}
+#nodeHeader {
+  display:flex;
+  justify-content: center;
+}
+#circle {
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+}
+#legend {
+  width:100%;
+  height: 100%;
 }
