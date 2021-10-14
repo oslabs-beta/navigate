@@ -29,7 +29,6 @@ function NodeView(props: any) {
       } 
       if(array[i].kind === 'Service' && array[i].selectorName === props.masterNode){
         serviceNode = array[i];
-        console.log("service",serviceNode)
         let newPod = {
           data: {
             id: array[i].label,
@@ -49,7 +48,6 @@ function NodeView(props: any) {
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
           if(ele.kind === "Deployment" && ele.label === props.masterNode){
-            // console.log('ele', array[i])
             if(array[i].namespace === ele.namespace){
               let newPod = {
                 data: {
@@ -97,7 +95,6 @@ function NodeView(props: any) {
           label: "connection"
         }
       }
-      console.log(targetNode.container)
       let newContainer = {
         data: {
           id: targetNode.container.name + i,

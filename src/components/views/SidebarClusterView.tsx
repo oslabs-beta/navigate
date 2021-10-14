@@ -4,7 +4,6 @@ import { useEffect, useRef, useCallback, useState } from "react";
 function SidebarClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
-  console.log('inside sidebar: ', deploymentStatus);
 
   const statuses: any[] = [];
   deploymentStatus.forEach((ele: any) => {
