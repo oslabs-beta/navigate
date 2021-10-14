@@ -11,8 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, './'))); 
 
 app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", 'http://localhost:8080'); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.status(200);
   next();
 });
 
@@ -20,7 +21,7 @@ app.get("/getData", databaseController.getData, (req: Request, res: Response) =>
   return res.status(200).send(res.locals.data);
 });
 
-app.get("/getLiveData", databaseController.getLiveData, (req: Request, res: Response) => {
+app.get("/statusConditions", databaseController.getLiveData, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.pollingData);
 });
 
