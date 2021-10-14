@@ -11,7 +11,7 @@ const databaseController: someObject = {};
 
 databaseController.getData = (req: Request, res: Response, next: NextFunction) => {
   const dataJSON = parseSchedulerInformation();
-  console.log('parseSchedulerInformation', dataJSON);
+  // console.log('parseSchedulerInformation', dataJSON);
   const data = getYAMLData();
   // console.log(data);
   res.locals.data = data;
