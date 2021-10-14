@@ -8,6 +8,7 @@ import {kObject} from "../kObjects/kObject"
 import statefulContainer, {volumeMount} from "../kObjects/statefulContainer";
 import { kStatefulSet } from "../kObjects/kStatefulSet";
 import volumeClaimTemplates from "../kObjects/volumeClaimTemplates";
+
 function App() {
   const kObjArray: kObject[] = [];
   const [dataIsReady, setReady] = React.useState(false);
@@ -42,7 +43,6 @@ function App() {
     })
     .catch((error) => console.log('GET /getLiveData response error: ', error));
   }
-  fetchLiveData();
 
   function parseData(relevantData: any[]) 
   {
