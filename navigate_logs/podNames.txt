@@ -1,1 +1,0 @@
-mafia-backend-6d5d7c9b8f-crfmr mafia-ui-78849d96c8-hrxbs redis-stateful-set-0

@@ -23,10 +23,4 @@ exportObj.runCommand = (cmd) => {
     });
 }
 
-// kubectl get pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia -o json
-// gets updated pods object (with  status  from kubernetes) updated  yaml file config with  live kubernetes data
-
-// kubectl describe pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia
-// has events, config map name, volumes, conditions, environment, container, start time, Ports, state, restart count, IP  addresses, controlled by
-
 module.exports = exportObj;
