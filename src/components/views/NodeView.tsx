@@ -16,6 +16,7 @@ Cytoscape.use(dagre);
 
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);
+  const [imageName, setImageName] = React.useState("");
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
@@ -70,12 +71,14 @@ function NodeView(props: any) {
         })
       }
     }
-    
+
     for(let i = 0; i < targetNode.replicas; i++){
       let newPod = {
         data: {
           id: targetNode.label + i,
           label: targetNode.podLabel + i,
+          //pods
+          class: "pod"
         },
       };
       //line from new pod to master
@@ -99,6 +102,8 @@ function NodeView(props: any) {
         data: {
           id: targetNode.container.name + i,
           label: targetNode.container.name + "\n" + "Port:" + targetNode.container.containerPort,
+          //container??
+          class: "container",
         },
       };
       //line from newPod to newContainer
@@ -137,32 +142,35 @@ function NodeView(props: any) {
       elements: relevantData,
     };
     let cy = Cytoscape(config);
-    let layout: Cytoscape.LayoutOptions = cy.layout({
+    let layout = cy.layout({
       name:'dagre',
       nodeDimensionsIncludeLabels: true,
+      animate: true,
     });
     layout.run();
     cy.on('click',(event)=> {
       if(event.target._private.data.class === "image"){
-        console.log(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
+        setImageName(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
       else console.log(event.target._private.data.id)
     })
     }, []);
 
   return (
-    <div> 
-      <h1>Node View</h1>
+    <div id="nodeView"> 
+      <div id="nodeHeader">
+        <h1>Node View {props.masterNode}</h1>
+      </div>
       <button onClick={() =>{
-        props.setTrigger(false)
-        props.setMasterNode('Control Plane')
-        props.setNamespace('default')
-      }}>Cluster View</button>
+        props.setTrigger(false);
+        props.setMasterNode('Kubernetes Cluster');
+        props.setNamespace('Kubernetes Cluster');
+      }}>Back to Cluster View</button>
       <div style={{display:'flex'}}>
-        <SidebarClusterView namespace={props.namespace}deploymentStatus={props.deploymentStatus}/>
+        <SidebarClusterView masterNode={props.masterNode} namespace={props.namespace} imageName={imageName} deploymentStatus={props.deploymentStatus}/>
         <div id='nodeView'
           ref={nodeViewRef}
-          style={ { width: '600px', height: '600px' }}
+          style={ { width: '100%', height: '600px' }}
         />   
       </div>
     </div>

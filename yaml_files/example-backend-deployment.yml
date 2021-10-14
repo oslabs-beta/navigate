@@ -7,7 +7,7 @@ metadata:
     name: example-backend
     app: example
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       app: example
