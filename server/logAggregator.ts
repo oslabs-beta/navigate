@@ -20,10 +20,7 @@ export default function getJSONFiles(): any {
 function parseSchedulerInformation(jsonObjs: any){
   try {
     const statusConditions: any = [];
-    // jsonObjs.forEach((obj: Object) => {
     for(let i = 0; i < jsonObjs.length; i++){
-      // console.log(`jsonObjs ${[i]}`,jsonObjs[i][0]) // represents each file object
-      console.log('line 27  condition: ', jsonObjs[i][0].status.conditions.length)
       for(let j = 0; j < jsonObjs[i][0].status.conditions.length; j++){
         let conditionObject: any = {};
         conditionObject.name = jsonObjs[i][0].metadata.name;
@@ -36,7 +33,7 @@ function parseSchedulerInformation(jsonObjs: any){
           conditionObject.type = jsonObjs[i][0].status.conditions[j].type;
           }
         catch (error) {
-          console.log('failure inside  deployment conditional: ', error);
+          console.log('Error inside deployment conditional of parseSchedulerInformation: ', error);
         }
       }
         else if(jsonObjs[i][0].kind === 'Pod'){
@@ -44,13 +41,12 @@ function parseSchedulerInformation(jsonObjs: any){
             conditionObject.time = jsonObjs[i][0].status.conditions[j].lastTransitionTime;
             conditionObject.event = `Pod deployment status: ${jsonObjs[i][0].status.conditions[j].type}`
           } catch (error) {
-            console.log('error in pod conditional: ', error)
+            console.log('Error in pod conditional of parseSchedulerInformation: ', error)
           }
         }
         statusConditions.push(conditionObject)
       }
     }
-    // })
     return sortStatusConditions(statusConditions);
   } catch (error) {
       console.log('Error in parseSchedulerInformation', error)
@@ -58,10 +54,11 @@ function parseSchedulerInformation(jsonObjs: any){
 }
 
 function sortStatusConditions(statusConditions: any){
-  // console.log(statusConditions)
-  statusConditions.sort(function(a: any,b: any){
-    // return new Date(a.time) - new Date(b.time)
-    return a.time.localeCompare(b.time)
-  })
-  console.log(statusConditions);
+  try {
+    statusConditions.sort(function(a: any,b: any){
+      return a.time.localeCompare(b.time)
+    })
+  } catch (error) {
+    console.log('Error in sortStatusConditions: ', error)
+  }
 }
