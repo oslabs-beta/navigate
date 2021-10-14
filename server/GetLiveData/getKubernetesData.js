@@ -1,7 +1,6 @@
 const getYAMLData = require('./yamlParser');
 const exportObj = require('../runCommand');
 const fs = require('fs');
-const fsPromises = require('fs').promises;
 const path = require('path');
 
 const logPath = path.join(__dirname, `../../navigate_logs/`);
