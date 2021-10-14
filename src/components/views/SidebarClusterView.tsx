@@ -13,17 +13,16 @@ function SidebarClusterView(props: any) {
       </div>)
   })
 
-
   return props.namespace !== "Kubernetes Cluster" ? (
     <div>
       <h1>{props.masterNode}</h1>
     </div>
   ) : (
     <div>
-        <h1>{props.namespace}</h1>
-        <h2>Node Scheduler</h2>
+    <h1>{props.namespace}</h1>
+    <h2>Node Scheduler</h2>
     <div id='statusBox' style={{width: '300px', height:'600px' , overflow: 'scroll'}}>
-        {statuses}
+    {statuses}
     </div>
     </div>
   );

@@ -7,7 +7,7 @@ import Cytoscape from 'cytoscape';
 import CytoscapeComponent from 'react-cytoscapejs';
 import { useEffect, useRef, useCallback, useState } from "react";
 import cola from 'cytoscape-cola';
-import SidebarClusterView from './SidebarClusterView'
+import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
 Cytoscape.use(cola);
@@ -167,7 +167,7 @@ function NodeView(props: any) {
         props.setNamespace('Kubernetes Cluster');
       }}>Back to Cluster View</button>
       <div style={{display:'flex'}}>
-        <SidebarClusterView masterNode={props.masterNode} namespace={props.namespace} imageName={imageName} deploymentStatus={props.deploymentStatus}/>
+        <SidebarNodeView/>
         <div id='nodeView'
           ref={nodeViewRef}
           style={ { width: '100%', height: '600px' }}
