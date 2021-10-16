@@ -3,7 +3,7 @@ import { useEffect, useRef, useCallback, useState } from "react";
 
 function SidebarNodeView(props: any) {
   return  (
-    <div style={{ width:'300px', height: '800px', overflow: 'scroll'}}>
+    <div style={{ width:'300px', height: '750px', overflow: 'scroll'}}>
       <h1>{props.masterNode}</h1>
       <h4>{props.target}</h4>
       <p>{`Image name: ${props.image}`}</p>

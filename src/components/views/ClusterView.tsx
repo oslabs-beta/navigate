@@ -203,8 +203,16 @@ function ClusterView(props: any) {
           {props.view}
         </h1>
       </div>  
+      <div id="buttonDiv">
+            <button onClick={() =>{
+              window.alert(namespacesArr)
+            }}>Namespaces
+            </button>
+            <h3>{`${props.masterNode}`}</h3>
+          </div>
       <div style={{display:'flex'}}> 
         <div id="pageView">
+          
           <div id="pageCol">
             <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
             <Legend/>
