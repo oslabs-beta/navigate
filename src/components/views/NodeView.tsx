@@ -1,10 +1,6 @@
 //populate with relevant data
 import * as React from "react";
-import {kObject} from '../../kObjects/kObject';
-import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
-import CytoscapeComponent from 'react-cytoscapejs';
-import { useEffect, useRef, useCallback, useState } from "react";
 import cola from 'cytoscape-cola';
 import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
@@ -132,7 +128,7 @@ function NodeView(props: any) {
 
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     populateArray(props.dataArray);
     const config: Cytoscape.CytoscapeOptions = {
       container: nodeViewRef.current,

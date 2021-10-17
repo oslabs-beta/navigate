@@ -1,11 +1,9 @@
 import * as React from "react";
 import Cytoscape from 'cytoscape';
-import { useEffect, useRef, useCallback, useState } from "react";
 import SidebarClusterView from "./SidebarClusterView";
 import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
-import { servicesVersion } from "typescript";
 import Legend from './Legend';
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
@@ -26,7 +24,6 @@ function ClusterView(props: any) {
   const namespacesArr: string[] = [];
   const populateNamespaces = (array: any[]): void => {
     array.forEach(kObject => {
-      // console.log("kobj",kObject)
       if(!namespacesArr.includes(kObject.namespace) && kObject.namespace !== undefined) namespacesArr.push(kObject.namespace);
     })
   namespacesArr.forEach(namespace => {
@@ -167,7 +164,7 @@ function ClusterView(props: any) {
       }
     }
   }
-  useEffect(() => {
+  React.useEffect(() => {
     populateNamespaces(props.dataArray);
     populateArray(props.dataArray);
     const config: Cytoscape.CytoscapeOptions = {
