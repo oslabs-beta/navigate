@@ -15,7 +15,7 @@ function App() {
   const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kObjArray | undefined>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
-  // const [view, setView] = React.useState('Cluster View')
+  const [view, setView] = React.useState('Cluster View')
   const [masterNode, setMasterNode] = React.useState("Kubernetes Cluster")
   const [namespace, setNamespace] = React.useState("Kubernetes Cluster")
   
@@ -49,7 +49,7 @@ function App() {
         })
         setDeployment(deploymentStatus)
       })
-    .catch((error) => console.log('GET /getLiveData response error: ', error));
+    .catch((error) => console.log('GET /statusConditions response error: ', error));
   }
 
   function fetchPodDeployment(): void {
@@ -61,7 +61,7 @@ function App() {
         })
         getPodDeploys(podDeployments)
       })
-    .catch((error) => console.log('GET /getLiveData response error: ', error));
+    .catch((error) => console.log('GET /getPodDeploymentData response error: ', error));
   }
 
   function parseData(relevantData: any[]) 
@@ -151,8 +151,8 @@ function App() {
         setMasterNode={setMasterNode}
         namespace={namespace}
         setNamespace={setNamespace}
-        // view={view}
-        // setView={setView}
+        view={view}
+        setView={setView}
         />
       </div>
       
@@ -168,8 +168,8 @@ function App() {
         namespace={namespace}
         podDeployments = {podDeployInfo}
         setNamespace={setNamespace}
-        // view={view}
-        // setView={setView}
+        view={view}
+        setView={setView}
       />
     </div>
   )

@@ -1,6 +1,5 @@
 //populate with relevant data
 import * as React from "react";
-import {FC} from 'react';
 import {kObject} from '../../kObjects/kObject';
 import {kDeployment} from '../../kObjects/kDeployment';
 import Cytoscape from 'cytoscape';
@@ -10,13 +9,16 @@ import cola from 'cytoscape-cola';
 import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
+import Legend from './Legend';
+
 Cytoscape.use(cola);
 Cytoscape.use(dagre);
 
 
 function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);
-  const [imageName, setImageName] = React.useState("");
+  const [target, setTarget] = React.useState("");
+  const [image, setImage] = React.useState("");
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
@@ -29,7 +31,6 @@ function NodeView(props: any) {
       } 
       if(array[i].kind === 'Service' && array[i].selectorName === props.masterNode){
         serviceNode = array[i];
-        console.log("service",serviceNode)
         let newPod = {
           data: {
             id: array[i].label,
@@ -49,7 +50,6 @@ function NodeView(props: any) {
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
           if(ele.kind === "Deployment" && ele.label === props.masterNode){
-            // console.log('ele', array[i])
             if(array[i].namespace === ele.namespace){
               let newPod = {
                 data: {
@@ -71,7 +71,6 @@ function NodeView(props: any) {
         })
       }
     }
-
     for(let i = 0; i < targetNode.replicas; i++){
       let newPod = {
         data: {
@@ -97,7 +96,6 @@ function NodeView(props: any) {
           label: "connection"
         }
       }
-      console.log(targetNode.container)
       let newContainer = {
         data: {
           id: targetNode.container.name + i,
@@ -149,8 +147,13 @@ function NodeView(props: any) {
     });
     layout.run();
     cy.on('click',(event)=> {
-      if(event.target._private.data.class === "image"){
-        setImageName(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
+      if(event.target._private.data.class !== "undefined" && event.target._private.data.class !== "image"){
+        setTarget(event.target._private.data.id);
+        setImage("");
+      }
+      else if(event.target._private.data.class === "image"){
+        setTarget(event.target._private.data.label.split(":")[0]);
+        setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
       else console.log(event.target._private.data.id)
     })
@@ -158,20 +161,38 @@ function NodeView(props: any) {
 
   return (
     <div id="nodeView"> 
-      <div id="nodeHeader">
-        <h1>Node View {props.masterNode}</h1>
+      <div >
+        <h1 id="nodeHeader">
+          <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
+          {props.view}
+        </h1>
       </div>
+       <div id="buttonDiv">
       <button onClick={() =>{
         props.setTrigger(false);
         props.setMasterNode('Kubernetes Cluster');
         props.setNamespace('Kubernetes Cluster');
-      }}>Back to Cluster View</button>
+        props.setView('Cluster View');
+      }}>Back to Cluster View
+      </button>
+      <h3>{`${props.masterNode}`}</h3>
+
+      </div>
       <div style={{display:'flex'}}>
-      <SidebarNodeView  masterNode={props.masterNode} podDeployments={props.podDeployments}/>
         <div id='nodeView'
           ref={nodeViewRef}
           style={ { width: '100%', height: '600px' }}
         />   
+        <div id="pageView">
+          <div id="pageCol">
+          <SidebarNodeView  masterNode={props.masterNode} podDeployments={props.podDeployments}/>
+            <Legend/>
+          </div>
+          <div id='nodeView'
+            ref={nodeViewRef}
+            style={ { width: '1500px', height: '750px' }}
+          />   
+        </div>
       </div>
     </div>
     

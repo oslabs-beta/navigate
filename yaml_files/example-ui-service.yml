@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-ui-service
+  namespace: example
+spec:
+  selector:
+    app: example
+    name: example-ui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+

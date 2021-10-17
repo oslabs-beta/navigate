@@ -40,9 +40,8 @@ function SidebarNodeView(props: any) {
 
   
   
-  return  (
+  return(
     <div>
-      {/* <h1>{props.masterNode}</h1> */}
       {deploymentMain}
     </div>
   )
