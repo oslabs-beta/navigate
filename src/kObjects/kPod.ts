@@ -1,6 +1,6 @@
 import type {kObject} from './kObject';
 
-export class kPod implements kObject {
+export default class kPod implements kObject {
   label: string;
   identifier: string;
   currentHealthState: HealthState;

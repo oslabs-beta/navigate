@@ -1,7 +1,7 @@
 import * as React from "react";
 import ClusterView from './views/ClusterView';
 import NodeView from "./views/NodeView";
-import { kDeployment } from "../kObjects/kDeployment";
+import kDeployment from "../kObjects/kDeployment";
 import Container, {env} from "../kObjects/container";
 import kService from "../kObjects/kService";
 import {kObject} from "../kObjects/kObject"
@@ -12,7 +12,6 @@ import { createEmitAndSemanticDiagnosticsBuilderProgram } from "typescript";
 
 function App() {
   const kObjArray: kObject[] = [];
-  const [dataIsReady, setReady] = React.useState(false);
   const [dataProp, SetDataProp] = React.useState<typeof kObjArray | undefined>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
   const [view, setView] = React.useState('Cluster View')
@@ -31,7 +30,6 @@ function App() {
       .then((data: any) => {
         // Data will be an array of objects. Each object represents a different YAML file.
         parseData(data);
-        setReady(true);
       })
       .catch((error) => console.log('GET /getData response error: ', error));
   }
