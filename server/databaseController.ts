@@ -2,6 +2,7 @@ import * as fs from "fs";
 import {Request, Response, NextFunction} from 'express';
 import getYAMLData from "./yamlParser";
 import getJSONFiles from "./logAggregator";
+import getPodDeployFiles from "./DeployPodInfo";
 
 interface someObject {
     [key: string]: any
@@ -29,5 +30,17 @@ databaseController.getLiveData = (req: Request, res: Response, next: NextFunctio
     return next();
   }
 }
+
+databaseController.getPodDeployData = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = getPodDeployFiles();
+    res.locals.podDeployData = data;
+    return next();
+  } catch (error) {
+    console.log('Error inside databaseController.getPodDeployData: ', error);
+    return next();
+  }
+}
+
 
 export default databaseController;

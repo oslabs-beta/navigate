@@ -167,7 +167,7 @@ function NodeView(props: any) {
         props.setNamespace('Kubernetes Cluster');
       }}>Back to Cluster View</button>
       <div style={{display:'flex'}}>
-        <SidebarNodeView/>
+      <SidebarNodeView  masterNode={props.masterNode} podDeployments={props.podDeployments}/>
         <div id='nodeView'
           ref={nodeViewRef}
           style={ { width: '100%', height: '600px' }}

@@ -21,7 +21,11 @@ function App() {
   
   const deploymentStatus: any[] = [];
   const [deploymentStat, setDeployment] = React.useState<typeof kObjArray | undefined>([]);
+
+  const podDeployments: any[] = [];
+  const [podDeployInfo, getPodDeploys] = React.useState<typeof kObjArray | undefined>([]);
   React.useEffect(getData, []);
+  React.useEffect(fetchPodDeployment, [])
   React.useEffect(fetchLiveData, []);
   
   //fetch data from backend, push to kDeployArray
@@ -44,6 +48,18 @@ function App() {
           deploymentStatus.push(data);
         })
         setDeployment(deploymentStatus)
+      })
+    .catch((error) => console.log('GET /getLiveData response error: ', error));
+  }
+
+  function fetchPodDeployment(): void {
+    fetch('http://localhost:3000/getPodDeploymentData')
+      .then((data: any) => data.json())
+      .then((data: any) => {
+        data.forEach((data: any) => {
+          podDeployments.push(data);
+        })
+        getPodDeploys(podDeployments)
       })
     .catch((error) => console.log('GET /getLiveData response error: ', error));
   }
@@ -150,6 +166,7 @@ function App() {
         masterNode={masterNode}
         setMasterNode={setMasterNode}
         namespace={namespace}
+        podDeployments = {podDeployInfo}
         setNamespace={setNamespace}
         // view={view}
         // setView={setView}

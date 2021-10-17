@@ -4,7 +4,7 @@ import * as path from 'path';
 
 const root = './navigate_logs';
 
-export default function getJSONFiles(): any {
+export default function getPodDeployFiles(): any {
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
     if(file.match(/js?on/)) 
@@ -21,7 +21,6 @@ function parsePodInformation(jsonObjs: any){
   try {
     const podsInfoObjs: any = [];
     for(let i = 0; i < jsonObjs.length; i++){
-      for(let j = 0; j < jsonObjs[i][0].status.conditions.length; j++){
         let infoObject: any = {};
         infoObject.name = jsonObjs[i][0].metadata.name;
         infoObject.kind = jsonObjs[i][0].kind;
@@ -34,7 +33,7 @@ function parsePodInformation(jsonObjs: any){
           infoObject.strategy = jsonObjs[i][0].spec.strategy;
           }
         catch (error) {
-          console.log('Error inside deployment conditional of parseSchedulerInformation: ', error);
+          console.log('Error inside deployment conditional of parsePodInformation: ', error);
         }
       }
         else if(jsonObjs[i][0].kind === 'Pod'){
@@ -49,14 +48,13 @@ function parsePodInformation(jsonObjs: any){
             infoObject.dnsPolicy = jsonObjs[i][0].spec.dnsPolicy;
             infoObject.restartPolicy = jsonObjs[i][0].spec.restartPolicy;
           } catch (error) {
-            console.log('Error in pod conditional of parseSchedulerInformation: ', error)
+            console.log('Error in pod conditional of parsePodInformation: ', error)
           }
         }
         podsInfoObjs.push(infoObject)
-      }
     }
     return podsInfoObjs;
   } catch (error) {
-      console.log('Error in parseSchedulerInformation', error)
+      console.log('Error in parsePodInformation', error)
   }
 }
