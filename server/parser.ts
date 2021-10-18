@@ -21,7 +21,7 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
 function getYAMLFiles(): object[] {
   try{
       const root = './yaml_files';
-      data = getFiles(/ya?m/, root);
+      data = getFiles(/\.ya?ml/, root);
     }
   catch (error) {
     console.log('Error with getYAMLData funciton: ', error);
@@ -32,7 +32,7 @@ function getYAMLFiles(): object[] {
 function getJSONFiles(): object[] {
   try {
     const root = 'navigate_logs'
-    data = getFiles(/js?on/, root)
+    data = getFiles(/\.json/, root)
   } catch (error) {
     console.log('Error with getJSONData funciton: ', error)
   }
