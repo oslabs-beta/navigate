@@ -61,7 +61,7 @@ async function getPodDetails(){
   console.log(pods);
   console.log(namespaces);
 }
-// getPodDetails();
+getPodDetails();
 
 // kubectl get pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia -o json
 // gets updated pods object (with  status  from kubernetes) updated  yaml file config with  live kubernetes data

@@ -28,7 +28,7 @@ function getYAMLFiles() {
 }
 function getJSONFiles() {
     try {
-        var root = 'navigate_logs';
+        var root = path.join(__dirname, '../../navigate_logs');
         data = getFiles(/\.json/, root);
     }
     catch (error) {
