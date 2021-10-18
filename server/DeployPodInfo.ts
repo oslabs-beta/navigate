@@ -2,21 +2,24 @@ import * as fs from 'fs';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
 import kDeploymentLive from './kDeploymentLive';
+import getFiles from './yamlParser'
 
 const root = './navigate_logs';
 
-export default function getPodDeployFiles(): any{
-  const raw: string[] = [];
-  fs.readdirSync(root).forEach(file => {
-    if(file.match(/js?on/)) 
-      raw.push(file);
-  });
-  const jsonObjs: Array<object> = [];
-  raw.forEach(file => {
-    jsonObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
-  })
-  return parsePodInformation(jsonObjs);
-}
+// export default function getPodDeployFiles(): any{
+//   const raw: string[] = [];
+//   fs.readdirSync(root).forEach(file => {
+//     if(file.match(/js?on/)) 
+//       raw.push(file);
+//   });
+//   const jsonObjs: Array<object> = [];
+//   raw.forEach(file => {
+//     jsonObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
+//   })
+//   return parsePodInformation(jsonObjs);
+// }
+
+// getFiles(/js?on/)
 
 function parsePodInformation(jsonObjs: any): Array<kDeploymentLive>{
     const podsInfoObjs:  Array<kDeploymentLive> = [];

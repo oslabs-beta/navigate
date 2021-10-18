@@ -6,25 +6,34 @@ const root = './yaml_files';
 
 let data: object[];
 
-function getYAMLFiles(): Array<object> {
+function getFiles(fileType: RegExp): Array<object> {
+  console.log('line 10')
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
-    if(file.match(/ya?ml/)) 
+    if(file.match(fileType)) 
       raw.push(file);
   });
-  const yamlObjs: object[] = [];
+  const fileObjs: object[] = [];
   raw.forEach(file => {
-    yamlObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
+    fileObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
-  return yamlObjs;
+  return fileObjs;
 }
 
-export default function getYAMLData(): object[] {
+
+function getYAMLData(): object[] {
   try{
-      data = getYAMLFiles();
+      data = getFiles(/ya?m/);
     }
   catch (error) {
     console.log(error);
   }
   return data;
 }
+
+const yamlParser = {
+  getFiles,
+  getYAMLData
+}
+
+export default yamlParser;
