@@ -5,7 +5,6 @@ import * as path from 'path';
 let data: object[];
 
 function getFiles(fileType: RegExp, root: string): Array<object> {
-  console.log('line 10')
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
     if(file.match(fileType)) 

@@ -46,7 +46,7 @@ function App() {
   }
 
   function fetchPodDeployment(): void {
-    fetch('http://localhost:3000/getPodDeploymentData')
+    fetch('http://localhost:3000/getLiveDeploymentData')
       .then((data: any) => data.json())
       .then((data: any) => {
         data.forEach((data: any) => {
@@ -54,7 +54,7 @@ function App() {
         })
         getPodDeploys(podDeployments)
       })
-    .catch((error) => console.log('GET /getPodDeploymentData response error: ', error));
+    .catch((error) => console.log('GET /getLiveDeploymentData response error: ', error));
   }
 
   function parseData(relevantData: kObject[]) 

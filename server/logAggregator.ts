@@ -1,10 +1,3 @@
-import * as fs from 'fs';
-import { stat } from 'fs/promises';
-import * as YAML from 'js-yaml';
-import * as path from 'path';
-
-const root = './navigate_logs';
-
 export default function parseSchedulerInformation(jsonObjs: any){
   try {
     const statusConditions: any = [];

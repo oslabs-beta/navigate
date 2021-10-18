@@ -2,7 +2,7 @@ import * as fs from "fs";
 import {Request, Response, NextFunction} from 'express';
 import parser from "./yamlParser";
 import parseSchedulerInformation from "./logAggregator";
-import parsePodInformation from "./DeployPodInfo";
+import parseDeploymentInformation from "./parseDeployment";
 
 interface someObject {
     [key: string]: any
@@ -24,7 +24,7 @@ databaseController.getLiveData = (req: Request, res: Response, next: NextFunctio
   try {
     const data = parser.getJSONFiles();
     const parsedData = parseSchedulerInformation(data);
-    res.locals.pollingData = data;
+    res.locals.pollingData = parsedData;
     return next();
   } catch (error) {
     console.log('Error inside databaseController.getLiveData: ', error);
@@ -32,14 +32,14 @@ databaseController.getLiveData = (req: Request, res: Response, next: NextFunctio
   }
 }
 
-databaseController.getPodDeployData = (req: Request, res: Response, next: NextFunction) => {
+databaseController.getLiveDeploymentData = (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = parser.getJSONFiles();
-    const parsedData = parsePodInformation(data);
-    res.locals.podDeployData = data;
+    const parsedData = parseDeploymentInformation(data);
+    res.locals.podDeployData = parsedData;
     return next();
   } catch (error) {
-    console.log('Error inside databaseController.getPodDeployData: ', error);
+    console.log('Error inside databaseController.getLiveDeploymentData: ', error);
     return next();
   }
 }
