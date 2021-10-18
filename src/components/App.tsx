@@ -6,7 +6,6 @@ import * as kObjects from "../kObjects/__index";
 import * as dataParser from "../component_data/kDataParser";
 
 function App() {
-  let kObjArray: kObject[] = [];
   const [dataProp, SetDataProp] = React.useState<kObject[]>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
   const [view, setView] = React.useState('Cluster View')
@@ -14,10 +13,10 @@ function App() {
   const [namespace, setNamespace] = React.useState("Kubernetes Cluster")
   
   const deploymentStatus: any[] = [];
-  const [deploymentStat, setDeployment] = React.useState<typeof kObjArray | undefined>([]);
+  const [deploymentStat, setDeployment] = React.useState<kObject[]>([]);
 
   const podDeployments: any[] = [];
-  const [podDeployInfo, getPodDeploys] = React.useState<typeof kObjArray | undefined>([]);
+  const [podDeployInfo, getPodDeploys] = React.useState<kObject[]>([]);
   React.useEffect(getData, []);
   React.useEffect(fetchPodDeployment, [])
   React.useEffect(fetchLiveData, []);
