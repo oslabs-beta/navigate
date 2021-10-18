@@ -20,7 +20,7 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
 
 function getYAMLFiles(): object[] {
   try{
-      const root = './yaml_files';
+      const root = path.join(__dirname, '../yaml_files');
       data = getFiles(/\.ya?ml/, root);
     }
   catch (error) {

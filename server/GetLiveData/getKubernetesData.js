@@ -1,4 +1,4 @@
-const getYAMLData = require('./yamlParser');
+const parser = require('./parser');
 const exportObj = require('../runCommand');
 const fs = require('fs');
 const path = require('path');
@@ -16,7 +16,7 @@ const defaultNamespaceMap = {
 function getElementsOfKind(kind) {
   try
   {
-    const data = getYAMLData();
+    const data = parser.getYAMLFiles();
     const output = [];
     data.forEach(k8sObject => {        
       if(k8sObject[0].kind === kind) output.push(k8sObject);
@@ -35,6 +35,7 @@ function getElementsOfKind(kind) {
 function parseNamespaces() {
   const namespaces = [];
   let deployments = getElementsOfKind("Deployment");
+  console.log(deployments);
   deployments.forEach(ele => {
     if(!Object.keys(defaultNamespaceMap).includes(ele[0].namespace))
     {
@@ -44,6 +45,7 @@ function parseNamespaces() {
   return namespaces;
 }
 
+// kubectl get pods -o=jsonpath='{.items[*].metadata.name}
 async function parsePodNames (filePath = path.join(__dirname, `../../navigate_logs/${exportObj.fileName}`)) {
   const result = await fs.promises.readFile(filePath, 'utf-8', (error, result) => {
     if(error){
@@ -53,37 +55,12 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
   return result;
 }
 
-
-// pod name, deployment object connected to pod, namespace of pod
-/*
-specs-> containers->:
-dnsPolicy
-nodeName
-restartPolicy
-schedulerName
-volume.name
-status.conditions
-status.containerStatuses
-
-Node
-Start time
-Labels
-Status
-IP
-Controlled  By
-Containers
-Conditions
-Volumes
-Events
-metadata.labels.name
-*/
 async function getPodDetails(){
   const pods = await parsePodNames();
   const namespaces = parseNamespaces();
   console.log(pods);
   console.log(namespaces);
 }
-
 // getPodDetails();
 
 // kubectl get pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia -o json
@@ -91,8 +68,6 @@ async function getPodDetails(){
 
 // kubectl describe pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia
 // has events, config map name, volumes, conditions, environment, container, start time, Ports, state, restart count, IP  addresses
-
-// kubectl get pods -o=jsonpath='{.items[*].metadata.name}
 
 function getAllPods(cmd, namespace) {
   exportObj.runCommand(`${cmd} -n ${namespace} &> ../navigate_logs/${exportObj.fileName}`);
