@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import {Request, Response, NextFunction} from 'express';
 import parser from "./yamlParser";
-import getJSONFiles from "./logAggregator";
-import getPodDeployFiles from "./DeployPodInfo";
+import parseSchedulerInformation from "./logAggregator";
+import parsePodInformation from "./DeployPodInfo";
 
 interface someObject {
     [key: string]: any
@@ -23,6 +23,7 @@ databaseController.getData = (req: Request, res: Response, next: NextFunction) =
 databaseController.getLiveData = (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = parser.getJSONFiles();
+    const parsedData = parseSchedulerInformation(data);
     res.locals.pollingData = data;
     return next();
   } catch (error) {
@@ -34,6 +35,7 @@ databaseController.getLiveData = (req: Request, res: Response, next: NextFunctio
 databaseController.getPodDeployData = (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = parser.getJSONFiles();
+    const parsedData = parsePodInformation(data);
     res.locals.podDeployData = data;
     return next();
   } catch (error) {

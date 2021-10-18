@@ -21,14 +21,14 @@ app.get("/getData", databaseController.getData, (req: Request, res: Response) =>
   return res.status(200).send(res.locals.data);
 });
 
-// app.get("/statusConditions", databaseController.getLiveData, (req: Request, res: Response) => {
-//   return res.status(200).send(res.locals.pollingData);
-// });
+app.get("/statusConditions", databaseController.getLiveData, (req: Request, res: Response) => {
+  return res.status(200).send(res.locals.pollingData);
+});
 
-// app.get("/getPodDeploymentData", databaseController.getPodDeployData, (req: Request, res: Response) => {
-//   console.log('inside /getPodDeployments endpoint: ', res.locals.podDeployData)
-//   return res.status(200).send(res.locals.podDeployData);
-// });
+app.get("/getPodDeploymentData", databaseController.getPodDeployData, (req: Request, res: Response) => {
+  console.log('inside /getPodDeployments endpoint: ', res.locals.podDeployData)
+  return res.status(200).send(res.locals.podDeployData);
+});
 
 ///////////
 

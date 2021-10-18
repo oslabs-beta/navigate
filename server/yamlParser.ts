@@ -2,11 +2,9 @@ import * as fs from 'fs';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
 
-const root = './yaml_files';
-
 let data: object[];
 
-function getFiles(fileType: RegExp): Array<object> {
+function getFiles(fileType: RegExp, root: string): Array<object> {
   console.log('line 10')
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
@@ -23,7 +21,8 @@ function getFiles(fileType: RegExp): Array<object> {
 
 function getYAMLFiles(): object[] {
   try{
-      data = getFiles(/ya?m/);
+      const root = './yaml_files';
+      data = getFiles(/ya?m/, root);
     }
   catch (error) {
     console.log('Error with getYAMLData funciton: ', error);
@@ -33,7 +32,8 @@ function getYAMLFiles(): object[] {
 
 function getJSONFiles(): object[] {
   try {
-    data = getFiles(/js?on/)
+    const root = 'navigate_logs'
+    data = getFiles(/js?on/, root)
   } catch (error) {
     console.log('Error with getJSONData funciton: ', error)
   }

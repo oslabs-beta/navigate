@@ -6,7 +6,7 @@ import getFiles from './yamlParser'
 
 const root = './navigate_logs';
 
-function parsePodInformation(jsonObjs: any): Array<kDeploymentLive>{
+export default function parsePodInformation(jsonObjs: any): Array<kDeploymentLive>{
     const podsInfoObjs:  Array<kDeploymentLive> = [];
     for(let i = 0; i < jsonObjs.length; i++){
       const ele = jsonObjs[i][0];
