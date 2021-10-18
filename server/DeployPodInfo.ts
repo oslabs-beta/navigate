@@ -1,10 +1,11 @@
 import * as fs from 'fs';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
+import kDeployment from 'src/kObjects/kDeployment';
 
 const root = './navigate_logs';
 
-export default function getPodDeployFiles(): any {
+export default function getPodDeployFiles(): Array<object> {
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
     if(file.match(/js?on/)) 
@@ -17,11 +18,11 @@ export default function getPodDeployFiles(): any {
   return parsePodInformation(jsonObjs);
 }
 
-function parsePodInformation(jsonObjs: any){
+function parsePodInformation(jsonObjs: Array<object>){
   try {
     const podsInfoObjs: any = [];
     for(let i = 0; i < jsonObjs.length; i++){
-        let infoObject: any = {};
+        let infoObject: kDeployment;
         infoObject.name = jsonObjs[i][0].metadata.name;
         infoObject.kind = jsonObjs[i][0].kind;
         infoObject.namespace = jsonObjs[i][0].namespace;
@@ -53,6 +54,7 @@ function parsePodInformation(jsonObjs: any){
         }
         podsInfoObjs.push(infoObject)
     }
+    console.log('inside DeployPodInfo.ts, podInfoObjs  is: ', podsInfoObjs)
     return podsInfoObjs;
   } catch (error) {
       console.log('Error in parsePodInformation', error)

@@ -26,6 +26,7 @@ app.get("/statusConditions", databaseController.getLiveData, (req: Request, res:
 });
 
 app.get("/getPodDeploymentData", databaseController.getPodDeployData, (req: Request, res: Response) => {
+  console.log('inside /getPodDeployments endpoint: ', res.locals.podDeployData)
   return res.status(200).send(res.locals.podDeployData);
 });
 

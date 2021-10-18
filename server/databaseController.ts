@@ -35,6 +35,7 @@ databaseController.getPodDeployData = (req: Request, res: Response, next: NextFu
   try {
     const data = getPodDeployFiles();
     res.locals.podDeployData = data;
+    console.log('inside databaseController:  ',  res.locals.podDeployData)
     return next();
   } catch (error) {
     console.log('Error inside databaseController.getPodDeployData: ', error);
