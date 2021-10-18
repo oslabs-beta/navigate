@@ -5,20 +5,7 @@ import * as path from 'path';
 
 const root = './navigate_logs';
 
-export default function getJSONFiles(): any {
-  const raw: string[] = [];
-  fs.readdirSync(root).forEach(file => {
-    if(file.match(/js?on/)) 
-      raw.push(file);
-  });
-  const jsonObjs: object[] = [];
-  raw.forEach(file => {
-    jsonObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
-  })
-  return parseSchedulerInformation(jsonObjs);
-}
-
-function parseSchedulerInformation(jsonObjs: any){
+export default function parseSchedulerInformation(jsonObjs: any){
   try {
     const statusConditions: any = [];
     for(let i = 0; i < jsonObjs.length; i++){

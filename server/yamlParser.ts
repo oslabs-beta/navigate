@@ -21,19 +21,28 @@ function getFiles(fileType: RegExp): Array<object> {
 }
 
 
-function getYAMLData(): object[] {
+function getYAMLFiles(): object[] {
   try{
       data = getFiles(/ya?m/);
     }
   catch (error) {
-    console.log(error);
+    console.log('Error with getYAMLData funciton: ', error);
   }
   return data;
 }
 
-const yamlParser = {
-  getFiles,
-  getYAMLData
+function getJSONFiles(): object[] {
+  try {
+    data = getFiles(/js?on/)
+  } catch (error) {
+    console.log('Error with getJSONData funciton: ', error)
+  }
+  return data;
 }
 
-export default yamlParser;
+const parser = {
+  getYAMLFiles,
+  getJSONFiles
+}
+
+export default parser;
