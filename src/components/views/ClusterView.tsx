@@ -192,6 +192,9 @@ function ClusterView(props: any) {
     })
   }, [props.dataArray]);
 
+
+  const limitSidebarHeight = document.getElementById('clusterView')?.style.height;
+
   return(
     <div>
       <div >
@@ -209,9 +212,9 @@ function ClusterView(props: any) {
           </div>
       <div style={{display:'flex'}}> 
         <div id="pageView">
-        <Legend/>
-          <div id="pageCol">
+          <div id="pageCol" style={{display:'flex', flexDirection:'column', justifyContent:'space-around', height:limitSidebarHeight}}>
             <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
+            <Legend/>
           </div>
           <div id="clusterView"
             ref={containerRef}

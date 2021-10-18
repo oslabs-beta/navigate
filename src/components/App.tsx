@@ -52,7 +52,6 @@ function App() {
         data.forEach((data: any) => {
           podDeployments.push(data);
         })
-        console.log('front end inside data: ', podDeployments)
         getPodDeploys(podDeployments)
       })
     .catch((error) => console.log('GET /getPodDeploymentData response error: ', error));
