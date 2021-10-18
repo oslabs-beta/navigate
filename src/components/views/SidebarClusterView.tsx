@@ -5,10 +5,22 @@ function SidebarClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
 
+
+  //kind
+  //name
+  //event
+  //time
   const statuses: any[] = [];
   deploymentStatus.forEach((ele: any, index: number) => {
-    statuses.push(<div style={{borderBottom:"thin solid gray", borderTop:"thin solid gray"}} key={index}>
-      <p  style={{textAlign:"right"}} >{ele.kind}</p><p>Name: {ele.name}</p><p>Event: {ele.event}</p><p>{ele.time}</p>
+    statuses.push(<div style={{width:"300px", borderBottom:"thin solid gray", borderTop:"thin solid gray"}} key={index}>
+      <table style={{width:"300px"}}>
+        <tbody>
+          <tr><td>Kind:</td><td>{ele.kind}</td></tr>
+          <tr><td>Name:</td><td>{ele.name}</td></tr>
+          <tr><td>Event:</td><td>{ele.event}</td></tr>
+          <tr><td>Time:</td><td>{ele.time}</td></tr>
+        </tbody>
+      </table>
       </div>)
   })
 
@@ -21,7 +33,7 @@ function SidebarClusterView(props: any) {
     // Cluster View
     <div>
     <h2>Node Scheduler Logs</h2>
-    <div id='statusBox' style={{width: '300px', height:'600px' , overflow: 'scroll'}}>
+    <div id='statusBox' style={{ display:'flex', flexDirection:'column', height:'400px', overflow: 'scroll'}}>
     {statuses}
     </div>
     </div>

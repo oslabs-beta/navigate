@@ -175,10 +175,14 @@ function NodeView(props: any) {
 
       </div>
       <div style={{display:'flex'}}>
+        <div id='nodeView'
+          ref={nodeViewRef}
+          style={ { width: '100%', height: '600px' }}
+        />   
         <div id="pageView">
-          <div id="pageCol">
-            <SidebarNodeView/>
-            <Legend/>
+          <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly'}}>
+          <SidebarNodeView  masterNode={props.masterNode} podDeployments={props.podDeployments}/>
+          <Legend/>
           </div>
           <div id='nodeView'
             ref={nodeViewRef}

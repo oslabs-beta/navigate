@@ -8,6 +8,7 @@ export default class kDeployment implements kObject {
   podLabel: string;
   replicas: number;
   container: container;
+
   
   constructor(namespace = "", kind: string, label: string, podLabel: string, replicas: number, container: container)
   {
@@ -17,6 +18,7 @@ export default class kDeployment implements kObject {
     this.replicas = replicas;
     this.podLabel = podLabel;
     this.container = container;
+
   }
   
   getLabel(): string

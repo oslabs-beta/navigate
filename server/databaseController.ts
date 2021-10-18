@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import {Request, Response, NextFunction} from 'express';
-import getYAMLData from "./yamlParser";
-import getJSONFiles from "./logAggregator";
+import parser from "./yamlParser";
+import parseSchedulerInformation from "./logAggregator";
+import parseDeploymentInformation from "./parseDeployment";
 
 interface someObject {
     [key: string]: any
@@ -11,7 +12,7 @@ const databaseController: someObject = {};
 
 databaseController.getData = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = getYAMLData();
+    const data = parser.getYAMLFiles();
     res.locals.data = data;
   return next();
   } catch (error) {
@@ -21,13 +22,27 @@ databaseController.getData = (req: Request, res: Response, next: NextFunction) =
 
 databaseController.getLiveData = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = getJSONFiles();
-    res.locals.pollingData = data;
+    const data = parser.getJSONFiles();
+    const parsedData = parseSchedulerInformation(data);
+    res.locals.pollingData = parsedData;
     return next();
   } catch (error) {
     console.log('Error inside databaseController.getLiveData: ', error);
     return next();
   }
 }
+
+databaseController.getLiveDeploymentData = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = parser.getJSONFiles();
+    const parsedData = parseDeploymentInformation(data);
+    res.locals.podDeployData = parsedData;
+    return next();
+  } catch (error) {
+    console.log('Error inside databaseController.getLiveDeploymentData: ', error);
+    return next();
+  }
+}
+
 
 export default databaseController;

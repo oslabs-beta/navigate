@@ -2,29 +2,46 @@ import * as fs from 'fs';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
 
-const root = './yaml_files';
-
 let data: object[];
 
-function getYAMLFiles(): Array<object> {
+function getFiles(fileType: RegExp, root: string): Array<object> {
   const raw: string[] = [];
   fs.readdirSync(root).forEach(file => {
-    if(file.match(/ya?ml/)) 
+    if(file.match(fileType)) 
       raw.push(file);
   });
-  const yamlObjs: object[] = [];
+  const fileObjs: object[] = [];
   raw.forEach(file => {
-    yamlObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
+    fileObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
-  return yamlObjs;
+  return fileObjs;
 }
 
-export default function getYAMLData(): object[] {
+
+function getYAMLFiles(): object[] {
   try{
-      data = getYAMLFiles();
+      const root = './yaml_files';
+      data = getFiles(/ya?m/, root);
     }
   catch (error) {
-    console.log(error);
+    console.log('Error with getYAMLData funciton: ', error);
   }
   return data;
 }
+
+function getJSONFiles(): object[] {
+  try {
+    const root = 'navigate_logs'
+    data = getFiles(/js?on/, root)
+  } catch (error) {
+    console.log('Error with getJSONData funciton: ', error)
+  }
+  return data;
+}
+
+const parser = {
+  getYAMLFiles,
+  getJSONFiles
+}
+
+export default parser;
