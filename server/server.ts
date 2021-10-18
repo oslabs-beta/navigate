@@ -29,6 +29,10 @@ app.get("/getLiveDeploymentData", databaseController.getLiveDeploymentData, (req
   return res.status(200).send(res.locals.podDeployData);
 });
 
+app.get("/getLivePodData", databaseController.getLivePodData, (req: Request, res: Response) => {
+  return res.status(200).send(res.locals.podDeployData);
+});
+
 ///////////
 
 app.use("*", (req: Request, res: Response) => {
