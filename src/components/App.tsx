@@ -76,6 +76,7 @@ function App() {
     SetDataProp(data)
   }
 
+  // console.log('for joel: ', podInfoObjects)
   return( !nodeViewPage ? 
     <div className="Tabs">
       <div className="ClusterView">

@@ -13,6 +13,7 @@ export default function parsePodInformation(jsonObjs: any): Array<kPodLive>{
             ele.metadata.ownerReferences,
             ele.metadata.resourceVersion,
             ele.metadata.uid,
+            ele.metadata.labels,
             ele.spec.containers[0].name,
             ele.spec.containers[0].env,
             ele.spec.containers[0].image,

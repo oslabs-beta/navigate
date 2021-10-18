@@ -9,6 +9,7 @@ export default class kPodLive {
     ownerReferences: Array<object>;
     resourceVersion: string | number;
     uid: string;
+    labelForMatching: object;
 
     //container
     container: string;
@@ -42,7 +43,7 @@ export default class kPodLive {
 
     
     constructor(namespace = "", kind: string, name: string, created: string,ownerReferences: Array<object>,
-     resourceVersion: string,uid: string, container: string, env: Array<object>, image: string, imagePullPolicy: string,
+     resourceVersion: string,uid: string, labelForMatching: object, container: string, env: Array<object>, image: string, imagePullPolicy: string,
      dnsPolicy: string, nodeNode: string, premptionPolicy: string, restartPolicy: string, schedulerName: string,
      serviceAccount: string, serviceAccountName: string, volumeNames: Array<string>, volumeMountPath: Array<string>,
      volumeReadOnly: Array<boolean>, containerID: string, imageID: string, containerRunStarted: string, hostIP: string,
@@ -54,6 +55,7 @@ export default class kPodLive {
       this.ownerReferences = ownerReferences;
       this.resourceVersion = resourceVersion;
       this.uid = uid;
+      this.labelForMatching = labelForMatching;
 
       this.container = container;
       this.env = env;
