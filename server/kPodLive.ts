@@ -11,10 +11,6 @@ export default class kPodLive {
 
     //spec
     
-
-
-    
-    
     constructor(namespace = "", kind: string, name: string, created: string,ownerReferences: Array<object>,
      resourceVersion: string,uid: string)
     {
