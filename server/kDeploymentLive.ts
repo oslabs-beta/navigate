@@ -4,8 +4,9 @@ export default class kDeploymentLive {
   name: string;
 
   created: string;
+  resourceVersion: string;
   uid: string;
-  stragetyType: string;
+  strategyType: string;
   rollingUpdateMaxSurge: string | number;
   rollingUpdateMaxUnavailable: string | number;
   env: Array<object>;
@@ -13,8 +14,8 @@ export default class kDeploymentLive {
   restartPolicy: string;
   schedulerName: string;
   
-  constructor(namespace = "", kind: string, name: string, created: string, uid: string, 
-  stragetyType: string, rollingUpdateMaxSurge: string | number, rollingUpdateMaxUnavailable: string | number, env: Array<object>, dnsPolicy: string,
+  constructor(namespace = "", kind: string, name: string, created: string, resourceVersion: string,uid: string, 
+  strategyType: string, rollingUpdateMaxSurge: string | number, rollingUpdateMaxUnavailable: string | number, env: Array<object>, dnsPolicy: string,
   restartPolicy: string, schedulerName: string )
   {
     this.namespace = namespace;
@@ -22,8 +23,9 @@ export default class kDeploymentLive {
     this.name = name;
 
     this.created = created;
+    this.resourceVersion = resourceVersion;
     this.uid = uid;
-    this.stragetyType = stragetyType;
+    this.strategyType = strategyType;
     this.rollingUpdateMaxSurge = rollingUpdateMaxSurge;
     this.rollingUpdateMaxUnavailable = rollingUpdateMaxUnavailable;
     this.env = env;
@@ -31,5 +33,4 @@ export default class kDeploymentLive {
     this.restartPolicy = restartPolicy;
     this.schedulerName = schedulerName;
   }
-  
 }
