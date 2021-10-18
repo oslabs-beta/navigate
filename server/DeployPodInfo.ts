@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as YAML from 'js-yaml';
 import * as path from 'path';
-import kDeployment from 'src/kObjects/kDeployment';
+import kDeploymentLive from '/Users/hemwatie/OSP/navigate/server/liveDeployInfo';
 
 const root = './navigate_logs';
 
@@ -22,7 +22,9 @@ function parsePodInformation(jsonObjs: Array<object>){
   try {
     const podsInfoObjs: any = [];
     for(let i = 0; i < jsonObjs.length; i++){
-        let infoObject: kDeployment;
+        const infoObject: kDeploymentLive = {
+
+        };
         infoObject.name = jsonObjs[i][0].metadata.name;
         infoObject.kind = jsonObjs[i][0].kind;
         infoObject.namespace = jsonObjs[i][0].namespace;
