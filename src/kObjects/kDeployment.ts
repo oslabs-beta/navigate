@@ -15,8 +15,8 @@ export default class kDeployment implements kObject {
     this.namespace = namespace;
     this.kind = kind;
     this.label = label;
-    this.replicas = replicas;
     this.podLabel = podLabel;
+    this.replicas = replicas;
     this.container = container;
 
   }

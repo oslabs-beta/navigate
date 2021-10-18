@@ -14,6 +14,7 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
   raw.forEach(file => {
     fileObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
+  console.log('fileobjs',fileObjs);
   return fileObjs;
 }
 

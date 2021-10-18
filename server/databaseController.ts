@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import {Request, Response, NextFunction} from 'express';
-import parser from "./yamlParser";
+import parser from "./parser";
 import parseSchedulerInformation from "./logAggregator";
 import parseDeploymentInformation from "./parseDeployment";
 
