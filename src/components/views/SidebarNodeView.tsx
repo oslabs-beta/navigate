@@ -3,6 +3,7 @@ import kDeploymentLive from '../../../server/kDeploymentLive';
 
 function SidebarNodeView(props: any) {
   const podDeployObjs = props.podDeployments;
+  console.log("please worksies: ", props.podInfoObjects)
 
   const deploymentMain: any = [];
   podDeployObjs.forEach((ele: kDeploymentLive) => {
