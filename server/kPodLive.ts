@@ -1,3 +1,4 @@
+import * as kObjects from '../src/kObjects/__index';
 export default class kPodLive {
     namespace: string;
     kind: string
@@ -11,7 +12,7 @@ export default class kPodLive {
 
     //container
     container: string;
-    env: Array<object>;
+    env: Array<kObjects.anyObject>;
     image: string;
     imagePullPolicy: string;
 
@@ -45,8 +46,7 @@ export default class kPodLive {
      dnsPolicy: string, nodeNode: string, premptionPolicy: string, restartPolicy: string, schedulerName: string,
      serviceAccount: string, serviceAccountName: string, volumeNames: Array<string>, volumeMountPath: Array<string>,
      volumeReadOnly: Array<boolean>, containerID: string, imageID: string, containerRunStarted: string, hostIP: string,
-     phase: string, podIP: string)
-    {
+     phase: string, podIP: string){
       this.namespace = namespace;
       this.kind = kind;
       this.name = name;
@@ -79,5 +79,4 @@ export default class kPodLive {
       this.phase = phase;
       this.podIP = podIP;
     }
-    
   }

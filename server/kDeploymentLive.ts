@@ -18,8 +18,7 @@ export default class kDeploymentLive {
   
   constructor(namespace = "", kind: string, name: string, created: string, resourceVersion: string,uid: string, 
   strategyType: string, rollingUpdateMaxSurge: string | number, rollingUpdateMaxUnavailable: string | number, env: Array<kObjects.anyObject>, dnsPolicy: string,
-  restartPolicy: string, schedulerName: string )
-  {
+  restartPolicy: string, schedulerName: string){
     this.namespace = namespace;
     this.kind = kind;
     this.name = name;
