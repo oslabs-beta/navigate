@@ -31,7 +31,7 @@ function getYAMLFiles(): object[] {
 
 function getJSONFiles(): object[] {
   try {
-    const root = 'navigate_logs'
+    const root = path.join(__dirname, '../navigate_logs');
     data = getFiles(/\.json/, root)
   } catch (error) {
     console.log('Error with getJSONData funciton: ', error)

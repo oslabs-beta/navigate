@@ -6,14 +6,14 @@ const path = require('path');
 const logPath = path.join(__dirname, `../../navigate_logs/`);
 
 //object of the default namespaces that come with every k8s cluster; we want to ignore these
-const defaultNamespaceMap = {
+const listOfDefaultNamespaces = {
   "default" : '',
   "kube-node-lease": '',
   "kube-public": '',
   "kube-system": ''
 }
 
-function getElementsOfKind(kind) {
+function getElementsOfKind(kind, writeToDisk = true) {
   try
   {
     const data = parser.getYAMLFiles();
@@ -21,9 +21,10 @@ function getElementsOfKind(kind) {
     data.forEach(k8sObject => {        
       if(k8sObject[0].kind === kind) output.push(k8sObject);
     });
-    fs.writeFile(path.join(logPath, `/${kind}.json`), JSON.stringify(output, null, 2), { flag: 'w' }, function(err) {
-      if (err) 
-        return console.error(err); 
+    if(writeToDisk)
+      fs.writeFile(path.join(logPath, `/${kind}.json`), JSON.stringify(output, null, 2), { flag: 'w' }, function(err) {
+        if (err) 
+          return console.error(err); 
   });
     return output;
   }
@@ -32,17 +33,16 @@ function getElementsOfKind(kind) {
   }
 }
 
-function parseNamespaces() {
-  const namespaces = [];
+function getNamespaceDeploymentPairs(){
+  const output = {};
   let deployments = getElementsOfKind("Deployment");
-  console.log(deployments);
   deployments.forEach(ele => {
-    if(!Object.keys(defaultNamespaceMap).includes(ele[0].namespace))
-    {
-      namespaces.push(ele[0]);
+    if(!Object.keys(listOfDefaultNamespaces).includes(ele[0].metadata.namespace)){
+      if(output[ele[0].metadata.namespace]) output[ele[0].metadata.namespace].push(ele[0].metadata.name);
+      else output[ele[0].metadata.namespace] = [ele[0].metadata.name];
     }
-  });
-  return namespaces;
+  })
+  return output;
 }
 
 // kubectl get pods -o=jsonpath='{.items[*].metadata.name}
@@ -55,11 +55,15 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
   return result;
 }
 
-async function getPodDetails(){
+async function getPodDetails()
+{
   const pods = await parsePodNames();
-  const namespaces = parseNamespaces();
-  console.log(pods);
-  console.log(namespaces);
+  const namespaceMap = getNamespaceDeploymentPairs();
+  // for(let i = 0; i < Object.keys(namespaceMap).length; i++){
+    // if(namespaceMap[i] !== undefined)
+    // for(let j = 0; j < namespaceMap[i].length; j++)
+      await exportObj.runCommand(`kubectl get deployment ${Object.keys(namespaceMap)[0][0]} --namespace=${namespaceMap[0]} -o json >> ${path.join(__dirname, '../../navigate_logs/hi.txt')}`);
+  // }
 }
 getPodDetails();
 
@@ -77,5 +81,5 @@ module.exports = {
   getAllPods,
   parsePodNames,
   getElementsOfKind,
-  parseNamespaces
+  getNamespaceDeploymentPairs
 }

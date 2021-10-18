@@ -9,7 +9,6 @@ exportObj = {};
 exportObj.command = `kubectl get pods -o=jsonpath='{.items[*].metadata.name}'`;
 exportObj.fileName = 'podNames.txt'
 
-
 exportObj.runCommand = (cmd) => {
     exec(cmd, function (error, stdout, stderr) {
         if(process.env.NODE_ENV !== 'test')
