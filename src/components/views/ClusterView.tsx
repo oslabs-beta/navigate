@@ -209,10 +209,9 @@ function ClusterView(props: any) {
           </div>
       <div style={{display:'flex'}}> 
         <div id="pageView">
-          
+        <Legend/>
           <div id="pageCol">
             <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
-            <Legend/>
           </div>
           <div id="clusterView"
             ref={containerRef}

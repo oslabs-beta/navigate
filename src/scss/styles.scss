@@ -73,18 +73,17 @@ button + h3 {
   align-items: center;
   justify-content: space-around;
 }
-#legendContainer {
-  font-family: 'Bebas Neue', cursive;
-  width: 100%;
-  height: 25%;
-  display: flex;
-  border: 2px solid lightgray;
-  padding: 10px;
-  #legendCol{
-    display: flex;
-    flex-direction: column;
-  }
-}
+// #legendContainer {
+//   font-family: 'Bebas Neue', cursive;
+//   height: 25%;
+//   display: flex;
+//   border: 2px solid lightgray;
+//   padding: 10px;
+//   #legendCol{
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }
 
 #pageView {
   display: flex;

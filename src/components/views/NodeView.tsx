@@ -181,9 +181,6 @@ function NodeView(props: any) {
           style={ { width: '100%', height: '600px' }}
         />   
         <div id="pageView">
-          <div id="pageCol">
-            <Legend/>
-          </div>
           <div id='nodeView'
             ref={nodeViewRef}
             style={ { width: '1500px', height: '750px' }}

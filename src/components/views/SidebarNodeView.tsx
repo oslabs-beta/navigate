@@ -2,8 +2,6 @@ import * as React from "react";
 import kDeploymentLive from '../../../server/kDeploymentLive';
 
 function SidebarNodeView(props: any) {
-  console.log('master node is: ', props.masterNode)
-  console.log('inside nodeView sidebar: ', props.podDeployments)
   const podDeployObjs = props.podDeployments;
 
   const deploymentMain: any = [];
@@ -13,10 +11,27 @@ function SidebarNodeView(props: any) {
         <div>
           <table>
             <tbody>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+
               <tr><td>Name:</td><td>{ele.name}</td></tr>
               <tr><td>Kind:</td><td>{ele.kind}</td></tr>
               <tr><td>Namespace:</td><td>{ele.namespace}</td></tr>
               <tr><td>Created at:</td><td>{ele.created}</td></tr>
+              <tr><td>Environment Variables:</td><td><table>
+                <tbody>
+                  <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+                  </tr>
+                  <tr>
+                    <td>{ele.env[0].name}</td>
+                    <td>{ele.env[0].value}</td>
+                  </tr>
+                </tbody>
+                </table></td></tr>
               <tr><td>Resource Version:</td><td>{ele.resourceVersion}</td></tr>
               <tr><td>Restart Policy:</td><td>{ele.restartPolicy}</td></tr>
               <tr><td>Strategy Type:</td><td>{ele.strategyType}</td></tr>

@@ -10,6 +10,7 @@ export default class kPodLive {
     uid: string;
 
     //spec
+    
 
 
     
