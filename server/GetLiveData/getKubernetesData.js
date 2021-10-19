@@ -59,13 +59,7 @@ async function getPodDetails()
 {
   const pods = await parsePodNames();
   const namespaceMap = getNamespaceDeploymentPairs();
-  // for(let i = 0; i < Object.keys(namespaceMap).length; i++){
-    // if(namespaceMap[i] !== undefined)
-    // for(let j = 0; j < namespaceMap[i].length; j++)
-      await exportObj.runCommand(`kubectl get deployment ${Object.keys(namespaceMap)[0][0]} --namespace=${namespaceMap[0]} -o json >> ${path.join(__dirname, '../../navigate_logs/hi.txt')}`);
-  // }
 }
-getPodDetails();
 
 // kubectl get pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia -o json
 // gets updated pods object (with  status  from kubernetes) updated  yaml file config with  live kubernetes data
