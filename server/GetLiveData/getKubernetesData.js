@@ -7,7 +7,6 @@ const logPath = path.join(__dirname, `../../navigate_logs/`);
 
 //object of the default namespaces that come with every k8s cluster; we want to ignore these
 const listOfDefaultNamespaces = {
-  "default" : '',
   "kube-node-lease": '',
   "kube-public": '',
   "kube-system": ''
@@ -37,6 +36,7 @@ function getNamespaceDeploymentPairs(){
   const output = {};
   let deployments = getElementsOfKind("Deployment");
   deployments.forEach(ele => {
+    //if it is not a default namespace, skip it
     if(!Object.keys(listOfDefaultNamespaces).includes(ele[0].metadata.namespace)){
       if(output[ele[0].metadata.namespace]) output[ele[0].metadata.namespace].push(ele[0].metadata.name);
       else output[ele[0].metadata.namespace] = [ele[0].metadata.name];
@@ -55,20 +55,49 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
   return result;
 }
 
-async function getPodDetails()
+async function aggregateLogs()
 {
   const pods = await parsePodNames();
+  const podArray = pods.split(' ');
   const namespaceMap = getNamespaceDeploymentPairs();
-}
+  const keys = Object.keys(namespaceMap);
+  let index = 1;
+  // get deployment logs
+  for(let i = 0; i < keys.length; i++){
+    for(let j = 0; j < namespaceMap[keys[i]].length; j++){
+      let filePath = path.join(__dirname, `../../navigate_logs/deployment${index}.json`);
+      try
+      {
+        await exportObj.runCommand(`kubectl get deployment ${namespaceMap[keys[i]][j]} --namespace=${keys[i]} -o json &> ${filePath}`);
+      }
+      catch(error){
+        console.log(error);
+      }
+      index++;
+    }
+  }
+  index = 1;
+  // gets updated pods object (with  status  from kubernetes) updated  yaml file config with live kubernetes data
+  //TODO: map pod to namespace, do for every pod in every namespace
+  let filePath;
+  for(let i = 0; i < podArray.length; i++){
+    filePath = path.join(__dirname, `../../navigate_logs/pod${index}.json`);
+    try{
+      await exportObj.runCommand(`kubectl get pod ${podArray[i]} --namespace=default -o json &> ${filePath}`);
+    }
+    catch(error){
+      console.log(error);
+    }
+    index++;
+  }
+} 
 
-// kubectl get pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia -o json
-// gets updated pods object (with  status  from kubernetes) updated  yaml file config with  live kubernetes data
+//"default" is hardcoded for the google k8s demo, change later to dynamically call for each namespace using getElementsOfKind("Namespace")
+// getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'');
+aggregateLogs();
 
-// kubectl describe pods mafia-backend-6d5d7c9b8f-crfmr --namespace=mafia
-// has events, config map name, volumes, conditions, environment, container, start time, Ports, state, restart count, IP  addresses
-
-function getAllPods(cmd, namespace) {
-  exportObj.runCommand(`${cmd} -n ${namespace} &> ../navigate_logs/${exportObj.fileName}`);
+function getAllPods(cmd, namespace = "default") {
+  exportObj.runCommand(`${cmd} -n ${namespace} &> ${path.join(__dirname, `../../navigate_logs/${exportObj.fileName}`)}`);
 }
 
 module.exports = {
