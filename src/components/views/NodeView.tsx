@@ -68,7 +68,6 @@ function NodeView(props: any) {
       }
     }
     for(let i = 0; i < targetNode.replicas; i++){
-      console.log('target',targetNode)
       let newPod = {
         data: {
           id: targetNode.label + i,

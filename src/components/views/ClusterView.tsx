@@ -10,13 +10,6 @@ Cytoscape.use(cola);
 dagre(Cytoscape)
 
 function ClusterView(props: any) {
-  const getDupes = (arr: any[]) => {
-    const checked: any = {};
-    arr.forEach((ele:any) => {
-      if(!checked.ele) checked.ele = 1;
-      else return ele;
-    })
-  }
   const containerRef = React.useRef<HTMLDivElement>(null);
   const relevantData: any[] = [
     {data: { id :"Kubernetes Cluster", label: "Kubernetes Cluster"}},
@@ -43,9 +36,6 @@ function ClusterView(props: any) {
   const populateArray = (array: any[]): void => {
     console.log(array);
     for (let i = 0; i < array.length; i++) {
-      // if (!allLabels.includes(array[i].label)) {
-      // }
-      // console.log(array[i])`
       if (array[i].kind === "Deployment") {
         let newNode = {
           data: {
@@ -96,7 +86,6 @@ function ClusterView(props: any) {
       } 
       else if (array[i].kind === "Service") {
         if (!namespacesArr.includes(array[i].label)){
-            console.log('should')
             let newNode = {
               data: {
                 id: array[i].label,
@@ -131,7 +120,6 @@ function ClusterView(props: any) {
             relevantData.push(newNode, edge);
           } 
           else{
-            // console.log('there',array[i])
             let newNode = {
               data: {
                 id: `${array[i].label} service`,
@@ -146,21 +134,6 @@ function ClusterView(props: any) {
                 label: `deployment`,
               },
             };
-            //invis nodes to force placement
-            // let newNode2 = {
-            //   data: {
-            //     id: `${array[i].label} invis`,
-            //     label: `${array[i].label} invis`,
-            //     class: "invis",
-            //   },
-            // };
-            // let edge2 = {
-            //   data: {
-            //     source: `${array[i].label} service`,
-            //     target: `${array[i].label} invis`,
-            //     label: "invis",
-            //   },
-            // };
             relevantData.push(newNode, edge);
           }
         }
