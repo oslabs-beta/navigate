@@ -14,13 +14,14 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
   raw.forEach(file => {
     fileObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
+  console.log('fileobjs', fileObjs)
   return fileObjs;
 }
 
 
 function getYAMLFiles(): object[] {
   try{
-      const root = './yaml_files';
+      const root = path.join(__dirname, '../googleDemo');
       data = getFiles(/\.ya?ml/, root);
     }
   catch (error) {
@@ -31,7 +32,7 @@ function getYAMLFiles(): object[] {
 
 function getJSONFiles(): object[] {
   try {
-    const root = 'navigate_logs'
+    const root = path.join(__dirname, '../googleDemoLogs');
     data = getFiles(/\.json/, root)
   } catch (error) {
     console.log('Error with getJSONData funciton: ', error)

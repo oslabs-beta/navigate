@@ -3,6 +3,7 @@ import kDeploymentLive from '../../../server/kDeploymentLive';
 
 function SidebarNodeView(props: any) {
   const podDeployObjs = props.podDeployments;
+  console.log("please worksies: ", props.podInfoObjects)
 
   const deploymentMain: any = [];
   podDeployObjs.forEach((ele: kDeploymentLive) => {
@@ -15,7 +16,6 @@ function SidebarNodeView(props: any) {
                 <th>Property</th>
                 <th>Value</th>
               </tr>
-
               <tr><td>Name:</td><td>{ele.name}</td></tr>
               <tr><td>Kind:</td><td>{ele.kind}</td></tr>
               <tr><td>Namespace:</td><td>{ele.namespace}</td></tr>

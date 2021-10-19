@@ -3,6 +3,7 @@ import {Request, Response, NextFunction} from 'express';
 import parser from "./parser";
 import parseSchedulerInformation from "./logAggregator";
 import parseDeploymentInformation from "./parseDeployment";
+import parsePodInformation from "./parsePods"
 
 interface someObject {
     [key: string]: any
@@ -44,5 +45,16 @@ databaseController.getLiveDeploymentData = (req: Request, res: Response, next: N
   }
 }
 
+databaseController.getLivePodData = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = parser.getJSONFiles();
+    const parsedData = parsePodInformation(data);
+    res.locals.podDeployData = parsedData;
+    return next();
+  } catch (error) {
+    console.log('Error inside databaseController.getLivePodData: ', error);
+    return next();
+  }
+}
 
 export default databaseController;
