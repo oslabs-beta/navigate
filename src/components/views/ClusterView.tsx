@@ -10,13 +10,6 @@ Cytoscape.use(cola);
 dagre(Cytoscape)
 
 function ClusterView(props: any) {
-  const getDupes = (arr: any[]) => {
-    const checked: any = {};
-    arr.forEach((ele:any) => {
-      if(!checked.ele) checked.ele = 1;
-      else return ele;
-    })
-  }
   const containerRef = React.useRef<HTMLDivElement>(null);
   const relevantData: any[] = [
     {data: { id :"Kubernetes Cluster", label: "Kubernetes Cluster"}},
@@ -41,21 +34,23 @@ function ClusterView(props: any) {
   })
   
   const populateArray = (array: any[]): void => {
+    console.log(array);
     for (let i = 0; i < array.length; i++) {
-      if (!allLabels.includes(array[i].label)) {
-      }
       if (array[i].kind === "Deployment") {
         let newNode = {
           data: {
-            id: array[i].label,
-            label: array[i].podLabel,
+            id: !namespacesArr.includes(array[i].label) ? array[i].label : `${array[i].label} deployment`,
+            // id: `${array[i].label} deployment`,
+            label: array[i].label,
             class: "deployment",
           },
         };
+        //remove edge?
         let edge = {
           data: {
             source: array[i].namespace,
             target: array[i].label,
+            // target: `${array[i].label} deployment`,
             label: `deployment`,
           },
         };
@@ -75,7 +70,6 @@ function ClusterView(props: any) {
             label: `stateful`,
           },
         };
-
         relevantData.push(newNode, edge);
         props.dataArray.forEach((ele: any) => {
           if (ele.kind === "Service" && ele.namespace === array[i].namespace) {
@@ -89,7 +83,8 @@ function ClusterView(props: any) {
             relevantData.push(edge);
           }
         });
-      } else if (array[i].kind === "Service") {
+      } 
+      else if (array[i].kind === "Service") {
         if (!namespacesArr.includes(array[i].label)){
             let newNode = {
               data: {
@@ -98,6 +93,7 @@ function ClusterView(props: any) {
                 class: "service",
               },
             };
+            //remove edge?
             let edge = {
               data: {
                 source: array[i].namespace,
@@ -120,6 +116,7 @@ function ClusterView(props: any) {
                 relevantData.push(edge);
               }
             });
+            //remove edge? 
             relevantData.push(newNode, edge);
           } 
           else{
@@ -137,21 +134,7 @@ function ClusterView(props: any) {
                 label: `deployment`,
               },
             };
-            let newNode2 = {
-              data: {
-                id: `${array[i].label} invis`,
-                label: `${array[i].label} invis`,
-                class: "invis",
-              },
-            };
-            let edge2 = {
-              data: {
-                source: `${array[i].label} service`,
-                target: `${array[i].label} invis`,
-                label: "invis",
-              },
-            };
-            relevantData.push(newNode, edge,newNode2, edge2);
+            relevantData.push(newNode, edge);
           }
         }
       }
@@ -188,6 +171,7 @@ function ClusterView(props: any) {
         props.setNamespace(getNamespace(event.target._private.data.id));
         props.setMasterNode(event.target._private.data.id);
         props.setTrigger(true);
+        console.log(event.target._private.data.label);
       }
     })
   }, [props.dataArray]);

@@ -71,6 +71,7 @@ function NodeView(props: any) {
       let newPod = {
         data: {
           id: targetNode.label + i,
+          //pods need live pod name
           label: targetNode.podLabel + i,
           //pods
           class: "pod"
@@ -85,12 +86,15 @@ function NodeView(props: any) {
         }
       }
       //line from service to pod
-      let edge2 = {
-        data: {
-          source: serviceNode.label,
-          target: targetNode.container.name + i,
-          label: "connection"
+      if(serviceNode){
+        let edge2 = {
+          data: {
+            source: serviceNode.label,
+            target: targetNode.container.name + i,
+            label: "connection"
+          }
         }
+        relevantData.push(edge2)
       }
       let newContainer = {
         data: {
@@ -123,7 +127,7 @@ function NodeView(props: any) {
           // label: `Edge from master to ${array[i].label}`
         }
       }
-      relevantData.push(newPod,edge1,newContainer,edge2,newImage,edge3,edge4);
+      relevantData.push(newPod,edge1,newContainer,newImage,edge3,edge4);
     }
 
   }
@@ -151,7 +155,7 @@ function NodeView(props: any) {
         setTarget(event.target._private.data.label.split(":")[0]);
         setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
-      else console.log(event.target._private.data.id)
+      console.log(event.target._private.data.target)
     })
     }, []);
 

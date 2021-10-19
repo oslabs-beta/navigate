@@ -30,6 +30,7 @@ function App() {
       .then((data: any[]) => {
         // Data will be an array of objects. Each object represents a different YAML file.
         parseData(data);
+        // console.log('data',data)
       })
       .catch((error) => console.log('GET /getData response error: ', error));
   }
