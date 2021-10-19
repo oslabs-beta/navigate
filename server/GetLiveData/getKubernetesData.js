@@ -93,7 +93,7 @@ async function aggregateLogs()
 } 
 
 //"default" is hardcoded for the google k8s demo, change later to dynamically call for each namespace using getElementsOfKind("Namespace")
-// getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'');
+getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'');
 aggregateLogs();
 
 function getAllPods(cmd, namespace = "default") {
