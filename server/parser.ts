@@ -18,9 +18,9 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
 }
 
 
-function getYAMLFiles(): object[] {
+function getYAMLFiles(localPath: string = '../yaml_files'): object[] {
   try{
-      const root = path.join(__dirname, '../yaml_files');
+      const root = path.join(__dirname, localPath);
       data = getFiles(/\.ya?ml/, root);
     }
   catch (error) {
@@ -29,9 +29,9 @@ function getYAMLFiles(): object[] {
   return data;
 }
 
-function getJSONFiles(): object[] {
+function getJSONFiles(localPath: string = '../navigate_logs'): object[] {
   try {
-    const root = path.join(__dirname, '../navigate_logs');
+    const root = path.join(__dirname, localPath);
     data = getFiles(/\.json/, root)
   } catch (error) {
     console.log('Error with getJSONData funciton: ', error)
