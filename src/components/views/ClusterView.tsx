@@ -108,22 +108,6 @@ function ClusterView(props: any) {
               if (
                 ele.kind === "Deployment" &&
                 ele.namespace === array[i].namespace &&
-                //label will not always match
-                ele.label === array[i].label
-              ) {
-                
-                let edge = {
-                  data: {
-                    source: ele.label + " deployment",
-                    target: array[i].label,
-                    label: `stateful`,
-                  },
-                };
-                relevantData.push(edge);
-              }
-              else if (
-                ele.kind === "Deployment" &&
-                ele.namespace === array[i].namespace &&
                 ele.label === array[i].selectorName
                 //label will not always match
               ) {
@@ -234,5 +218,22 @@ function ClusterView(props: any) {
 }
 
 export default ClusterView;
+//please ignore for now sry - joel
 //take out edge from namespace to service
 //make edge from deploy to service orange
+              // if (
+              //   ele.kind === "Deployment" &&
+              //   ele.namespace === array[i].namespace &&
+              //   //label will not always match
+              //   ele.label === array[i].label
+              // ) {
+                
+              //   let edge = {
+              //     data: {
+              //       source: ele.label + " deployment",
+              //       target: array[i].label,
+              //       label: `stateful`,
+              //     },
+              //   };
+              //   relevantData.push(edge);
+              // }
