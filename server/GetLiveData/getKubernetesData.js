@@ -57,7 +57,7 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
 
 async function aggregateLogs()
 {
-  //get namespace: [pods] key value pairs
+  //get namespace: [pods] key value pairs <3
   const namespaces = getElementsOfKind("Namespace");
   const namespacePodKVP = {};
   //overwrite existing podNames txt if it exists already for first namespace, which is always "default"
@@ -66,9 +66,13 @@ async function aggregateLogs()
   (err, data) => {
     if(err)
       console.log(err);
+    // console.log(data);
     rawNames = Buffer.from(data).toString('utf8');
+  }).on('close', () => {
+    const podArray = rawNames.split(' ');
+    namespacePodKVP["default"] = podArray;
+
   });
-  console.log(rawNames);
   // await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', "default", true);
   // const podNames = await parsePodNames();
   // console.log(podNames);
@@ -86,6 +90,7 @@ async function aggregateLogs()
   // console.log(namespacePodKVP);
 
   /*
+
     1. Get namespaces via "kubectl get namespaces" command 
         a. Store namespaces into an array
             [can also get namespaces from yaml files]
@@ -93,12 +98,13 @@ async function aggregateLogs()
         a. Iterate through all namespaces array running above command.
         b. Store list of deployment names as an array, inside an object, where key is <namespace>
             [can also get deployment names from yaml files]
-            
+
     3. Get pod names via "kubectl get pods --namespace=<namespace>" command
         a. Iterate through all namespaces array running above command.
         b. Store list of pod names as an array, inside an object, where key is <namespace>
     4. Get deployment logs via  "kubectl get deployment <deploymentname> -o json >> deployment[i].json"
     5. Get pod logs via "kubectl get pod <podName> -o json >> pod[i].json"
+  
   */
 
   // const pods = await parsePodNames();
