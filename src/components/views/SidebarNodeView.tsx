@@ -1,14 +1,37 @@
 import * as React from "react";
 import kDeploymentLive from '../../../server/kDeploymentLive';
+import kPodLive from '../../../server/kPodLive'
 
 function SidebarNodeView(props: any) {
-  const podDeployObjs = props.podDeployments;
+  const deployObjs = props.podDeployments;
+  const podObjs = props.podInfoObjects;
   console.log("please worksies: ", props.podInfoObjects)
   console.log('Hemwatie, youre looking for  this: ', props.clickedPod)
 
-  
+  // Display specific pod  information
+  const podMain: any = [];
+  podObjs.forEach((ele: kPodLive) => {
+    if(ele.name === props.clickedPod){
+      podMain.push(
+        <div>
+          <table>
+            <tbody>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+              <tr><td>Name</td><td>{ele.name}</td></tr>
+              <tr><td>Kind</td><td>{ele.kind}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  })
+
+  // Displaying deployment information
   const deploymentMain: any = [];
-  podDeployObjs.forEach((ele: kDeploymentLive) => {
+  deployObjs.forEach((ele: kDeploymentLive) => {
     if(ele.name === props.masterNode){
       deploymentMain.push(
         <div>
@@ -50,10 +73,15 @@ function SidebarNodeView(props: any) {
 
   
   
-  return(
+  return props.clickedPod === undefined ? (
     <div>
       {deploymentMain}
     </div>
+  ) : (
+    <div>
+      <h1> does  this logic work? </h1>
+      {podMain}
+  </div>
   )
 }
 
