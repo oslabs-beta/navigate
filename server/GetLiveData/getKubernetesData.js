@@ -65,29 +65,31 @@ async function aggregateLogs()
   exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n "default"`,
   (err, data) => {
     if(err)
+    {
+      console.log("failed to get pod information: ")
       console.log(err);
-    // console.log(data);
+    }
     rawNames = Buffer.from(data).toString('utf8');
   }).on('close', () => {
     const podArray = rawNames.split(' ');
     namespacePodKVP["default"] = podArray;
 
+    //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
+    if(namespaces[0])
+      for(let i =0; i < namespaces[0].length; i++){
+        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[0][i].metadata.name}`,
+          (err, data) => {
+            if(err) console.log(err);
+            namespacePodKVP[namespaces[0][i].metadata.name] = Buffer.from(data).toString('utf8').split(' ');
+        });
+      }
   });
   // await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', "default", true);
-  // const podNames = await parsePodNames();
-  // console.log(podNames);
-  // const podArray = podNames.split(' ');
-  // console.log(podArray);
-  // // namespacePodKVP["default"] = podNames;
-  // // console.log(namespacePodKVP);
-  // //sometimes it's all just in the default namespace
-  // if(namespaces[0])
   // // now get all other pods for all other namespaces
   // for(let i = 0; i < namespaces[0].length; i++){
   //   await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', namespaces[0][i].metadata.name);
   //   namespacePodKVP[namespaces[0][i].metadata.name] = await parsePodNames().then(data => data.split(' '));
   // }
-  // console.log(namespacePodKVP);
 
   /*
 
@@ -107,39 +109,39 @@ async function aggregateLogs()
   
   */
 
-  // const pods = await parsePodNames();
-  // const podArray = pods.split(' ');
-  // const deploymentKVP = getNamespaceElementPairs("Deployment");
-  // const keys = Object.keys(deploymentKVP);
-  // let index = 1;
-  // // get deployment logs
-  // for(let i = 0; i < keys.length; i++){
-  //   for(let j = 0; j < deploymentKVP[keys[i]].length; j++){
-  //     let filePath = path.join(__dirname, `../../navigate_logs/deployment${index}.json`);
-  //     try
-  //     {
-  //       await exportObj.runCommand(`kubectl get deployment ${deploymentKVP[keys[i]][j]} --namespace=${keys[i]} -o json &> ${filePath}`);
-  //     }
-  //     catch(error){
-  //       console.log(error);
-  //     }
-  //     index++;
-  //   }
-  // }
-  // index = 1;
-  // // gets updated pods object (with  status  from kubernetes) updated  yaml file config with live kubernetes data
-  // //TODO: map pod to namespace, do for every pod in every namespace
-  // let filePath;
-  // for(let i = 0; i < podArray.length; i++){
-  //   filePath = path.join(__dirname, `../../navigate_logs/pod${index}.json`);
-  //   try{
-  //     await exportObj.runCommand(`kubectl get pod ${podArray[i]} --namespace=default -o json &> ${filePath}`);
-  //   }
-  //   catch(error){
-  //     console.log(error);
-  //   }
-  //   index++;
-  // }
+  const deploymentKVP = getNamespaceElementPairs("Deployment");
+  const keys = Object.keys(deploymentKVP);
+  let index = 1;
+  // get deployment logs
+  for(let i = 0; i < keys.length; i++){
+    for(let j = 0; j < deploymentKVP[keys[i]].length; j++){
+      let filePath = path.join(__dirname, `../../navigate_logs/deployment${index}.json`);
+      try
+      {
+        await exportObj.runCommand(`kubectl get deployment ${deploymentKVP[keys[i]][j]} --namespace=${keys[i]} -o json &> ${filePath}`);
+      }
+      catch(error){
+        console.log(error);
+      }
+      index++;
+    }
+  }
+  index = 1;
+  // gets updated pods object (with  status  from kubernetes) updated  yaml file config with live kubernetes data
+  let filePath;
+  for(let i = 0; i < Object.keys(namespacePodKVP).length; i++){
+    filePath = path.join(__dirname, `../../navigate_logs/pod${index}.json`);
+    for(let j = 0; j < Object.keys(namespacePodKVP)[i].length; j++)
+    {
+      try{
+        await exportObj.runCommand(`kubectl get pod ${Object.keys(namespacePodKVP)[i]} --namespace=${Object.keys(namespacePodKVP)[i]} -o json &> ${filePath}`);
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+    index++;
+  }
 
 }
 
