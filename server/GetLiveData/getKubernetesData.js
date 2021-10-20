@@ -32,14 +32,14 @@ function getElementsOfKind(kind, writeToDisk = true) {
   }
 }
 
-function getNamespaceDeploymentPairs(){
+function getNamespaceElementPairs(kind){
   const output = {};
-  let deployments = getElementsOfKind("Deployment");
-  deployments.forEach(ele => {
-    //if it is not a default namespace, skip it
-    if(!Object.keys(listOfDefaultNamespaces).includes(ele[0].metadata.namespace)){
-      if(output[ele[0].metadata.namespace]) output[ele[0].metadata.namespace].push(ele[0].metadata.name);
-      else output[ele[0].metadata.namespace] = [ele[0].metadata.name];
+  let elements = getElementsOfKind(kind);
+  elements.forEach(element => {
+    //if it is a default namespace, skip it
+    if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace)){
+      if(output[element[0].metadata.namespace]) output[element[0].metadata.namespace].push(element[0].metadata.name);
+      else output[element[0].metadata.namespace] = [element[0].metadata.name];
     }
   })
   return output;
@@ -57,18 +57,32 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
 
 async function aggregateLogs()
 {
+  //get namespace: [pods] key value pairs
+  const namespaces = getElementsOfKind("Namespace");
+  console.log(namespaces);
+  const namespacePodKVP = {};
+  //overwrite existing podNames txt if it exists already for first namespace
+  getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', namespaces[0], true);
+  namespacePodKVP[namespace[0]] = await parsePodNames();
+  namespacePodKVP[namespace[0]].split(' ');
+  //now get all other pods for all other namespaces
+  for(let i = 1; i < namespaces.length; i++){
+    await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', namespaces[i]);
+    namespacePodKVP[namespace[i]] = await parsePodNames().then(data => data.split(' '));
+  }
+
   const pods = await parsePodNames();
   const podArray = pods.split(' ');
-  const namespaceMap = getNamespaceDeploymentPairs();
-  const keys = Object.keys(namespaceMap);
-  let index = 1;
+  const deploymentKVP = getNamespaceElementPairs("Deployment");
+  const keys = Object.keys(deploymentKVP);
+  let index = 1;  
   // get deployment logs
   for(let i = 0; i < keys.length; i++){
-    for(let j = 0; j < namespaceMap[keys[i]].length; j++){
+    for(let j = 0; j < deploymentKVP[keys[i]].length; j++){
       let filePath = path.join(__dirname, `../../navigate_logs/deployment${index}.json`);
       try
       {
-        await exportObj.runCommand(`kubectl get deployment ${namespaceMap[keys[i]][j]} --namespace=${keys[i]} -o json &> ${filePath}`);
+        await exportObj.runCommand(`kubectl get deployment ${deploymentKVP[keys[i]][j]} --namespace=${keys[i]} -o json &> ${filePath}`);
       }
       catch(error){
         console.log(error);
@@ -90,19 +104,18 @@ async function aggregateLogs()
     }
     index++;
   }
+
 } 
 
-//"default" is hardcoded for the google k8s demo, change later to dynamically call for each namespace using getElementsOfKind("Namespace")
-getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'');
 aggregateLogs();
 
-function getAllPods(cmd, namespace = "default") {
-  exportObj.runCommand(`${cmd} -n ${namespace} &> ${path.join(__dirname, `../../navigate_logs/${exportObj.fileName}`)}`);
+function getAllPods(cmd, namespace = "default", overwrite = false) {
+  exportObj.runCommand(`${cmd} -n ${namespace} ${overwrite ? ">": "&>"} ${path.join(__dirname, `../../navigate_logs/${exportObj.fileName}`)}`);
 }
 
 module.exports = {
   getAllPods,
   parsePodNames,
   getElementsOfKind,
-  getNamespaceDeploymentPairs
+  getNamespaceDeploymentPairs: getNamespaceElementPairs
 }
