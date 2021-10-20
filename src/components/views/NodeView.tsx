@@ -156,8 +156,8 @@ function NodeView(props: any) {
         setTarget(event.target._private.data.label.split(":")[0]);
         setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
-      console.log(event.target._private.data)
-      clickedPod = event.target._private.data;
+      console.log(event.target._private.data.id)
+      clickedPod = event.target._private.data.id;
       registerPod(clickedPod);
     })
     }, []);
