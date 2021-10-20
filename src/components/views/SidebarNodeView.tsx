@@ -10,7 +10,7 @@ function SidebarNodeView(props: any) {
   console.log("please worksies: ", props.podInfoObjects)
   console.log('Hemwatie, youre looking for  this: ', props.clickedPod)
 
-  // Display specific pod  information
+  // Filtering podObject list based on on-click 
   const displayPod: Array<object> = [];
   podObjs.forEach((ele: kPodLive) => {
     console.log('first part of condition: ', ele.name.split('-')[0])
