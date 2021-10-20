@@ -4,7 +4,9 @@ import kDeploymentLive from '../../../server/kDeploymentLive';
 function SidebarNodeView(props: any) {
   const podDeployObjs = props.podDeployments;
   console.log("please worksies: ", props.podInfoObjects)
+  console.log('Hemwatie, youre looking for  this: ', props.clickedPod)
 
+  
   const deploymentMain: any = [];
   podDeployObjs.forEach((ele: kDeploymentLive) => {
     if(ele.name === props.masterNode){
