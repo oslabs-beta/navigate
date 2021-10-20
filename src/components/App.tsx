@@ -74,10 +74,10 @@ function App() {
   function parseData(relevantData: kObject[]) 
   {
     const data = dataParser.parseData(relevantData);
-    SetDataProp(data)
+    SetDataProp(data);
   }
 
-  // console.log('for joel: ', podInfoObjects)
+  // console.log('for joel: ', podInfoObjects);
   return( !nodeViewPage ? 
     <div className="Tabs">
       <div className="ClusterView">
