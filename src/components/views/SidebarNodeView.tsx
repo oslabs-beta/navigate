@@ -1,12 +1,24 @@
+import { HtmlTagObject } from "html-webpack-plugin";
 import * as React from "react";
 import kDeploymentLive from '../../../server/kDeploymentLive';
+import kPodLive from '../../../server/kPodLive'
+import PodInfoInNodeView from './PodInfoInNodeView';
 
 function SidebarNodeView(props: any) {
-  const podDeployObjs = props.podDeployments;
-  console.log("please worksies: ", props.podInfoObjects)
+  const deployObjs = props.podDeployments;
+  const podObjs = props.podInfoObjects;
 
+  // Filtering podObject list based on on-click 
+  const displayPod: Array<object> = [];
+  podObjs.forEach((ele: kPodLive) => {
+    if(ele.name.split('-')[0] === props.clickedPod){
+      displayPod.push(ele)
+    }
+  })
+
+  // Displaying deployment information
   const deploymentMain: any = [];
-  podDeployObjs.forEach((ele: kDeploymentLive) => {
+  deployObjs.forEach((ele: kDeploymentLive) => {
     if(ele.name === props.masterNode){
       deploymentMain.push(
         <div>
@@ -48,10 +60,14 @@ function SidebarNodeView(props: any) {
 
   
   
-  return(
+  return props.clickedPod === undefined ? (
     <div>
       {deploymentMain}
     </div>
+  ) : (
+    <div>
+      <PodInfoInNodeView displayPod = {displayPod}/>
+  </div>
   )
 }
 

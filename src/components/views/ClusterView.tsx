@@ -34,7 +34,6 @@ function ClusterView(props: any) {
   })
   
   const populateArray = (array: any[]): void => {
-    console.log(array);
     for (let i = 0; i < array.length; i++) {
       if (array[i].kind === "Deployment") {
         let newNode = {

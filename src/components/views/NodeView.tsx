@@ -15,6 +15,7 @@ function NodeView(props: any) {
   const nodeViewRef = React.useRef<HTMLDivElement>(null);
   const [target, setTarget] = React.useState("");
   const [image, setImage] = React.useState("");
+  let [clickedPod, registerPod] = React.useState(undefined);
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
@@ -155,7 +156,8 @@ function NodeView(props: any) {
         setTarget(event.target._private.data.label.split(":")[0]);
         setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
-      console.log(event.target._private.data.target)
+      clickedPod = event.target._private.data.id;
+      registerPod(clickedPod);
     })
     }, []);
 
@@ -185,7 +187,7 @@ function NodeView(props: any) {
         />   
         <div id="pageView">
           <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly'}}>
-          <SidebarNodeView  podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
+          <SidebarNodeView  clickedPod = {clickedPod} podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
           <Legend/>
           </div>
           <div id='nodeView'
