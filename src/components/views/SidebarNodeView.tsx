@@ -1,31 +1,22 @@
+import { HtmlTagObject } from "html-webpack-plugin";
 import * as React from "react";
 import kDeploymentLive from '../../../server/kDeploymentLive';
 import kPodLive from '../../../server/kPodLive'
+import PodInfoInNodeView from './PodInfoInNodeView';
 
 function SidebarNodeView(props: any) {
   const deployObjs = props.podDeployments;
   const podObjs = props.podInfoObjects;
   console.log("please worksies: ", props.podInfoObjects)
   console.log('Hemwatie, youre looking for  this: ', props.clickedPod)
+  let [displayPod, rerenderPodInfo] = React.useState<any>([]);
 
   // Display specific pod  information
-  const podMain: any = [];
   podObjs.forEach((ele: kPodLive) => {
-    if(ele.name === props.clickedPod){
-      podMain.push(
-        <div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Property</th>
-                <th>Value</th>
-              </tr>
-              <tr><td>Name</td><td>{ele.name}</td></tr>
-              <tr><td>Kind</td><td>{ele.kind}</td></tr>
-            </tbody>
-          </table>
-        </div>
-      )
+    if(ele.name.split('-')[0] === props.clickedPod){
+      console.log('plsfuckingdisplayconditional my guy')
+      displayPod.push(<h1>hello</h1>)
+      rerenderPodInfo(displayPod)
     }
   })
 
@@ -79,8 +70,7 @@ function SidebarNodeView(props: any) {
     </div>
   ) : (
     <div>
-      <h1> does  this logic work? </h1>
-      {podMain}
+      <PodInfoInNodeView />
   </div>
   )
 }
