@@ -1,6 +1,7 @@
 import * as React from "react";
 
 function PodInfoInNodeView(props: any) {
+    console.log('PLEASE  FUCKING WORK NOW: ', props.displayPod)
 
     return (
         <div>

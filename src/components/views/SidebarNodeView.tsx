@@ -9,14 +9,15 @@ function SidebarNodeView(props: any) {
   const podObjs = props.podInfoObjects;
   console.log("please worksies: ", props.podInfoObjects)
   console.log('Hemwatie, youre looking for  this: ', props.clickedPod)
-  let [displayPod, rerenderPodInfo] = React.useState<any>([]);
 
   // Display specific pod  information
+  const displayPod: Array<object> = [];
   podObjs.forEach((ele: kPodLive) => {
+    console.log('first part of condition: ', ele.name.split('-')[0])
+    console.log('checking to see if matched this: ', props.clickedPod)
     if(ele.name.split('-')[0] === props.clickedPod){
       console.log('plsfuckingdisplayconditional my guy')
-      displayPod.push(<h1>hello</h1>)
-      rerenderPodInfo(displayPod)
+      displayPod.push(ele)
     }
   })
 
@@ -70,7 +71,7 @@ function SidebarNodeView(props: any) {
     </div>
   ) : (
     <div>
-      <PodInfoInNodeView />
+      <PodInfoInNodeView displayPod = {displayPod}/>
   </div>
   )
 }
