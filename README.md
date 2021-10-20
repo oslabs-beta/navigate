@@ -15,6 +15,7 @@ Use it:
 - Kubernetes
 - React
 - Cytoscape
+- Github Actions
 - Jest
 - Supertest
 - NodeJS
