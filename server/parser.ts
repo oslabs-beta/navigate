@@ -20,7 +20,7 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
 
 function getYAMLFiles(): object[] {
   try{
-      const root = path.join(__dirname, '../googleDemo');
+      const root = path.join(__dirname, '../yaml_files');
       data = getFiles(/\.ya?ml/, root);
     }
   catch (error) {
@@ -31,7 +31,7 @@ function getYAMLFiles(): object[] {
 
 function getJSONFiles(): object[] {
   try {
-    const root = path.join(__dirname, '../googleDemoLogs');
+    const root = path.join(__dirname, '../navigate_logs');
     data = getFiles(/\.json/, root)
   } catch (error) {
     console.log('Error with getJSONData funciton: ', error)
