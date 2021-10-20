@@ -14,6 +14,7 @@ exportObj.runCommand = (cmd) => {
         if(process.env.NODE_ENV !== 'test')
         {
             console.log(stdout);
+            if(stderr)
             console.log('stderr: ' + stderr);
             if (error !== null) {
                  console.log('exec error: ' + error);
