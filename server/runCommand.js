@@ -22,4 +22,23 @@ exportObj.runCommand = (cmd) => {
     });
 }
 
+exportObj.runAndSave = (cmd, callback) => {
+    var child_process = exec(cmd, function (err, stdout, stderr) {
+      if (err && err.length > 1) {
+              console.log("failed to execute");
+              callback(error("InternalError", "No input or output devices found", 500));
+              return;
+          }else{
+              if(stdout){
+                callback(null,stdout); 
+              }
+              if(stderr){
+                callback(new Error("STDERR"),stderr);
+              }
+    
+      }  
+    });
+    return child_process;
+}
+
 module.exports = exportObj;

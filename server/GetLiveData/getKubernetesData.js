@@ -61,20 +61,28 @@ async function aggregateLogs()
   const namespaces = getElementsOfKind("Namespace");
   const namespacePodKVP = {};
   //overwrite existing podNames txt if it exists already for first namespace, which is always "default"
-  await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', "default", true);
-  const podNames = await parsePodNames();
-  console.log(podNames);
-  const podArray = podNames.split(' ');
-  console.log(podArray);
-  // namespacePodKVP["default"] = podNames;
-  // console.log(namespacePodKVP);
-  //sometimes it's all just in the default namespace
-  if(namespaces[0])
-  // now get all other pods for all other namespaces
-  for(let i = 0; i < namespaces[0].length; i++){
-    await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', namespaces[0][i].metadata.name);
-    namespacePodKVP[namespaces[0][i].metadata.name] = await parsePodNames().then(data => data.split(' '));
-  }
+  let rawNames;
+  exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n "default"`,
+  (err, data) => {
+    if(err)
+      console.log(err);
+    rawNames = Buffer.from(data).toString('utf8');
+  });
+  console.log(rawNames);
+  // await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', "default", true);
+  // const podNames = await parsePodNames();
+  // console.log(podNames);
+  // const podArray = podNames.split(' ');
+  // console.log(podArray);
+  // // namespacePodKVP["default"] = podNames;
+  // // console.log(namespacePodKVP);
+  // //sometimes it's all just in the default namespace
+  // if(namespaces[0])
+  // // now get all other pods for all other namespaces
+  // for(let i = 0; i < namespaces[0].length; i++){
+  //   await getAllPods('kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\'', namespaces[0][i].metadata.name);
+  //   namespacePodKVP[namespaces[0][i].metadata.name] = await parsePodNames().then(data => data.split(' '));
+  // }
   // console.log(namespacePodKVP);
 
   /*
