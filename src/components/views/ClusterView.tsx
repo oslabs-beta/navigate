@@ -5,6 +5,7 @@ import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
 import Legend from './Legend';
+import { electron } from "webpack";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -41,7 +42,7 @@ function ClusterView(props: any) {
           data: {
             // id: !namespacesArr.includes(array[i].label) ? array[i].label : `${array[i].label} deployment`,
             id: `${array[i].label} deployment`,
-            label: `${array[i].label} deployment`,
+            label: array[i].label,
             class: "deployment",
           },
         };
@@ -89,11 +90,11 @@ function ClusterView(props: any) {
             let newNode = {
               data: {
                 id: array[i].label,
-                label: array[i].label,
+                label: (array[i].type) ? `${array[i].label} ${array[i].type}` : `${array[i].label} ClusterIP`,
                 class: "service",
               },
             };
-            //remove edge?
+            //remove deployment edge?
             // let edge = {
             //   data: {
             //     source: array[i].namespace,
@@ -137,6 +138,23 @@ function ClusterView(props: any) {
             };
             relevantData.push(newNode, edge);
           }
+        } else if(array[i].kind === "DaemonSet") {
+          console.log("daemon",array[i])
+          let newDaemonSet = {
+            data: {
+              id: array[i].label,
+              label: array[i].label,
+              class: "daemonSet",
+            },
+          };
+          let edge = {
+            data: {
+              source: array[i].namespace,
+              target: array[i].label,
+              label: `daemonSet`,
+            },
+          };
+          relevantData.push(newDaemonSet, edge);
         }
       }
     

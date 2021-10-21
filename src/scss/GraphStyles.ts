@@ -30,9 +30,29 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     },
   },
   {
+    //default node styling
+    selector: 'node[class = "daemonSet"]',
+    style: {
+      shape: "round-pentagon",
+      width: "40%",
+      height: "40%",
+      "font-size": "14%",
+      "font-weight": "bold",
+      "font-family": font,
+      content: 'data(label)',
+      "text-valign": "bottom",
+      "text-wrap": "wrap",
+      "text-max-width": "140",
+      "background-color": "whitesmoke",
+      // "border-color": "none",
+      // "border-width": "2",
+      color: "whitesmoke",
+    },
+  },
+  {
     selector: 'node[class = "pod"]',
     style: {
-      shape: "ellipse",
+      shape: "elipse",
       width: "40%",
       height: "40%",
       "font-size": "14%",
@@ -43,7 +63,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-halign": "right",
       "text-wrap": "wrap",
       "text-max-width": "140",
-      "background-color": "whitesmoke",
+      // "background-color": "whitesmoke",
+      // "background-image": ["https://cdn.iconscout.com/icon/premium/png-256-thumb/cube-2403569-2010160.png"],
       // "border-color": "black",
       // "border-width": "2",
       color: "whitesmoke",
@@ -52,7 +73,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[class = "container"]',
     style: {
-      shape: "ellipse",
+      shape: "rectangle",
       width: "40%",
       height: "40%",
       "font-size": "14%",
@@ -72,7 +93,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[class = "image"]',
     style: {
-      shape: "ellipse",
+      shape: "star",
       width: "40%",
       height: "40%",
       "font-size": "14%",
@@ -184,6 +205,24 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     }
   },
   {
+    selector: 'node[class = "replicaSet"]',
+    style: {
+      shape: "round-rectangle",
+      width: "60%",
+      height: "40%",
+      "font-size": "14%",
+      "font-weight": "bold",
+      "font-family": "#1a1a1a",
+      content: 'data(label)',
+      "text-valign": "top",
+      "text-halign": "left",
+      "text-wrap": "wrap",
+      "text-max-width": "140",
+      "background-color": "whitesmoke",
+      "color": "whitesmoke"
+    },
+  },
+  {
     selector: 'node[class = "invis"]',
     style: {
       shape: "ellipse",
@@ -276,6 +315,22 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "line-color": connectionColor,
       "font-weight": "bold",
       "line-style": 'dashed'
+    },
+  },
+  {
+    selector: 'edge[label = "daemonSet"]',
+    style: {
+      "curve-style": "bezier",
+      color: "blue",
+      "text-background-color": "#ffffff",
+      "text-background-opacity": 1,
+      "text-background-padding": "3",
+      width: "3",
+      "target-arrow-shape": "triangle",
+      "target-arrow-color": "lightblue",
+      "line-color": "lightblue",
+      "font-weight": "bold",
+      // "line-style": 'dashed'
     },
   },
 ]

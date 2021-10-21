@@ -22,14 +22,10 @@ function NodeView(props: any) {
   const populateArray = (array: any[]): void => {
     let targetNode;
     let serviceNode;
-    
     for(let i = 0; i < array.length; i++){
-      console.log('herere', array[i])
       if(array[i].kind === "Deployment" && (array[i].selectorName + " deployment" === props.masterNode || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
-        console.log("target",targetNode.kind + " deployment") 
       } 
-      console.log('select',array[i],array[i].selectorName)
       if(array[i].kind === 'Service' && array[i].selectorName + " deployment" === props.masterNode){
         serviceNode = array[i];
         let newPod = {
@@ -52,7 +48,6 @@ function NodeView(props: any) {
         props.dataArray.forEach((ele: any) => {
           if(ele.kind === "Deployment" && (ele.label + " deployment" === props.masterNode) || (ele.selectorName + " deployment" === props.masterNode)){
             if(array[i].namespace === ele.namespace){
-              console.log('answer',array[i])
               let newPod = {
                 data: {
                   id: array[i].label + " stateful",
@@ -74,27 +69,26 @@ function NodeView(props: any) {
         })
       } 
     }
-    console.log("PLEASEEE",targetNode)
+    const podNames: string[] = [];
     for(let i = 0; i < targetNode.replicas; i++){
       //get live podName here
-      console.log('please')
-      console.log("array[i]",targetNode)
-      console.log("pod",targetNode.label)
+      props.podInfoObjects.forEach((pod: any) => {
+        if(Object.values(pod.labelForMatching).includes(props.masterNode.split(' ')[0])){
+          podNames.push(pod.name)
+        } 
+      })
       let newPod = {
         data: {
-          id: targetNode.label + " pod" + i,
-          //pods need live pod name
-          label: targetNode.label + " pod" + i,
-          //pods
+          id: podNames[i],
+          label: podNames[i],
           class: "pod"
         },
       };
-      // line from new pod to master
+      // line from replicaset to newPod
       let edge1 = {
         data: {
-          source: 'master',
-          target: targetNode.label + " pod"  + i,
-          // label: `Edge from master to ${array[i].label}`
+          source: `ReplicaSet: ${targetNode.replicas}`,
+          target: podNames[i],
         }
       }
       // line from service to pod
@@ -111,14 +105,14 @@ function NodeView(props: any) {
       let newContainer = {
         data: {
           id: targetNode.container.name + " container" + i,
-          label: targetNode.container.name + " container" + "\n" + "Port:" ,
+          label: targetNode.container.name + " container" + "\n" + "Port:" + targetNode.container.containerPort ,
           class: "container",
         },
       };
       //line from newPod to newContainer
       let edge3 = {
         data: {
-          source: targetNode.label  + " pod" + i ,
+          source: podNames[i],
           target: targetNode.container.name + " container" + i,
           // label: `Edge from master to ${array[i].label}`
         }
@@ -130,7 +124,7 @@ function NodeView(props: any) {
           class: "image"
         },
       };
-      //line from newContainer to image
+      //line from newContainer to newImage
       let edge4 = {
         data: {
           source: targetNode.container.name + " container" + i,
@@ -140,8 +134,21 @@ function NodeView(props: any) {
       }
       relevantData.push(newPod,newContainer,newImage,edge1,edge3,edge4);
     }
-    
-
+    const newReplicaSet = {
+      data: {
+        id: `ReplicaSet: ${targetNode.replicas}`,
+        label: `ReplicaSet: ${targetNode.replicas}`,
+        class: "replicaSet",
+      }
+    }
+    const edgeReplicaSet = {
+      data: {
+        source: "master",
+        target: `ReplicaSet: ${targetNode.replicas}`,
+        label: "deployment"
+      }
+    } 
+    relevantData.push(newReplicaSet,edgeReplicaSet)
   }
 
   React.useEffect(() => {
@@ -167,9 +174,9 @@ function NodeView(props: any) {
         setTarget(event.target._private.data.label.split(":")[0]);
         setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
-      console.log(event.target._private.data.class)
-      // clickedPod = event.target._private.data.id;
-      // registerPod(clickedPod);
+      console.log('hemmie',event.target._private.data.id)
+      clickedPod = event.target._private.data.id;
+      registerPod(clickedPod);
     })
     }, []);
 

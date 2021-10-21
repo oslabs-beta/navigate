@@ -29,7 +29,7 @@ function getYAMLFiles(localPath: string = '../googleDemo'): object[] {
   return data;
 }
 
-function getJSONFiles(localPath: string = '../navigate_logs'): object[] {
+function getJSONFiles(localPath: string = '../googleDemoLogs'): object[] {
   try {
     const root = path.join(__dirname, localPath);
     data = getFiles(/\.json/, root)

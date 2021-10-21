@@ -84,8 +84,17 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
             ? ele.spec.selector.name
             : ele.spec.selector.app,
           ele.spec.type
+          //default=clusterIP, loadbalancing , node port
         );
         kObjArray.push(newkSerivce);
+      } else if(ele.kind === "DaemonSet"){
+        const newkDaemonSet = new kObjects.kDaemonSet(
+          ele.metadata.name,
+          ele.metadata.namespace ? ele.metadata.namespace : "default",
+          ele.kind,
+          //want more info?
+        );
+        kObjArray.push(newkDaemonSet);
       } else {
         console.log("rejected: "); //ele
       }

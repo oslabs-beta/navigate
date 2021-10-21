@@ -7,11 +7,12 @@ import PodInfoInNodeView from './PodInfoInNodeView';
 function SidebarNodeView(props: any) {
   const deployObjs = props.podDeployments;
   const podObjs = props.podInfoObjects;
-
+  // console.log("pods",podObjs)
   // Filtering podObject list based on on-click 
   const displayPod: Array<object> = [];
   podObjs.forEach((ele: kPodLive) => {
-    if(ele.name.split('-')[0] === props.clickedPod){
+    // console.log("namehere",ele.name)
+    if(ele.name === props.clickedPod){
       displayPod.push(ele)
     }
   })
@@ -19,7 +20,7 @@ function SidebarNodeView(props: any) {
   // Displaying deployment information
   const deploymentMain: any = [];
   deployObjs.forEach((ele: kDeploymentLive) => {
-    if(ele.name === props.masterNode){
+    if(ele.name + " deployment" === props.masterNode){
       deploymentMain.push(
         <div>
           <table>
