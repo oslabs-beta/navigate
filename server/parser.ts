@@ -18,7 +18,7 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
 }
 
 
-function getYAMLFiles(localPath: string = '../yaml_files'): object[] {
+function getYAMLFiles(localPath: string = '../googleDemo'): object[] {
   try{
       const root = path.join(__dirname, localPath);
       data = getFiles(/\.ya?ml/, root);

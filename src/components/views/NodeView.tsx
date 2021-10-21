@@ -22,43 +22,49 @@ function NodeView(props: any) {
   const populateArray = (array: any[]): void => {
     let targetNode;
     let serviceNode;
+    
     for(let i = 0; i < array.length; i++){
-      if(array[i].label === props.masterNode){
+      console.log('herere', array[i])
+      if(array[i].kind === "Deployment" && (array[i].selectorName + " deployment" === props.masterNode || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
+        console.log("target",targetNode.kind + " deployment") 
       } 
-      if(array[i].kind === 'Service' && array[i].selectorName === props.masterNode){
+      console.log('select',array[i],array[i].selectorName)
+      if(array[i].kind === 'Service' && array[i].selectorName + " deployment" === props.masterNode){
         serviceNode = array[i];
         let newPod = {
           data: {
-            id: array[i].label,
-            label: array[i].label + "\n" + `Port: ${serviceNode.port}`,
+            id: array[i].label + ' service',
+            label: array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}`,
             class: "service",
           },
         };
         let edge = {
           data: {
             source: 'master',
-            target: array[i].label,
+            target: array[i].label + ' service',
             label: `connection`
           }
         }
-        relevantData.push(newPod,edge)
+        relevantData.push(newPod, edge)
       }
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
-          if(ele.kind === "Deployment" && ele.label === props.masterNode){
+          if(ele.kind === "Deployment" && (ele.label + " deployment" === props.masterNode) || (ele.selectorName + " deployment" === props.masterNode)){
             if(array[i].namespace === ele.namespace){
+              console.log('answer',array[i])
               let newPod = {
                 data: {
-                  id: array[i].label,
-                  label: array[i].label + "\n" + "Port:" + array[i].container.containerPort,
+                  id: array[i].label + " stateful",
+                  //container.containerPort is undefined
+                  label: array[i].label + "\n" + "Port:" ,
                   class: "stateful",
                 },
               };
               let edge = {
                 data: {
                   source: 'master',
-                  target: array[i].label,
+                  target: array[i].label + " stateful",
                   label: "connection"
                 }
               }
@@ -66,32 +72,37 @@ function NodeView(props: any) {
             }
           } 
         })
-      }
+      } 
     }
+    console.log("PLEASEEE",targetNode)
     for(let i = 0; i < targetNode.replicas; i++){
+      //get live podName here
+      console.log('please')
+      console.log("array[i]",targetNode)
+      console.log("pod",targetNode.label)
       let newPod = {
         data: {
-          id: targetNode.label + i,
+          id: targetNode.label + " pod" + i,
           //pods need live pod name
-          label: targetNode.podLabel + i,
+          label: targetNode.label + " pod" + i,
           //pods
           class: "pod"
         },
       };
-      //line from new pod to master
+      // line from new pod to master
       let edge1 = {
         data: {
           source: 'master',
-          target: targetNode.label + i,
+          target: targetNode.label + " pod"  + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
-      //line from service to pod
+      // line from service to pod
       if(serviceNode){
         let edge2 = {
           data: {
-            source: serviceNode.label,
-            target: targetNode.container.name + i,
+            source: serviceNode.label + " service",
+            target: targetNode.container.name  + " container" + i,
             label: "connection"
           }
         }
@@ -99,23 +110,22 @@ function NodeView(props: any) {
       }
       let newContainer = {
         data: {
-          id: targetNode.container.name + i,
-          label: targetNode.container.name + "\n" + "Port:" + targetNode.container.containerPort,
-          //container??
+          id: targetNode.container.name + " container" + i,
+          label: targetNode.container.name + " container" + "\n" + "Port:" ,
           class: "container",
         },
       };
       //line from newPod to newContainer
       let edge3 = {
         data: {
-          source: targetNode.label + i,
-          target: targetNode.container.name + i,
+          source: targetNode.label  + " pod" + i ,
+          target: targetNode.container.name + " container" + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
       let newImage = {
         data: {
-          id: targetNode.container.image + i,
+          id: targetNode.container.image + " image" + i,
           label: targetNode.container.image.split(":")[0],
           class: "image"
         },
@@ -123,13 +133,14 @@ function NodeView(props: any) {
       //line from newContainer to image
       let edge4 = {
         data: {
-          source: targetNode.container.name + i,
-          target: targetNode.container.image + i,
+          source: targetNode.container.name + " container" + i,
+          target: targetNode.container.image + " image" + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
-      relevantData.push(newPod,edge1,newContainer,newImage,edge3,edge4);
+      relevantData.push(newPod,newContainer,newImage,edge1,edge3,edge4);
     }
+    
 
   }
 
@@ -156,8 +167,9 @@ function NodeView(props: any) {
         setTarget(event.target._private.data.label.split(":")[0]);
         setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
       }
-      clickedPod = event.target._private.data.id;
-      registerPod(clickedPod);
+      console.log(event.target._private.data.class)
+      // clickedPod = event.target._private.data.id;
+      // registerPod(clickedPod);
     })
     }, []);
 

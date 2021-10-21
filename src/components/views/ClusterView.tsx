@@ -41,7 +41,6 @@ function ClusterView(props: any) {
           data: {
             // id: !namespacesArr.includes(array[i].label) ? array[i].label : `${array[i].label} deployment`,
             id: `${array[i].label} deployment`,
-            // label: array[i].label,
             label: `${array[i].label} deployment`,
             class: "deployment",
           },
@@ -50,7 +49,6 @@ function ClusterView(props: any) {
         let edge = {
           data: {
             source: array[i].namespace,
-            // target: array[i].label,
             target: `${array[i].label} deployment`,
             label: `deployment`,
           },
@@ -108,10 +106,7 @@ function ClusterView(props: any) {
                 ele.kind === "Deployment" &&
                 ele.namespace === array[i].namespace &&
                 ele.label === array[i].selectorName
-                //label will not always match
               ) {
-                console.log('ele',ele)
-                console.log('array[i]',array[i])
                 let edge = {
                   data: {
                     source: ele.label + " deployment",
@@ -217,22 +212,3 @@ function ClusterView(props: any) {
 }
 
 export default ClusterView;
-//please ignore for now sry - joel
-//take out edge from namespace to service
-//make edge from deploy to service orange
-              // if (
-              //   ele.kind === "Deployment" &&
-              //   ele.namespace === array[i].namespace &&
-              //   //label will not always match
-              //   ele.label === array[i].label
-              // ) {
-                
-              //   let edge = {
-              //     data: {
-              //       source: ele.label + " deployment",
-              //       target: array[i].label,
-              //       label: `stateful`,
-              //     },
-              //   };
-              //   relevantData.push(edge);
-              // }

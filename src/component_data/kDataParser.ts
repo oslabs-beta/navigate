@@ -13,7 +13,6 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
       let ele = eleArr[j];
       // Checks to see if kubernetes object is a deployment
       if (ele.kind === "Deployment") {
-        // console.log('deploy',ele)
         const newEnv = new kObjects.env(
           ele.spec.template.spec.containers[0].env 
             ? ele.spec.template.spec.containers[0].env[0].name
@@ -38,13 +37,16 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.spec.template.metadata.labels.name
             ? ele.spec.template.metadata.labels.name
             : ele.spec.template.metadata.labels.app,
-          ele.spec.replicas ? ele.spec.replicas : 1,
-          newContainer
+          ele.spec.replicas 
+            ? ele.spec.replicas 
+            : 1,
+          newContainer,
+          ele.spec.selector.matchLabels.name
+            ? ele.spec.selector.matchLabels.name
+            : ele.spec.selector.matchLabels.app,
         );
-        // console.log('new',newDeployment)
         kObjArray.push(newDeployment);
       } else if (ele.kind === "StatefulSet") {
-        // console.log('ele',ele)
         const newVolumeMount = new kObjects.volumeMount(
           ele.spec.template.spec.containers[0].volumeMounts[0].mountPath,
           ele.spec.template.spec.containers[0].volumeMounts[0].name
@@ -64,15 +66,13 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.metadata.namespace ? ele.metadata.namespace : "default",
           ele.kind,
           ele.metadata.name,
-          ele.spec.replicas,
+          ele.spec.replicas ? ele.spec.replicas : 1,
           ele.spec.serviceName,
           newStatefulContainer,
           newVolumeClaimTemplates
         );
         kObjArray.push(newKStatefulSet);
-        // console.log(kObjArray)
       } else if (ele.kind === "Service") {
-        // console.log('service',ele)
         const newkSerivce = new kObjects.kService(
           ele.metadata.namespace ? ele.metadata.namespace : "default",
           ele.metadata.name,
@@ -86,7 +86,6 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.spec.type
         );
         kObjArray.push(newkSerivce);
-        // console.log(kObjArray)
       } else {
         console.log("rejected: "); //ele
       }
