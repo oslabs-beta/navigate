@@ -73,7 +73,7 @@ function App() {
   function parseData(relevantData: kObject[]) 
   {
     const data = dataParser.parseData(relevantData);
-    SetDataProp(data)
+    SetDataProp(data);
   }
 
   return( !nodeViewPage ? 

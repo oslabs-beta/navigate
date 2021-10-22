@@ -6,6 +6,7 @@ import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
 import Legend from './Legend';
+import { anyObject, container } from "../../kObjects/__index";
 
 Cytoscape.use(cola);
 Cytoscape.use(dagre);
@@ -23,34 +24,34 @@ function NodeView(props: any) {
     let targetNode;
     let serviceNode;
     for(let i = 0; i < array.length; i++){
-      if(array[i].label === props.masterNode){
+      if(array[i].kind === "Deployment" && (array[i].selectorName + " deployment" === props.masterNode || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
       } 
-      if(array[i].kind === 'Service' && array[i].selectorName === props.masterNode){
+      if(array[i].kind === 'Service' && findSelectorMatchWithMaster(array[i].selectors,props.masterNode)){
         serviceNode = array[i];
         let newPod = {
           data: {
-            id: array[i].label,
-            label: array[i].label + "\n" + `Port: ${serviceNode.port}`,
+            id: array[i].label + ' service',
+            label: array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}`,
             class: "service",
           },
         };
         let edge = {
           data: {
             source: 'master',
-            target: array[i].label,
+            target: array[i].label + ' service',
             label: `connection`
           }
         }
-        relevantData.push(newPod,edge)
+        relevantData.push(newPod, edge)
       }
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
-          if(ele.kind === "Deployment" && ele.label === props.masterNode){
+          if(ele.kind === "Deployment" && (ele.label + " deployment" === props.masterNode) || (ele.selectorName + " deployment" === props.masterNode)){
             if(array[i].namespace === ele.namespace){
               let newPod = {
                 data: {
-                  id: array[i].label,
+                  id: array[i].label + " stateful",
                   label: array[i].label + "\n" + "Port:" + array[i].container.containerPort,
                   class: "stateful",
                 },
@@ -58,7 +59,7 @@ function NodeView(props: any) {
               let edge = {
                 data: {
                   source: 'master',
-                  target: array[i].label,
+                  target: array[i].label + " stateful",
                   label: "connection"
                 }
               }
@@ -66,32 +67,36 @@ function NodeView(props: any) {
             }
           } 
         })
-      }
+      } 
     }
+    const podNames: string[] = [];
     for(let i = 0; i < targetNode.replicas; i++){
+      //get live podName here
+      props.podInfoObjects.forEach((pod: any) => {
+        if(Object.values(pod.labelForMatching).includes(props.masterNode.split(' ')[0])){
+          podNames.push(pod.name)
+        } 
+      })
       let newPod = {
         data: {
-          id: targetNode.label + i,
-          //pods need live pod name
-          label: targetNode.podLabel + i,
-          //pods
+          id: podNames[i],
+          label: podNames[i],
           class: "pod"
         },
       };
-      //line from new pod to master
+      // line from replicaset to newPod
       let edge1 = {
         data: {
-          source: 'master',
-          target: targetNode.label + i,
-          // label: `Edge from master to ${array[i].label}`
+          source: `ReplicaSet: ${targetNode.replicas}`,
+          target: podNames[i],
         }
       }
-      //line from service to pod
+      // line from service to pod
       if(serviceNode){
         let edge2 = {
           data: {
-            source: serviceNode.label,
-            target: targetNode.container.name + i,
+            source: serviceNode.label + " service",
+            target: targetNode.container.name  + " container" + i,
             label: "connection"
           }
         }
@@ -99,38 +104,60 @@ function NodeView(props: any) {
       }
       let newContainer = {
         data: {
-          id: targetNode.container.name + i,
-          label: targetNode.container.name + "\n" + "Port:" + targetNode.container.containerPort,
-          //container??
+          id: targetNode.container.name + " container" + i,
+          label: targetNode.container.name + " container" + "\n" + "Port:" + targetNode.container.containerPort ,
           class: "container",
         },
       };
       //line from newPod to newContainer
       let edge3 = {
         data: {
-          source: targetNode.label + i,
-          target: targetNode.container.name + i,
+          source: podNames[i],
+          target: targetNode.container.name + " container" + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
       let newImage = {
         data: {
-          id: targetNode.container.image + i,
+          id: targetNode.container.image + " image" + i,
           label: targetNode.container.image.split(":")[0],
           class: "image"
         },
       };
-      //line from newContainer to image
+      //line from newContainer to newImage
       let edge4 = {
         data: {
-          source: targetNode.container.name + i,
-          target: targetNode.container.image + i,
+          source: targetNode.container.name + " container" + i,
+          target: targetNode.container.image + " image" + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
-      relevantData.push(newPod,edge1,newContainer,newImage,edge3,edge4);
+      relevantData.push(newPod,newContainer,newImage,edge1,edge3,edge4);
     }
-
+    const newReplicaSet = {
+      data: {
+        id: `ReplicaSet: ${targetNode.replicas}`,
+        label: `ReplicaSet: ${targetNode.replicas}`,
+        class: "replicaSet",
+      }
+    }
+    const edgeReplicaSet = {
+      data: {
+        source: "master",
+        target: `ReplicaSet: ${targetNode.replicas}`,
+        label: "deployment"
+      }
+    } 
+    relevantData.push(newReplicaSet,edgeReplicaSet)
+  }
+  //import this function instead
+  const findSelectorMatchWithMaster = (obj: anyObject, string: string) => {
+    for(let key in obj){
+      if(`${obj[key]} deployment` === string){
+        return true;
+      }
+    }
+    return false;
   }
 
   React.useEffect(() => {

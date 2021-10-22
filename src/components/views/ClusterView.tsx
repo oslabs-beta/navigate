@@ -5,6 +5,8 @@ import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
 import Legend from './Legend';
+import { electron } from "webpack";
+import { anyObject } from "../../kObjects/__index";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -38,18 +40,15 @@ function ClusterView(props: any) {
       if (array[i].kind === "Deployment") {
         let newNode = {
           data: {
-            id: !namespacesArr.includes(array[i].label) ? array[i].label : `${array[i].label} deployment`,
-            // id: `${array[i].label} deployment`,
+            id: `${array[i].label} deployment`,
             label: array[i].label,
             class: "deployment",
           },
         };
-        //remove edge?
         let edge = {
           data: {
             source: array[i].namespace,
-            target: array[i].label,
-            // target: `${array[i].label} deployment`,
+            target: `${array[i].label} deployment`,
             label: `deployment`,
           },
         };
@@ -84,39 +83,33 @@ function ClusterView(props: any) {
         });
       } 
       else if (array[i].kind === "Service") {
+        //change class to include servicetype
         if (!namespacesArr.includes(array[i].label)){
             let newNode = {
               data: {
                 id: array[i].label,
-                label: array[i].label,
+                label: (array[i].type) ? `${array[i].label} ${array[i].type}` : `${array[i].label} ClusterIP`,
                 class: "service",
-              },
-            };
-            //remove edge?
-            let edge = {
-              data: {
-                source: array[i].namespace,
-                target: array[i].label,
-                label: `deployment`,
               },
             };
             props.dataArray.forEach((ele: any) => {
               if (
                 ele.kind === "Deployment" &&
-                ele.namespace === array[i].namespace
+                ele.namespace === array[i].namespace &&
+                findSelectorMatch(ele.selectors,array[i].selectors)
               ) {
                 let edge = {
                   data: {
-                    source: ele.label,
+                    source: ele.label + " deployment",
                     target: array[i].label,
-                    label: `connection`,
+                    label: `stateful`,
                   },
                 };
                 relevantData.push(edge);
+           
               }
             });
-            //remove edge? 
-            relevantData.push(newNode, edge);
+            relevantData.push(newNode);
           } 
           else{
             let newNode = {
@@ -135,6 +128,22 @@ function ClusterView(props: any) {
             };
             relevantData.push(newNode, edge);
           }
+        } else if(array[i].kind === "DaemonSet") {
+          let newDaemonSet = {
+            data: {
+              id: array[i].label,
+              label: array[i].label,
+              class: "daemonSet",
+            },
+          };
+          let edge = {
+            data: {
+              source: array[i].namespace,
+              target: array[i].label,
+              label: `daemonSet`,
+            },
+          };
+          relevantData.push(newDaemonSet, edge);
         }
       }
     
@@ -145,6 +154,14 @@ function ClusterView(props: any) {
         return props.dataArray[i].namespace;
       }
     }
+  }
+  const findSelectorMatch = (obj1: anyObject, obj2: anyObject) => {
+    for(let key in obj1){
+      if(obj2[key] === obj1[key]){
+        return true;
+      }
+    }
+    return false;
   }
   React.useEffect(() => {
     populateNamespaces(props.dataArray);

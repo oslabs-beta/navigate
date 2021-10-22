@@ -13,7 +13,6 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
       let ele = eleArr[j];
       // Checks to see if kubernetes object is a deployment
       if (ele.kind === "Deployment") {
-        // console.log('deploy',ele)
         const newEnv = new kObjects.env(
           ele.spec.template.spec.containers[0].env 
             ? ele.spec.template.spec.containers[0].env[0].name
@@ -34,17 +33,16 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.metadata.namespace ? ele.metadata.namespace : "default",
           ele.kind,
           ele.metadata.name,
-          //.name can be anything need to grab dynamically
-          ele.spec.template.metadata.labels.name
-            ? ele.spec.template.metadata.labels.name
-            : ele.spec.template.metadata.labels.app,
-          ele.spec.replicas ? ele.spec.replicas : 1,
-          newContainer
+          //placeholder offline podname
+          ele.metadata.name,
+          ele.spec.replicas 
+            ? ele.spec.replicas 
+            : 1,
+          newContainer,
+          ele.spec.selector.matchLabels
         );
-        // console.log('new',newDeployment)
         kObjArray.push(newDeployment);
       } else if (ele.kind === "StatefulSet") {
-        // console.log('ele',ele)
         const newVolumeMount = new kObjects.volumeMount(
           ele.spec.template.spec.containers[0].volumeMounts[0].mountPath,
           ele.spec.template.spec.containers[0].volumeMounts[0].name
@@ -64,29 +62,31 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.metadata.namespace ? ele.metadata.namespace : "default",
           ele.kind,
           ele.metadata.name,
-          ele.spec.replicas,
+          ele.spec.replicas ? ele.spec.replicas : 1,
           ele.spec.serviceName,
           newStatefulContainer,
           newVolumeClaimTemplates
         );
         kObjArray.push(newKStatefulSet);
-        // console.log(kObjArray)
       } else if (ele.kind === "Service") {
-        // console.log('service',ele)
         const newkSerivce = new kObjects.kService(
           ele.metadata.namespace ? ele.metadata.namespace : "default",
           ele.metadata.name,
           ele.kind,
           ele.spec.ports[0].port,
           ele.spec.ports[0].targetPort,
-          //ele.spec.selector['app.kubernetes.io/name']
-          ele.spec.selector.name
-            ? ele.spec.selector.name
-            : ele.spec.selector.app,
-          ele.spec.type
+          ele.spec.selector,
+          ele.spec.type,
         );
         kObjArray.push(newkSerivce);
-        // console.log(kObjArray)
+      } else if(ele.kind === "DaemonSet"){
+        const newkDaemonSet = new kObjects.kDaemonSet(
+          ele.metadata.name,
+          ele.metadata.namespace ? ele.metadata.namespace : "default",
+          ele.kind,
+          //want more info?
+        );
+        kObjArray.push(newkDaemonSet);
       } else {
         console.log("rejected: "); //ele
       }
