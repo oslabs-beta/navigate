@@ -52,7 +52,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[class = "pod"]',
     style: {
-      shape: "elipse",
+      shape: "ellipse",
       width: "40%",
       height: "40%",
       "font-size": "14%",
