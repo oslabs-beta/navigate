@@ -79,8 +79,8 @@ function NodeView(props: any) {
       })
       let newPod = {
         data: {
-          id: podNames[i],
-          label: podNames[i],
+          id: podNames[i] ? podNames[i] : targetNode.podLabel + i,
+          label: podNames[i] ? podNames[i] : targetNode.podLabel + i,
           class: "pod"
         },
       };
@@ -88,7 +88,7 @@ function NodeView(props: any) {
       let edge1 = {
         data: {
           source: `ReplicaSet: ${targetNode.replicas}`,
-          target: podNames[i],
+          target: podNames[i] ? podNames[i] : targetNode.podLabel + i,
         }
       }
       // line from service to pod
