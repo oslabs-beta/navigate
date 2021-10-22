@@ -27,7 +27,7 @@ function NodeView(props: any) {
       if(array[i].kind === "Deployment" && (array[i].selectorName + " deployment" === props.masterNode || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
       } 
-      if(array[i].kind === 'Service' && findSelectorMatch(array[i].selectors,props.masterNode)){
+      if(array[i].kind === 'Service' && findSelectorMatchWithMaster(array[i].selectors,props.masterNode)){
         serviceNode = array[i];
         let newPod = {
           data: {
@@ -153,7 +153,7 @@ function NodeView(props: any) {
   }
   //import this function instead
   //array[i].selectorName + " deployment" === props.masterNode
-  const findSelectorMatch = (obj: anyObject, string: string) => {
+  const findSelectorMatchWithMaster = (obj: anyObject, string: string) => {
     for(let key in obj){
       if(`${obj[key]} deployment` === string){
         return true;

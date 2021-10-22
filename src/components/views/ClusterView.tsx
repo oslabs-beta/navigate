@@ -112,6 +112,7 @@ function ClusterView(props: any) {
                   },
                 };
                 relevantData.push(edge);
+           
               }
             });
             //remove edge? 
