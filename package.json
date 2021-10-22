@@ -58,7 +58,7 @@
     "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
-    "test": "jest --verbose --unhandled-rejections=strict --watchAll=false",
+    "test": "jest --verbose --unhandled-rejections=strict --forceExit",
     "start": "node server/GetLiveData/getKubernetesData.js & ts-node server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack serve --open",
