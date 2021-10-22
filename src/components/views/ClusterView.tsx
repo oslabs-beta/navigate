@@ -38,16 +38,13 @@ function ClusterView(props: any) {
   const populateArray = (array: any[]): void => {
     for (let i = 0; i < array.length; i++) {
       if (array[i].kind === "Deployment") {
-        //change deployment to include deployment
         let newNode = {
           data: {
-            // id: !namespacesArr.includes(array[i].label) ? array[i].label : `${array[i].label} deployment`,
             id: `${array[i].label} deployment`,
             label: array[i].label,
             class: "deployment",
           },
         };
-        //remove edge?
         let edge = {
           data: {
             source: array[i].namespace,
@@ -86,8 +83,7 @@ function ClusterView(props: any) {
         });
       } 
       else if (array[i].kind === "Service") {
-        //change service to include service
-        console.log('service',array[i].selectors)
+        //change class to include servicetype
         if (!namespacesArr.includes(array[i].label)){
             let newNode = {
               data: {
@@ -100,9 +96,7 @@ function ClusterView(props: any) {
               if (
                 ele.kind === "Deployment" &&
                 ele.namespace === array[i].namespace &&
-                //check for selector match here
                 findSelectorMatch(ele.selectors,array[i].selectors)
-                // ele.selectors.app === array[i].selectors.app
               ) {
                 let edge = {
                   data: {
@@ -115,7 +109,6 @@ function ClusterView(props: any) {
            
               }
             });
-            //remove edge? 
             relevantData.push(newNode);
           } 
           else{
@@ -136,7 +129,6 @@ function ClusterView(props: any) {
             relevantData.push(newNode, edge);
           }
         } else if(array[i].kind === "DaemonSet") {
-          console.log("daemon",array[i])
           let newDaemonSet = {
             data: {
               id: array[i].label,

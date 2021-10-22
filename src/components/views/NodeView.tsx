@@ -6,7 +6,7 @@ import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
 import Legend from './Legend';
-import { anyObject } from "../../kObjects/__index";
+import { anyObject, container } from "../../kObjects/__index";
 
 Cytoscape.use(cola);
 Cytoscape.use(dagre);
@@ -52,8 +52,7 @@ function NodeView(props: any) {
               let newPod = {
                 data: {
                   id: array[i].label + " stateful",
-                  //container.containerPort is undefined
-                  label: array[i].label + "\n" + "Port:" ,
+                  label: array[i].label + "\n" + "Port:" + array[i].container.containerPort,
                   class: "stateful",
                 },
               };
@@ -152,7 +151,6 @@ function NodeView(props: any) {
     relevantData.push(newReplicaSet,edgeReplicaSet)
   }
   //import this function instead
-  //array[i].selectorName + " deployment" === props.masterNode
   const findSelectorMatchWithMaster = (obj: anyObject, string: string) => {
     for(let key in obj){
       if(`${obj[key]} deployment` === string){

@@ -13,7 +13,6 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
       let ele = eleArr[j];
       // Checks to see if kubernetes object is a deployment
       if (ele.kind === "Deployment") {
-        console.log('ele',ele.spec.template.metadata.labels)
         const newEnv = new kObjects.env(
           ele.spec.template.spec.containers[0].env 
             ? ele.spec.template.spec.containers[0].env[0].name
@@ -36,18 +35,11 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.metadata.name,
           //placeholder offline podname
           ele.metadata.name,
-            // ele.spec.template.metadata.labels.name
-            // ? ele.spec.template.metadata.labels.name
-            // : ele.spec.template.metadata.labels.app,
           ele.spec.replicas 
             ? ele.spec.replicas 
             : 1,
           newContainer,
-          //.name can be anything need to grab dynamically
           ele.spec.selector.matchLabels
-          // ele.spec.selector.matchLabels.name
-          // ? ele.spec.selector.matchLabels.name
-          // : ele.spec.selector.matchLabels.app,
         );
         kObjArray.push(newDeployment);
       } else if (ele.kind === "StatefulSet") {
@@ -83,13 +75,8 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
           ele.kind,
           ele.spec.ports[0].port,
           ele.spec.ports[0].targetPort,
-          //ele.spec.selector['app.kubernetes.io/name']
           ele.spec.selector,
-          // ele.spec.selector.name
-          //   ? ele.spec.selector.name
-          //   : ele.spec.selector.app,
-          ele.spec.type
-          //default=clusterIP, loadbalancing , node port
+          ele.spec.type,
         );
         kObjArray.push(newkSerivce);
       } else if(ele.kind === "DaemonSet"){
