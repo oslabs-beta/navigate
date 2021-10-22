@@ -6,6 +6,7 @@ import SidebarNodeView from './SidebarNodeView'
 import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
 import Legend from './Legend';
+import { anyObject } from "../../kObjects/__index";
 
 Cytoscape.use(cola);
 Cytoscape.use(dagre);
@@ -26,7 +27,7 @@ function NodeView(props: any) {
       if(array[i].kind === "Deployment" && (array[i].selectorName + " deployment" === props.masterNode || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
       } 
-      if(array[i].kind === 'Service' && array[i].selectorName + " deployment" === props.masterNode){
+      if(array[i].kind === 'Service' && findSelectorMatch(array[i].selectors,props.masterNode)){
         serviceNode = array[i];
         let newPod = {
           data: {
@@ -149,6 +150,16 @@ function NodeView(props: any) {
       }
     } 
     relevantData.push(newReplicaSet,edgeReplicaSet)
+  }
+  //import this function instead
+  //array[i].selectorName + " deployment" === props.masterNode
+  const findSelectorMatch = (obj: anyObject, string: string) => {
+    for(let key in obj){
+      if(`${obj[key]} deployment` === string){
+        return true;
+      }
+    }
+    return false;
   }
 
   React.useEffect(() => {

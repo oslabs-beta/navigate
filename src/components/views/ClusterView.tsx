@@ -6,6 +6,7 @@ import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
 import Legend from './Legend';
 import { electron } from "webpack";
+import { anyObject } from "../../kObjects/__index";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -86,6 +87,7 @@ function ClusterView(props: any) {
       } 
       else if (array[i].kind === "Service") {
         //change service to include service
+        console.log('service',array[i].selectors)
         if (!namespacesArr.includes(array[i].label)){
             let newNode = {
               data: {
@@ -94,19 +96,13 @@ function ClusterView(props: any) {
                 class: "service",
               },
             };
-            //remove deployment edge?
-            // let edge = {
-            //   data: {
-            //     source: array[i].namespace,
-            //     target: array[i].label,
-            //     label: `service deployment`,
-            //   },
-            // };
             props.dataArray.forEach((ele: any) => {
               if (
                 ele.kind === "Deployment" &&
                 ele.namespace === array[i].namespace &&
-                ele.label === array[i].selectorName
+                //check for selector match here
+                findSelectorMatch(ele.selectors,array[i].selectors)
+                // ele.selectors.app === array[i].selectors.app
               ) {
                 let edge = {
                   data: {
@@ -165,6 +161,14 @@ function ClusterView(props: any) {
         return props.dataArray[i].namespace;
       }
     }
+  }
+  const findSelectorMatch = (obj1: anyObject, obj2: anyObject) => {
+    for(let key in obj1){
+      if(obj2[key] === obj1[key]){
+        return true;
+      }
+    }
+    return false;
   }
   React.useEffect(() => {
     populateNamespaces(props.dataArray);
