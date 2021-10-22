@@ -35,7 +35,6 @@ function getElementsOfKind(kind, writeToDisk = false) {
 function getNamespaceElementPairs(kind){
   const output = {};
   let elements = getElementsOfKind(kind);
-  console.log("Make brian happy");
   elements.forEach(element => {
     if(!element[0].metadata.namespace){
       if(!output["default"]) output["default"] = [element[0].metadata.name];
@@ -153,7 +152,6 @@ async function getPodInfo(namespacePodKVP){
 
 setInterval(()=>{
   aggregateLogs();
-  console.log("setInterval triggered");
 }, 60000);
 
 module.exports = {
