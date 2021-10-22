@@ -150,7 +150,9 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
-aggregateLogs();
+setInterval(()=>{
+  aggregateLogs();
+}, 60000);
 
 module.exports = {
   parsePodNames,
