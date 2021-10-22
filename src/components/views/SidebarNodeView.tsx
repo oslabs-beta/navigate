@@ -7,11 +7,9 @@ import PodInfoInNodeView from './PodInfoInNodeView';
 function SidebarNodeView(props: any) {
   const deployObjs = props.podDeployments;
   const podObjs = props.podInfoObjects;
-  // console.log("pods",podObjs)
   // Filtering podObject list based on on-click 
   const displayPod: Array<object> = [];
   podObjs.forEach((ele: kPodLive) => {
-    // console.log("namehere",ele.name)
     if(ele.name === props.clickedPod){
       displayPod.push(ele)
     }
