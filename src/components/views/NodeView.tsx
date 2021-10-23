@@ -7,6 +7,7 @@ import {GraphStyles} from "../../scss/GraphStyles";
 import dagre from 'cytoscape-dagre'
 import Legend from './Legend';
 import { anyObject, container } from "../../kObjects/__index";
+import { kObject } from "../../kObjects/kObject";
 
 Cytoscape.use(cola);
 Cytoscape.use(dagre);
@@ -20,15 +21,29 @@ function NodeView(props: any) {
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
+  const getMasterNode = (label: string) => {
+    props.dataArray.forEach((obj: anyObject) => {
+      if(`${obj.label.replace(" deployment","")} deployment`=== label) {
+        return obj;
+      }
+      return undefined
+    })
+  }
+  const str = "str"
   const populateArray = (array: any[]): void => {
     let targetNode;
     let serviceNode;
+    let masterNode;
     for(let i = 0; i < array.length; i++){
-      if(array[i].kind === "Deployment" && (array[i].selectorName + " deployment" === props.masterNode || array[i].label + " deployment" === props.masterNode) ){
+      if(array[i].kind === "Deployment" && (findSelectorMatchWithMaster(array[i].selectors,props.masterNode) || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
-      } 
+        console.log('targetNode1',targetNode)
+      }
       if(array[i].kind === 'Service' && findSelectorMatchWithMaster(array[i].selectors,props.masterNode)){
+      // if(array[i].kind === 'Service' && findSelectorMatch(array[i].selectors,targetNode.selectors)){
         serviceNode = array[i];
+        console.log('targetNode2',targetNode)
+        // console.log('service',serviceNode)
         let newPod = {
           data: {
             id: array[i].label + ' service',
@@ -45,6 +60,7 @@ function NodeView(props: any) {
         }
         relevantData.push(newPod, edge)
       }
+      console.log('targetNode3',targetNode)
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
           if(ele.kind === "Deployment" && (ele.label + " deployment" === props.masterNode) || (ele.selectorName + " deployment" === props.masterNode)){
@@ -70,17 +86,20 @@ function NodeView(props: any) {
       } 
     }
     const podNames: string[] = [];
+    const containerIDs : string[] = [];
     for(let i = 0; i < targetNode.replicas; i++){
       //get live podName here
       props.podInfoObjects.forEach((pod: any) => {
         if(Object.values(pod.labelForMatching).includes(props.masterNode.split(' ')[0])){
-          podNames.push(pod.name)
+          // console.log("pod",pod.containerID)
+          if(!podNames.includes(pod.name)) podNames.push(pod.name);
+          if(!containerIDs.includes(pod.containerID)) containerIDs.push(pod.containerID)
         } 
       })
       let newPod = {
         data: {
-          id: podNames[i] ? podNames[i] : targetNode.podLabel + i,
-          label: podNames[i] ? podNames[i] : targetNode.podLabel + i,
+          id: podNames[i] !== undefined ? podNames[i] : targetNode.podLabel + 'pod' + i,
+          label: podNames[i] !== undefined ? podNames[i] : targetNode.podLabel + 'pod' + i,
           class: "pod"
         },
       };
@@ -88,7 +107,7 @@ function NodeView(props: any) {
       let edge1 = {
         data: {
           source: `ReplicaSet: ${targetNode.replicas}`,
-          target: podNames[i] ? podNames[i] : targetNode.podLabel + i,
+          target: podNames[i] !== undefined ? podNames[i] : targetNode.podLabel + 'pod' + i,
         }
       }
       // line from service to pod
@@ -96,7 +115,7 @@ function NodeView(props: any) {
         let edge2 = {
           data: {
             source: serviceNode.label + " service",
-            target: targetNode.container.name  + " container" + i,
+            target: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
             label: "connection"
           }
         }
@@ -104,16 +123,16 @@ function NodeView(props: any) {
       }
       let newContainer = {
         data: {
-          id: targetNode.container.name + " container" + i,
-          label: targetNode.container.name + " container" + "\n" + "Port:" + targetNode.container.containerPort ,
+          id: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
+          label: targetNode.container.name + "\n" + "Port:" + targetNode.container.containerPort ,
           class: "container",
         },
       };
       //line from newPod to newContainer
       let edge3 = {
         data: {
-          source: podNames[i],
-          target: targetNode.container.name + " container" + i,
+          source: podNames[i] !== undefined ? podNames[i] : targetNode.podLabel + 'pod' + i,
+          target: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
           // label: `Edge from master to ${array[i].label}`
         }
       }
@@ -127,7 +146,7 @@ function NodeView(props: any) {
       //line from newContainer to newImage
       let edge4 = {
         data: {
-          source: targetNode.container.name + " container" + i,
+          source: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
           target: targetNode.container.image + " image" + i,
           // label: `Edge from master to ${array[i].label}`
         }
@@ -154,6 +173,16 @@ function NodeView(props: any) {
   const findSelectorMatchWithMaster = (obj: anyObject, string: string) => {
     for(let key in obj){
       if(`${obj[key]} deployment` === string){
+        console.log('true findSelector',obj,string)
+        return true;
+      }
+    }
+    console.log('false findSelector',obj,string)
+    return false;
+  }
+  const findSelectorMatch = (obj1: anyObject, obj2: anyObject) => {
+    for(let key in obj1){
+      if(obj2[key] === obj1[key]){
         return true;
       }
     }
@@ -175,16 +204,13 @@ function NodeView(props: any) {
     });
     layout.run();
     cy.on('click',(event)=> {
-      if(event.target._private.data.class !== "undefined" && event.target._private.data.class !== "image"){
-        setTarget(event.target._private.data.id);
-        setImage("");
+      if(event.target._private.data.class === "container"){
+        console.log('nodeViewClick',event.target._private.data.id);
       }
-      else if(event.target._private.data.class === "image"){
-        setTarget(event.target._private.data.label.split(":")[0]);
-        setImage(event.target._private.data.id.slice(0,event.target._private.data.id.length - 2));
+      else if(event.target._private.data.class === 'pod'){
+        clickedPod = event.target._private.data.id;
+        registerPod(clickedPod);
       }
-      clickedPod = event.target._private.data.id;
-      registerPod(clickedPod);
     })
     }, []);
 

@@ -115,18 +115,36 @@ function ClusterView(props: any) {
             let newNode = {
               data: {
                 id: `${array[i].label} service`,
-                label: `${array[i].label} service`,
+                label: (array[i].type) ? `${array[i].label} ${array[i].type}` : `${array[i].label} ClusterIP`,
                 class: "service",
               },
             };
-            let edge = {
-              data: {
-                source: array[i].label,
-                target: `${array[i].label} service`,
-                label: `deployment`,
-              },
-            };
-            relevantData.push(newNode, edge);
+            props.dataArray.forEach((ele: any) => {
+              if (
+                ele.kind === "Deployment" &&
+                ele.namespace === array[i].namespace &&
+                findSelectorMatch(ele.selectors,array[i].selectors)
+              ) {
+                let edge = {
+                  data: {
+                    source: ele.label + " deployment",
+                    target: array[i].label + ' service',
+                    label: `stateful`,
+                  },
+                };
+                relevantData.push(edge);
+           
+              }
+            });
+            relevantData.push(newNode);
+            // let edge = {
+            //   data: {
+            //     source: array[i].label,
+            //     target: `${array[i].label} service`,
+            //     label: `deployment`,
+            //   },
+            // };
+            // relevantData.push(newNode, edge);
           }
         } else if(array[i].kind === "DaemonSet") {
           let newDaemonSet = {
