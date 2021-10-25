@@ -21,33 +21,42 @@ function NodeView(props: any) {
   const relevantData: any[] = [
     {data: { id: "master", label: props.masterNode , class:"namespace"}},
   ];
+  let testo: anyObject = {};
   const getMasterNode = (label: string) => {
+    // console.log('master',props.masterNode)
     props.dataArray.forEach((obj: anyObject) => {
-      if(`${obj.label.replace(" deployment","")} deployment`=== label) {
-        return obj;
+      // console.log('labels',obj.label)
+      if(`${obj.label} deployment`=== label) {
+        return testo = obj;
       }
-      return undefined
     })
   }
-  const str = "str"
   const populateArray = (array: any[]): void => {
     let targetNode;
-    let serviceNode;
-    let masterNode;
+    let serviceNodes: anyObject[] = [];
+    let serviceNode: anyObject = {};
+    // let testo = getMasterNode(props.masterNode);
+    console.log('testo',testo)
     for(let i = 0; i < array.length; i++){
+      // console.log("everyObj",array[i],'kind',array[i].kind)
       if(array[i].kind === "Deployment" && (findSelectorMatchWithMaster(array[i].selectors,props.masterNode) || array[i].label + " deployment" === props.masterNode) ){
         targetNode = array[i]
-        console.log('targetNode1',targetNode)
+        // console.log('targetNode1',targetNode)
       }
-      if(array[i].kind === 'Service' && findSelectorMatchWithMaster(array[i].selectors,props.masterNode)){
-      // if(array[i].kind === 'Service' && findSelectorMatch(array[i].selectors,targetNode.selectors)){
+      // if(array[i].kind === 'Service' && findSelectorMatch(array[i].selectors,testo.selectors)){
+      if(array[i].kind === 'Service' && findSelectorMatch(array[i],testo)){
+        // if(array[i].kind === 'Service'){
+        // console.log('truth',findSelectorMatch(array[i].selectors,testo.selectors));
         serviceNode = array[i];
-        console.log('targetNode2',targetNode)
+        serviceNodes.push(array[i]);
+        // console.log('target',targetNode)
+        // console.log('slector',findSelectorMatchWithMaster(array[i].selectors,props.masterNode))
         // console.log('service',serviceNode)
         let newPod = {
           data: {
             id: array[i].label + ' service',
-            label: array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}`,
+            label: serviceNode.port ? array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}` : array[i].label + ' service' + "\n" + `Port: N/A`,
+            // label: serviceNodes[i].port ? array[i].label + ' service' + "\n" + `Port: ${serviceNodes[i].port}` : array[i].label + ' service' + "\n" + `Port: N/A`,
             class: "service",
           },
         };
@@ -60,7 +69,24 @@ function NodeView(props: any) {
         }
         relevantData.push(newPod, edge)
       }
-      console.log('targetNode3',targetNode)
+      // for(let i = 0; i < serviceNodes.length; i++){
+      //   let newPod = {
+      //     data: {
+      //       id: array[i].label + ' service',
+      //       // label: serviceNode.port ? array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}` : array[i].label + ' service' + "\n" + `Port: N/A`,
+      //       label: serviceNodes[i].port ? array[i].label + ' service' + "\n" + `Port: ${serviceNodes[i].port}` : array[i].label + ' service' + "\n" + `Port: N/A`,
+      //       class: "service",
+      //     },
+      //   };
+      //   let edge = {
+      //     data: {
+      //       source: 'master',
+      //       target: array[i].label + ' service',
+      //       label: `connection`
+      //     }
+      //   }
+      //   relevantData.push(newPod, edge)
+      // }
       if(array[i].kind === 'StatefulSet'){
         props.dataArray.forEach((ele: any) => {
           if(ele.kind === "Deployment" && (ele.label + " deployment" === props.masterNode) || (ele.selectorName + " deployment" === props.masterNode)){
@@ -111,16 +137,28 @@ function NodeView(props: any) {
         }
       }
       // line from service to pod
-      if(serviceNode){
-        let edge2 = {
-          data: {
-            source: serviceNode.label + " service",
-            target: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
-            label: "connection"
+      if(serviceNodes){
+        for(let j = 0; j < serviceNodes.length; j++){
+          let edge2 = {
+            data: {
+              source: serviceNodes[j].label + " service",
+              target: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
+              label: "connection"
+            }
           }
+          relevantData.push(edge2)
         }
-        relevantData.push(edge2)
       }
+      // if(serviceNode){
+      //   let edge2 = {
+      //     data: {
+      //       source: serviceNode.label + " service",
+      //       target: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
+      //       label: "connection"
+      //     }
+      //   }
+      //   relevantData.push(edge2)
+      // }
       let newContainer = {
         data: {
           id: containerIDs[i] !== undefined ? containerIDs[i]: targetNode.container.name + " container" + i,
@@ -170,27 +208,50 @@ function NodeView(props: any) {
     relevantData.push(newReplicaSet,edgeReplicaSet)
   }
   //import this function instead
-  const findSelectorMatchWithMaster = (obj: anyObject, string: string) => {
+  const findSelectorMatchWithMaster = (obj: anyObject, string: string) =>{
     for(let key in obj){
       if(`${obj[key]} deployment` === string){
-        console.log('true findSelector',obj,string)
         return true;
       }
     }
-    console.log('false findSelector',obj,string)
     return false;
   }
   const findSelectorMatch = (obj1: anyObject, obj2: anyObject) => {
-    for(let key in obj1){
-      if(obj2[key] === obj1[key]){
+    console.log('obj1',obj1,'obj2',obj2)
+    let namespace = false;
+    for(let key in obj2.selectors){
+      // if(obj2.selectors[key] === obj1.selectors[key] && obj1.selectors[key] === obj1.namespace){
+      //   // console.log('bothTrue', obj2[key],obj1[key])
+      //   namespace = true;
+      // }
+      // console.log(obj1.selectors[key], obj2.namespace)
+      // // console.log(obj1.selectors[key], obj1.namespace)
+      // console.log(obj2.selectors[key] !== obj2.namespace)
+      if(obj2.selectors[key] === obj1.selectors[key]){
+        // console.log(obj1.selectors[key], obj2.namespace)
+        // console.log('bothTrue', obj2[key],obj1[key])
+        if(obj1.selectors[key] !== obj2.namespace)
         return true;
       }
+      else continue;
     }
     return false;
   }
+  // const findSelectorMatch = (obj1: anyObject, obj2: anyObject) => {
+  //   // console.log('obj1',obj1,'obj2',obj2)
+  //   for(let key in obj2.selectors){
+  //     if(obj2.selectors[key] === obj1.selectors[key]){
+  //       // console.log('bothTrue', obj2[key],obj1[key])
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
   React.useEffect(() => {
+    getMasterNode(props.masterNode);
     populateArray(props.dataArray);
+    
     const config: Cytoscape.CytoscapeOptions = {
       container: nodeViewRef.current,
       style: GraphStyles,

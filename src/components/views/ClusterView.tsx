@@ -205,7 +205,7 @@ function ClusterView(props: any) {
         props.setNamespace(getNamespace(event.target._private.data.id));
         props.setMasterNode(event.target._private.data.id);
         props.setTrigger(true);
-        console.log(event.target._private.data.label);
+        console.log(event.target._private.data.id);
       }
     })
   }, [props.dataArray]);

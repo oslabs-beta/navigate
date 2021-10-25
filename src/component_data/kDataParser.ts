@@ -39,7 +39,10 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
             ? ele.spec.replicas 
             : 1,
           newContainer,
-          ele.spec.selector.matchLabels
+          ele.metadata.labels
+            ? ele.metadata.labels
+            : ele.spec.selector.matchLabels,
+          // ele.spec.selector.matchLabels,
         );
         kObjArray.push(newDeployment);
       } else if (ele.kind === "StatefulSet") {
