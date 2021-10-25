@@ -5,13 +5,10 @@ import { appendFile } from "fs";
 const kObjArray: kObject[] = [];
 
 export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
-  // console.log('rel',relevantData)
   for (let i = 0; i < relevantData.length; i++) {
-    // Since each YAML file can have multiple objects, [0] assumes that there is only one object per file.
     let eleArr = relevantData[i];
     for (let j = 0; j < eleArr.length; j++) {
       let ele = eleArr[j];
-      // Checks to see if kubernetes object is a deployment
       if (ele.kind === "Deployment") {
         const newEnv = new kObjects.env(
           ele.spec.template.spec.containers[0].env 
@@ -39,7 +36,9 @@ export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
             ? ele.spec.replicas 
             : 1,
           newContainer,
-          ele.spec.selector.matchLabels
+          ele.metadata.labels
+            ? ele.metadata.labels
+            : ele.spec.selector.matchLabels,
         );
         kObjArray.push(newDeployment);
       } else if (ele.kind === "StatefulSet") {

@@ -1,178 +1,178 @@
 {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": {
-        "creationTimestamp": "2021-10-09T16:06:11Z",
-        "generateName": "mafia-backend-6d5d7c9b8f-",
-        "labels": {
-            "app": "mafia",
-            "name": "mafia-backend",
-            "pod-template-hash": "6d5d7c9b8f"
-        },
-        "name": "mafia-backend-6d5d7c9b8f-crfmr",
-        "namespace": "mafia",
-        "ownerReferences": [
-            {
-                "apiVersion": "apps/v1",
-                "blockOwnerDeletion": true,
-                "controller": true,
-                "kind": "ReplicaSet",
-                "name": "mafia-backend-6d5d7c9b8f",
-                "uid": "d52ee5b2-d02a-49a0-912f-e520e708e7cf"
-            }
-        ],
-        "resourceVersion": "3320",
-        "uid": "806fc4f8-9a26-4daa-ac39-04dd42732731"
-    },
-    "spec": {
-        "containers": [
-            {
-                "env": [
-                    {
-                        "name": "REDIS_HOST",
-                        "value": "redis-service.mafia"
-                    }
-                ],
-                "image": "taleodor/mafia-express@sha256:8328cd7de911367ef2a52a60f8696720e89c152c9a437983c7eccf411b0ede75",
-                "imagePullPolicy": "IfNotPresent",
-                "name": "mafia-backend-container",
-                "ports": [
-                    {
-                        "containerPort": 3000,
-                        "protocol": "TCP"
-                    }
-                ],
-                "resources": {},
-                "terminationMessagePath": "/dev/termination-log",
-                "terminationMessagePolicy": "File",
-                "volumeMounts": [
-                    {
-                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-67t58",
-                        "readOnly": true
-                    }
-                ]
-            }
-        ],
-        "dnsPolicy": "ClusterFirst",
-        "enableServiceLinks": true,
-        "nodeName": "docker-desktop",
-        "preemptionPolicy": "PreemptLowerPriority",
-        "priority": 0,
-        "restartPolicy": "Always",
-        "schedulerName": "default-scheduler",
-        "securityContext": {},
-        "serviceAccount": "default",
-        "serviceAccountName": "default",
-        "terminationGracePeriodSeconds": 30,
-        "tolerations": [
-            {
-                "effect": "NoExecute",
-                "key": "node.kubernetes.io/not-ready",
-                "operator": "Exists",
-                "tolerationSeconds": 300
-            },
-            {
-                "effect": "NoExecute",
-                "key": "node.kubernetes.io/unreachable",
-                "operator": "Exists",
-                "tolerationSeconds": 300
-            }
-        ],
-        "volumes": [
-            {
-                "name": "kube-api-access-67t58",
-                "projected": {
-                    "defaultMode": 420,
-                    "sources": [
-                        {
-                            "serviceAccountToken": {
-                                "expirationSeconds": 3607,
-                                "path": "token"
-                            }
-                        },
-                        {
-                            "configMap": {
-                                "items": [
-                                    {
-                                        "key": "ca.crt",
-                                        "path": "ca.crt"
-                                    }
-                                ],
-                                "name": "kube-root-ca.crt"
-                            }
-                        },
-                        {
-                            "downwardAPI": {
-                                "items": [
-                                    {
-                                        "fieldRef": {
-                                            "apiVersion": "v1",
-                                            "fieldPath": "metadata.namespace"
-                                        },
-                                        "path": "namespace"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "status": {
-        "conditions": [
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-09T16:06:11Z",
-                "status": "True",
-                "type": "Initialized"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-09T16:34:41Z",
-                "status": "True",
-                "type": "Ready"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-09T16:34:41Z",
-                "status": "True",
-                "type": "ContainersReady"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-09T16:06:11Z",
-                "status": "True",
-                "type": "PodScheduled"
-            }
-        ],
-        "containerStatuses": [
-            {
-                "containerID": "docker://59070b072684433d0c01d33e7d4fbafa08bd6814e42ef1a7c39b9998d948f7cd",
-                "image": "sha256:00fe9f531b4f31833c5c2ec4196a240dd980fd45135e21407985e18cd2f4fe29",
-                "imageID": "docker-pullable://taleodor/mafia-express@sha256:8328cd7de911367ef2a52a60f8696720e89c152c9a437983c7eccf411b0ede75",
-                "lastState": {},
-                "name": "mafia-backend-container",
-                "ready": true,
-                "restartCount": 0,
-                "started": true,
-                "state": {
-                    "running": {
-                        "startedAt": "2021-10-09T16:34:40Z"
-                    }
-                }
-            }
-        ],
-        "hostIP": "192.168.65.4",
-        "phase": "Running",
-        "podIP": "10.1.0.10",
-        "podIPs": [
-            {
-                "ip": "10.1.0.10"
-            }
-        ],
-        "qosClass": "BestEffort",
-        "startTime": "2021-10-09T16:06:11Z"
-    }
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+      "creationTimestamp": "2021-10-09T16:06:11Z",
+      "generateName": "mafia-backend-6d5d7c9b8f-",
+      "labels": {
+          "app": "mafia",
+          "name": "mafia-backend",
+          "pod-template-hash": "6d5d7c9b8f"
+      },
+      "name": "mafia-backend-6d5d7c9b8f-crfmr",
+      "namespace": "mafia",
+      "ownerReferences": [
+          {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "mafia-backend-6d5d7c9b8f",
+              "uid": "d52ee5b2-d02a-49a0-912f-e520e708e7cf"
+          }
+      ],
+      "resourceVersion": "3320",
+      "uid": "806fc4f8-9a26-4daa-ac39-04dd42732731"
+  },
+  "spec": {
+      "containers": [
+          {
+              "env": [
+                  {
+                      "name": "REDIS_HOST",
+                      "value": "redis-service.mafia"
+                  }
+              ],
+              "image": "taleodor/mafia-express@sha256:8328cd7de911367ef2a52a60f8696720e89c152c9a437983c7eccf411b0ede75",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "mafia-backend-container",
+              "ports": [
+                  {
+                      "containerPort": 3000,
+                      "protocol": "TCP"
+                  }
+              ],
+              "resources": {},
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                  {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "kube-api-access-67t58",
+                      "readOnly": true
+                  }
+              ]
+          }
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "enableServiceLinks": true,
+      "nodeName": "docker-desktop",
+      "preemptionPolicy": "PreemptLowerPriority",
+      "priority": 0,
+      "restartPolicy": "Always",
+      "schedulerName": "default-scheduler",
+      "securityContext": {},
+      "serviceAccount": "default",
+      "serviceAccountName": "default",
+      "terminationGracePeriodSeconds": 30,
+      "tolerations": [
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          },
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          }
+      ],
+      "volumes": [
+          {
+              "name": "kube-api-access-67t58",
+              "projected": {
+                  "defaultMode": 420,
+                  "sources": [
+                      {
+                          "serviceAccountToken": {
+                              "expirationSeconds": 3607,
+                              "path": "token"
+                          }
+                      },
+                      {
+                          "configMap": {
+                              "items": [
+                                  {
+                                      "key": "ca.crt",
+                                      "path": "ca.crt"
+                                  }
+                              ],
+                              "name": "kube-root-ca.crt"
+                          }
+                      },
+                      {
+                          "downwardAPI": {
+                              "items": [
+                                  {
+                                      "fieldRef": {
+                                          "apiVersion": "v1",
+                                          "fieldPath": "metadata.namespace"
+                                      },
+                                      "path": "namespace"
+                                  }
+                              ]
+                          }
+                      }
+                  ]
+              }
+          }
+      ]
+  },
+  "status": {
+      "conditions": [
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-09T16:06:11Z",
+              "status": "True",
+              "type": "Initialized"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-09T16:34:41Z",
+              "status": "True",
+              "type": "Ready"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-09T16:34:41Z",
+              "status": "True",
+              "type": "ContainersReady"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-09T16:06:11Z",
+              "status": "True",
+              "type": "PodScheduled"
+          }
+      ],
+      "containerStatuses": [
+          {
+              "containerID": "docker://59070b072684433d0c01d33e7d4fbafa08bd6814e42ef1a7c39b9998d948f7cd",
+              "image": "sha256:00fe9f531b4f31833c5c2ec4196a240dd980fd45135e21407985e18cd2f4fe29",
+              "imageID": "docker-pullable://taleodor/mafia-express@sha256:8328cd7de911367ef2a52a60f8696720e89c152c9a437983c7eccf411b0ede75",
+              "lastState": {},
+              "name": "mafia-backend-container",
+              "ready": true,
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                  "running": {
+                      "startedAt": "2021-10-09T16:34:40Z"
+                  }
+              }
+          }
+      ],
+      "hostIP": "192.168.65.4",
+      "phase": "Running",
+      "podIP": "10.1.0.10",
+      "podIPs": [
+          {
+              "ip": "10.1.0.10"
+          }
+      ],
+      "qosClass": "BestEffort",
+      "startTime": "2021-10-09T16:06:11Z"
+  }
 }
