@@ -2,7 +2,8 @@
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const path = require('path');
+const server = require("../server/server.ts");
 
 const createWindow = () => {
   // Create the browser window.

@@ -33,6 +33,10 @@ app.get("/getLivePodData", databaseController.getLivePodData, (req: Request, res
   return res.status(200).send(res.locals.podDeployData);
 });
 
+// require("http").createServer(function(req: Request, res: Response) {
+//   res.end("Hello  hemwatie, im  the  server  started by Electron appy wappy!");
+// }).listen(PORT)
+
 ///////////
 
 app.use("*", (req: Request, res: Response) => {
