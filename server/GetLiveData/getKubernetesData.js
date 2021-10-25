@@ -74,8 +74,8 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
         b. Store list of pod names as an array, inside an object, where key is <namespace>
     4. Get deployment logs via  "kubectl get deployment <deploymentname> -o json >> deployment[i].json"
     5. Get pod logs via "kubectl get pod <podName> -o json >> pod[i].json"
-
-*/
+  
+  */
 async function aggregateLogs()
 {
   //get namespace: [pods] key value pairs <3
@@ -150,8 +150,9 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
-
-aggregateLogs();
+// setInterval(()=>{
+  aggregateLogs();
+// }, 60000);
 
 module.exports = {
   parsePodNames,
