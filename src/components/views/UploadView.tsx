@@ -1,7 +1,9 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
+import App from '../App';
 
 export default function UploadView() {
+  const loaded = false;
   const yamlFiles: Array<string | ArrayBuffer> = [];
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file: File, index: Number, array: Array<File>) => {
@@ -36,11 +38,14 @@ export default function UploadView() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        //show App, pass the data down as props
       })
       .catch(error => console.log('POST ERROR: ' + error));
   }
 
-  return (
+  return ( 
+    loaded ? 
+    <App /> :
     <div {...getRootProps()}>
       <input {...getInputProps()} />
       {
