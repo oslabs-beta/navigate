@@ -42,8 +42,8 @@ function getNamespaceElementPairs(kind){
     }
     //if it is a default namespace, skip it
     else if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace.name)){
-      if(output[element[0].metadata.namespace.name]) output[element[0].metadata.namespace.name].push(element[0].metadata.name);
-      else output[element[0].metadata.namespace.name] = [element[0].metadata.name];
+      if(output[element[0].metadata.namespace]) output[element[0].metadata.namespace].push(element[0].metadata.name);
+      else output[element[0].metadata.namespace] = [element[0].metadata.name];
     }
   })
   return output;
