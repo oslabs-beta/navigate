@@ -49,7 +49,7 @@ function App() {
   function fetchDeploymentLive(): void {
     fetch('http://localhost:3000/getLiveDeploymentData')
       .then((data: any) => data.json())
-      .then((data: any) => {
+      .then((data: any) => {  
         data.forEach((data: any) => {
           podDeployments.push(data);
         })
