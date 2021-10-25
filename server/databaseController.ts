@@ -59,9 +59,11 @@ databaseController.getLivePodData = (req: Request, res: Response, next: NextFunc
 
 databaseController.uploadFiles = (req: Request, res: Response, next: NextFunction) => {
   const output = [];
-  console.log(req);
-  // const uploaded = JSON.parse(req.body);
-  // res.locals.uploadedData = uploaded;  
+  req.body.forEach((ele: string) => {
+    output.push(parser.readFile(ele));
+  })
+  console.log(output);
+  res.locals.uploadedData = JSON.stringify(output);  
   return next();
 }
 
