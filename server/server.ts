@@ -21,6 +21,10 @@ app.get("/getData", databaseController.getData, (req: Request, res: Response) =>
   return res.status(200).send(res.locals.data);
 });
 
+app.post("/uploadFiles", databaseController.uploadFiles, (req: Request, res: Response) => {
+  return res.status.200.send(res.locals.uploadedData);
+})
+
 app.get("/statusConditions", databaseController.getLiveData, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.pollingData);
 });

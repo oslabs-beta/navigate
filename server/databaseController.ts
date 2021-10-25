@@ -57,4 +57,8 @@ databaseController.getLivePodData = (req: Request, res: Response, next: NextFunc
   }
 }
 
+databaseController.uploadFiles = (req: Request, res: Response, next: NextFunction) => {
+  
+}
+
 export default databaseController;
