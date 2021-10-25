@@ -18,7 +18,7 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
 }
 
 
-function getYAMLFiles(localPath: string = '../googleDemo'): object[] {
+function getYAMLFiles(localPath: string = '../yaml_files'): object[] {
   try{
       const root = path.join(__dirname, localPath);
       data = getFiles(/\.ya?ml/, root);
@@ -29,7 +29,7 @@ function getYAMLFiles(localPath: string = '../googleDemo'): object[] {
   return data;
 }
 
-function getJSONFiles(localPath: string = '../googleDemoLogs'): object[] {
+function getJSONFiles(localPath: string = '../navigate_logs'): object[] {
   try {
     const root = path.join(__dirname, localPath);
     data = getFiles(/\.json/, root)
