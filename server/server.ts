@@ -21,8 +21,7 @@ app.get("/getData", databaseController.getData, (req: Request, res: Response) =>
   return res.status(200).send(res.locals.data);
 });
 
-app.post("/uploadFiles", databaseController.uploadFiles, (req: Request, res: Response) => {
-  console.log("upload");
+app.post("/upload", databaseController.uploadFiles, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.uploadedData);
 });
 

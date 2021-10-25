@@ -1,6 +1,5 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
-import { isLabeledStatement } from 'typescript';
 
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
@@ -19,7 +18,9 @@ export default function UploadView() {
         if(data)
           yamlFiles.push(data);
         if(isLastElement)
+        {
           postUpload(yamlFiles);
+        }
       }
       reader.readAsText(file);
     })
@@ -27,13 +28,15 @@ export default function UploadView() {
   const {getRootProps, getInputProps} = useDropzone({onDrop, multiple: true})
 
   function postUpload(upload: Array<string | ArrayBuffer>) {
-    fetch('http://localhost:3000/uploadFiles', {
+    fetch('http://localhost:3000/upload', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(upload)
     })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data);
+      })
       .catch(error => console.log('POST ERROR: ' + error));
   }
 
