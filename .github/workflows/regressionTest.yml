@@ -4,6 +4,7 @@ on:
     types: [opened, reopened]
     branches:
       - 'develop'
+      - 'main'
 
 jobs:
   run-tests:
