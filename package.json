@@ -2,7 +2,6 @@
   "name": "navigate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
@@ -52,15 +51,13 @@
     "@types/express": "^4.17.13",
     "@types/js-yaml": "^4.0.3",
     "@types/react-dom": "^17.0.9",
-    "electron": "^15.3.0",
-    "electron-is-dev": "^2.0.0",
     "ts-loader": "^9.2.6",
     "webpack-cli": "^4.9.0",
     "webpack-dev-server": "^4.3.1"
   },
   "scripts": {
     "test": "jest --verbose --unhandled-rejections=strict --detectOpenHandles",
-    "start": "node server/GetLiveData/getKubernetesData.js & ts-node server/server.ts",
+    "start": "ts-node server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack serve --open",
     "both": "npm run dev & npm run start",

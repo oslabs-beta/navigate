@@ -16,7 +16,11 @@ function getFiles(fileType, root) {
     });
     return fileObjs;
 }
-function getYAMLFiles(localPath = '../../yaml_files') {
+function readFile(file) {
+    return YAML.loadAll(file);
+}
+function getYAMLFiles(localPath) {
+    if (localPath === void 0) { localPath = '../yaml_files'; }
     try {
         var root = path.join(__dirname, localPath);
         data = getFiles(/\.ya?ml/, root);
@@ -26,7 +30,8 @@ function getYAMLFiles(localPath = '../../yaml_files') {
     }
     return data;
 }
-function getJSONFiles(localPath = '../../navigate_logs') {
+function getJSONFiles(localPath) {
+    if (localPath === void 0) { localPath = '../navigate_logs'; }
     try {
         var root = path.join(__dirname, localPath);
         data = getFiles(/\.json/, root);
@@ -38,6 +43,7 @@ function getJSONFiles(localPath = '../../navigate_logs') {
 }
 var parser = {
     getYAMLFiles: getYAMLFiles,
-    getJSONFiles: getJSONFiles
+    getJSONFiles: getJSONFiles,
+    readFile: readFile
 };
-module.exports = parser;
+exports["default"] = parser;
