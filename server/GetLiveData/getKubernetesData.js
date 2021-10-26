@@ -5,6 +5,8 @@ const path = require('path');
 
 const logPath = path.join(__dirname, `../../navigate_logs/`);
 
+const YAMLData = {data: []};
+
 //object of the default namespaces that come with every k8s cluster; we want to ignore these
 const listOfDefaultNamespaces = {
   "kube-node-lease": '',
@@ -15,7 +17,8 @@ const listOfDefaultNamespaces = {
 function getElementsOfKind(kind, writeToDisk = false) {
   try
   {
-    const data = parser.getYAMLFiles();
+    const data = YAMLData.data;
+    console.log(data);
     const output = [];
     data.forEach(k8sObject => {
       if(k8sObject[0].kind === kind) output.push(k8sObject);
@@ -154,5 +157,6 @@ module.exports = {
   parsePodNames,
   getElementsOfKind,
   getNamespaceDeploymentPairs: getNamespaceElementPairs,
-  aggregateLogs
+  aggregateLogs,
+  YAMLData
 }
