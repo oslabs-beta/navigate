@@ -26,7 +26,6 @@ app.options("/upload", (req: Request, res: Response) => {
 });
 
 app.post("/upload", databaseController.uploadFiles, (req: Request, res: Response) => {
-  console.log('successful')
   return res.status(200).send(res.locals.uploadedData);
 });
 
