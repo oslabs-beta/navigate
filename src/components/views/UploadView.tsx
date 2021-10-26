@@ -33,7 +33,9 @@ export default function UploadView() {
   function postUpload(upload: Array<string | ArrayBuffer>) {
     fetch('http://localhost:3000/upload', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(upload)
     })
       .then(response => response.json())
