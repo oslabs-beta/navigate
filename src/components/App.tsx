@@ -41,9 +41,9 @@ const App = (props: IProps) => {
 
   function fetchDeploymentLive(): void {
     fetch('http://localhost:3000/getLiveDeploymentData')
-      .then((data: any) => data.json())
-      .then((data: any) => {  
-        data.forEach((data: any) => {
+      .then((data: Response) => data.json())
+      .then((data: string[]) => {  
+        data.forEach((data: string) => {
           podDeployments.push(data);
         })
         getDeploys(podDeployments)
@@ -53,7 +53,7 @@ const App = (props: IProps) => {
 
   function fetchPodLive(): void {
     fetch('http://localhost:3000/getLivePodData')
-      .then((data: any) => data.json())
+      .then((data: Response) => data.json())
       .then((data: any) => {
         data.forEach((data: any) => {
           podInfoObjects.push(data);

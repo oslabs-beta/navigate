@@ -39,7 +39,6 @@ export default function UploadView() {
       .then(response => response.json())
       .then(data => {
         setArray(data);
-        console.log(data);  
         //show App, pass the data down as props
         setLoaded(true);
       })
