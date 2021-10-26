@@ -14,7 +14,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "outDir": "./build/",
+    "outDir": "build",
+    "sourceMap": true,
   },
-  "include": ["src", "decs.d.ts", "server"]
+  "include": ["src", "decs.d.ts", "server/**/*"]
 }

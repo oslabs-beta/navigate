@@ -2,13 +2,13 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:50Z",
-        "generateName": "paymentservice-5849646947-",
+        "creationTimestamp": "2021-10-18T18:50:56Z",
+        "generateName": "currencyservice-955d5ff9f-",
         "labels": {
-            "app": "paymentservice",
-            "pod-template-hash": "5849646947"
+            "app": "currencyservice",
+            "pod-template-hash": "955d5ff9f"
         },
-        "name": "paymentservice-5849646947-xrg84",
+        "name": "currencyservice-955d5ff9f-vfq4j",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,12 +16,12 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "paymentservice-5849646947",
-                "uid": "5554fa4e-619d-4754-b725-9d53bfa80183"
+                "name": "currencyservice-955d5ff9f",
+                "uid": "95671cba-262e-4e78-b4ae-9c19c189f089"
             }
         ],
-        "resourceVersion": "1084798",
-        "uid": "bd60606a-e7e5-4c82-b7fa-eb9cdbcbf799"
+        "resourceVersion": "1084806",
+        "uid": "43c81c16-50b1-47cd-a9dd-c9c7950de4d5"
     },
     "spec": {
         "containers": [
@@ -29,16 +29,16 @@
                 "env": [
                     {
                         "name": "PORT",
-                        "value": "50051"
+                        "value": "7000"
                     }
                 ],
-                "image": "gcr.io/google-samples/microservices-demo/paymentservice:v0.3.0",
+                "image": "gcr.io/google-samples/microservices-demo/currencyservice:v0.3.0",
                 "imagePullPolicy": "IfNotPresent",
                 "livenessProbe": {
                     "exec": {
                         "command": [
                             "/bin/grpc_health_probe",
-                            "-addr=:50051"
+                            "-addr=:7000"
                         ]
                     },
                     "failureThreshold": 3,
@@ -49,7 +49,8 @@
                 "name": "server",
                 "ports": [
                     {
-                        "containerPort": 50051,
+                        "containerPort": 7000,
+                        "name": "grpc",
                         "protocol": "TCP"
                     }
                 ],
@@ -57,7 +58,7 @@
                     "exec": {
                         "command": [
                             "/bin/grpc_health_probe",
-                            "-addr=:50051"
+                            "-addr=:7000"
                         ]
                     },
                     "failureThreshold": 3,
@@ -80,7 +81,7 @@
                 "volumeMounts": [
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-cx9sl",
+                        "name": "kube-api-access-24wd9",
                         "readOnly": true
                     }
                 ]
@@ -113,7 +114,7 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-cx9sl",
+                "name": "kube-api-access-24wd9",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -156,7 +157,7 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:50Z",
+                "lastTransitionTime": "2021-10-18T18:50:56Z",
                 "status": "True",
                 "type": "Initialized"
             },
@@ -174,45 +175,45 @@
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:50Z",
+                "lastTransitionTime": "2021-10-18T18:50:56Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://e7a114dceebd4f29be507c1509c7df2d967d9092da3c7cfa1a758f40a91c8ec1",
-                "image": "gcr.io/google-samples/microservices-demo/paymentservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/paymentservice@sha256:7e3b5a196b76d93989ada0be9399c6fce8e3fae64a33363a24835d13e3c0db5a",
+                "containerID": "docker://5fdff217f25f05de06e63d3456844a568bcb7e788a33a15386e6d49aa08b35cd",
+                "image": "gcr.io/google-samples/microservices-demo/currencyservice:v0.3.0",
+                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/currencyservice@sha256:02f172a13a343157870bcb07f754a17f55c0008d3a41357d904e3283bc980ac3",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://5b89dd8582f031911163f10b5c7d7e0bec61573d4f30a9b2369867b85e09dfef",
-                        "exitCode": 255,
-                        "finishedAt": "2021-10-25T14:46:34Z",
+                        "containerID": "docker://0501a86fd328d07cb7db954a206485c9da749d1cc9460e2de17201d44c960918",
+                        "exitCode": 137,
+                        "finishedAt": "2021-10-25T14:47:57Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-25T14:33:39Z"
+                        "startedAt": "2021-10-25T14:47:10Z"
                     }
                 },
                 "name": "server",
                 "ready": true,
-                "restartCount": 126,
+                "restartCount": 140,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-25T19:11:18Z"
+                        "startedAt": "2021-10-25T19:11:20Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.138",
+        "podIP": "10.1.0.140",
         "podIPs": [
             {
-                "ip": "10.1.0.138"
+                "ip": "10.1.0.140"
             }
         ],
         "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:50Z"
+        "startTime": "2021-10-18T18:50:56Z"
     }
 }

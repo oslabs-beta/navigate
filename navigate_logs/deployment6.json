@@ -1,0 +1,173 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+        "annotations": {
+            "deployment.kubernetes.io/revision": "1",
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"frontend\",\"namespace\":\"default\"},\"spec\":{\"selector\":{\"matchLabels\":{\"app\":\"frontend\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/rewriteAppHTTPProbers\":\"true\"},\"labels\":{\"app\":\"frontend\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"PORT\",\"value\":\"8080\"},{\"name\":\"PRODUCT_CATALOG_SERVICE_ADDR\",\"value\":\"productcatalogservice:3550\"},{\"name\":\"CURRENCY_SERVICE_ADDR\",\"value\":\"currencyservice:7000\"},{\"name\":\"CART_SERVICE_ADDR\",\"value\":\"cartservice:7070\"},{\"name\":\"RECOMMENDATION_SERVICE_ADDR\",\"value\":\"recommendationservice:8080\"},{\"name\":\"SHIPPING_SERVICE_ADDR\",\"value\":\"shippingservice:50051\"},{\"name\":\"CHECKOUT_SERVICE_ADDR\",\"value\":\"checkoutservice:5050\"},{\"name\":\"AD_SERVICE_ADDR\",\"value\":\"adservice:9555\"}],\"image\":\"gcr.io/google-samples/microservices-demo/frontend:v0.3.0\",\"livenessProbe\":{\"httpGet\":{\"httpHeaders\":[{\"name\":\"Cookie\",\"value\":\"shop_session-id=x-liveness-probe\"}],\"path\":\"/_healthz\",\"port\":8080},\"initialDelaySeconds\":10},\"name\":\"server\",\"ports\":[{\"containerPort\":8080}],\"readinessProbe\":{\"httpGet\":{\"httpHeaders\":[{\"name\":\"Cookie\",\"value\":\"shop_session-id=x-readiness-probe\"}],\"path\":\"/_healthz\",\"port\":8080},\"initialDelaySeconds\":10},\"resources\":{\"limits\":{\"cpu\":\"200m\",\"memory\":\"128Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"}}}],\"serviceAccountName\":\"default\"}}}}\n"
+        },
+        "creationTimestamp": "2021-10-18T18:50:47Z",
+        "generation": 1,
+        "name": "frontend",
+        "namespace": "default",
+        "resourceVersion": "1084832",
+        "uid": "98e40c90-1945-4e97-a234-6be42a980d93"
+    },
+    "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+            "matchLabels": {
+                "app": "frontend"
+            }
+        },
+        "strategy": {
+            "rollingUpdate": {
+                "maxSurge": "25%",
+                "maxUnavailable": "25%"
+            },
+            "type": "RollingUpdate"
+        },
+        "template": {
+            "metadata": {
+                "annotations": {
+                    "sidecar.istio.io/rewriteAppHTTPProbers": "true"
+                },
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "frontend"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "PORT",
+                                "value": "8080"
+                            },
+                            {
+                                "name": "PRODUCT_CATALOG_SERVICE_ADDR",
+                                "value": "productcatalogservice:3550"
+                            },
+                            {
+                                "name": "CURRENCY_SERVICE_ADDR",
+                                "value": "currencyservice:7000"
+                            },
+                            {
+                                "name": "CART_SERVICE_ADDR",
+                                "value": "cartservice:7070"
+                            },
+                            {
+                                "name": "RECOMMENDATION_SERVICE_ADDR",
+                                "value": "recommendationservice:8080"
+                            },
+                            {
+                                "name": "SHIPPING_SERVICE_ADDR",
+                                "value": "shippingservice:50051"
+                            },
+                            {
+                                "name": "CHECKOUT_SERVICE_ADDR",
+                                "value": "checkoutservice:5050"
+                            },
+                            {
+                                "name": "AD_SERVICE_ADDR",
+                                "value": "adservice:9555"
+                            }
+                        ],
+                        "image": "gcr.io/google-samples/microservices-demo/frontend:v0.3.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "httpHeaders": [
+                                    {
+                                        "name": "Cookie",
+                                        "value": "shop_session-id=x-liveness-probe"
+                                    }
+                                ],
+                                "path": "/_healthz",
+                                "port": 8080,
+                                "scheme": "HTTP"
+                            },
+                            "initialDelaySeconds": 10,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "server",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "httpHeaders": [
+                                    {
+                                        "name": "Cookie",
+                                        "value": "shop_session-id=x-readiness-probe"
+                                    }
+                                ],
+                                "path": "/_healthz",
+                                "port": 8080,
+                                "scheme": "HTTP"
+                            },
+                            "initialDelaySeconds": 10,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "128Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "64Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30
+            }
+        }
+    },
+    "status": {
+        "availableReplicas": 1,
+        "conditions": [
+            {
+                "lastTransitionTime": "2021-10-18T18:50:48Z",
+                "lastUpdateTime": "2021-10-18T18:52:09Z",
+                "message": "ReplicaSet \"frontend-7c4fc6584c\" has successfully progressed.",
+                "reason": "NewReplicaSetAvailable",
+                "status": "True",
+                "type": "Progressing"
+            },
+            {
+                "lastTransitionTime": "2021-10-25T19:11:41Z",
+                "lastUpdateTime": "2021-10-25T19:11:41Z",
+                "message": "Deployment has minimum availability.",
+                "reason": "MinimumReplicasAvailable",
+                "status": "True",
+                "type": "Available"
+            }
+        ],
+        "observedGeneration": 1,
+        "readyReplicas": 1,
+        "replicas": 1,
+        "updatedReplicas": 1
+    }
+}

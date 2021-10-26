@@ -33,8 +33,8 @@ app.get("/getLivePodData", databaseController.getLivePodData, (req: Request, res
   return res.status(200).send(res.locals.podDeployData);
 });
 
-// require("http").createServer(function(req: Request, res: Response) {
-//   res.end("Hello  hemwatie, im  the  server  started by Electron appy wappy!");
+// require("http").createapp(function(req: Request, res: Response) {
+//   res.end("Hello  hemwatie, im  the  app  started by Electron app!");
 // }).listen(PORT)
 
 ///////////
@@ -45,8 +45,8 @@ app.use("*", (req: Request, res: Response) => {
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const errorObj = {
-    log: "global error handler in express server",
-    message: { err: "global error handler in express server" },
+    log: "global error handler in express app",
+    message: { err: "global error handler in express app" },
   };
   const errorObject = Object.assign({}, errorObj, err);
   console.log(errorObject);

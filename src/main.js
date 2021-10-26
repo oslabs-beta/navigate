@@ -3,7 +3,12 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path');
-const server = require("../server/server.ts");
+const {spawn} = require('child_process');
+var waitOn = require('wait-on');
+const { runCommand } = require('../server/runCommand');
+var exec = require('child_process').exec, child;
+// const server = require('/Users/hemwatie/OSP/navigate/server/server.ts')
+// const server = require("../server/server.ts");
 
 const createWindow = () => {
   // Create the browser window.
@@ -13,10 +18,24 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
+    
   })
-
   // and load the index.html of the app.
-  mainWindow.loadFile('build/index.html')
+  mainWindow.loadFile('build/index.html');
+  // runCommand = (cmd) => {
+  //   exec(cmd, function (error, stdout, stderr) {
+  //       if(procsess.env.NODE_ENV !== 'test')
+  //       {
+  //           console.log(stdout);
+  //           if(stderr)
+  //           console.log('stderr: ' + stderr);
+  //           if (error !== null) {
+  //                console.log('exec error: ' + error);
+  //           }
+  //       }
+  //   })
+  // };
+
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -25,7 +44,38 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then( async() => {
+  // runCommand(`ts-node ./server/server.ts`)
+  // await exec(`ts-node ./server/server.ts`, function (err, stdout, stderr) {
+  //   if (err && err.length > 1) {
+  //           console.log("yuuuuuupp  failed to execute");
+  //           callback(error("idkkkkkkkkkkk", "No input or output devices found", 500));
+  //           return;
+  //       }else{
+  //           if(stdout){
+  //             callback(null,stdout); 
+  //           }
+  //           if(stderr){
+  //             callback(new Error("STDERR"),stderr);
+  //           }
+  
+  //   }  
+  // });
+
+  // const opts = {
+  //   resources: [
+  //     'http://localhost:3000',
+  //   ],
+  // }
+
+  // waitOn(opts, function(err){
+  //   if(err) {
+  //     return console.log('error inside waiton is: ', err)
+  //   }
+  // })
+
+  // await child_process();
+
   createWindow()
 
   app.on('activate', () => {
