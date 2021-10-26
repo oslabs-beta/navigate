@@ -8,6 +8,7 @@ import Legend from './Legend';
 import { electron } from "webpack";
 import { anyObject } from "../../kObjects/__index";
 import { findSelectorMatch } from "../../component_data/findSelectorMatch";
+import FetchLiveData from "./FetchLiveData";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -216,6 +217,7 @@ function ClusterView(props: any) {
           <div id="pageCol" style={{display:'flex', flexDirection:'column', justifyContent:'space-around', height:limitSidebarHeight}}>
             <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
             <Legend/>
+            <FetchLiveData />
           </div>
           <div id="clusterView"
             ref={containerRef}
