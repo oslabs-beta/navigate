@@ -60,7 +60,7 @@
   },
   "scripts": {
     "test": "jest --verbose --unhandled-rejections=strict --detectOpenHandles",
-    "start": "node server/GetLiveData/getKubernetesData.js & ts-node server/server.ts",
+    "start": "ts-node server/server.ts",
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack serve --open",
     "both": "npm run dev & npm run start",

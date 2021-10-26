@@ -9,6 +9,8 @@ import { electron } from "webpack";
 import { anyObject } from "../../kObjects/__index";
 import { findSelectorMatch } from "../../component_data/findSelectorMatch";
 import kNetworkPolicy from "../../kObjects/kNetworkPolicy";
+import * as dataParser from "../../component_data/kDataParser"
+import { kObject } from "../../kObjects/kObject";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -19,19 +21,22 @@ function NetworkPolicyView(props: any) {
   const [networkPolicy, setNetworkPolicy] = React.useState('');
   const [networkPoliciesArr, setNetworkPoliciesArr] = React.useState<kNetworkPolicy[]>([])
   const networkPolicies: any[] = [];
-  const populateNetworkPolicies = (array: kNetworkPolicy[]) => {
+  const [dataProp, SetDataProp] = React.useState<kObject[]>([]);
+  const populateNetworkPolicies = (array: any[]) => {
     array.forEach(kObject => {
       if(kObject.kind === "NetworkPolicy") networkPolicies.push(kObject);
     })
     if(networkPolicies.length === 1) setNetworkPolicy(networkPolicies[0].label);
     setNetworkPoliciesArr(networkPolicies);
-    
   };
+  function parseData(json: any)
+  {
+    const data = dataParser.parseData(json);
+    return data;
+  }
   const populateArray = (array: any[]): void => {
     for (let i = 0; i < array.length; i++) {
       if (array[i].kind === "NetworkPolicy" && array[i].label === networkPolicy) {
-        console.log('hyaaa',array[i])
-        console.log(networkPolicy)
         const getSelectors = (obj: anyObject) => {
           let str = '';
           for(let key in obj){
@@ -124,16 +129,9 @@ function NetworkPolicyView(props: any) {
       } 
     }
   }
-  const getNamespace = (id: string) => {
-    for(let i = 0; i < props.dataArray.length; i++){
-      if(props.dataArray[i].label === id) {
-        return props.dataArray[i].namespace;
-      }
-    }
-  }
   React.useEffect(() => {
-    populateNetworkPolicies(props.dataArray);
-    populateArray(props.dataArray);
+    populateNetworkPolicies(parseData(props.jsonFiles));
+    populateArray(parseData(props.jsonFiles));
     const config: Cytoscape.CytoscapeOptions = {
       container: networkPolicyRef.current,
       style: GraphStyles,
@@ -152,13 +150,12 @@ function NetworkPolicyView(props: any) {
     cy.on('click',(event)=> {
       if(event.target._private.data.class === "deployment" && event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){
         props.setView("Node View");
-        props.setNamespace(getNamespace(event.target._private.data.id));
         props.setMasterNode(event.target._private.data.id);
         props.setTrigger(true);
         console.log(event.target._private.data.id);
       }
     })
-  }, [props.dataArray, networkPolicy]);
+  }, [props.jsonFiles, networkPolicy]);
 
 
   const limitSidebarHeight = document.getElementById('clusterView')?.style.height;

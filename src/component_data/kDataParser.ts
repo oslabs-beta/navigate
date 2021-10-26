@@ -4,9 +4,10 @@ import { appendFile } from "fs";
 import IngressPolicy from "../kObjects/ingressPolicy";
 import EgressPolicy from "../kObjects/egressPolicy";
 
-const kObjArray: kObject[] = [];
+let kObjArray: kObject[] = [];
 
 export function parseData(relevantData: any[]): kObject[] {
+  kObjArray = [];
   for (let i = 0; i < relevantData.length; i++) {
     let eleArr = relevantData[i];
     for (let j = 0; j < eleArr.length; j++) {
@@ -89,7 +90,6 @@ export function parseData(relevantData: any[]): kObject[] {
         );
         kObjArray.push(newkDaemonSet);
       } else if(ele.kind === "NetworkPolicy"){
-        console.log(ele)
         const newIngressPolicy = new IngressPolicy(
           ele.spec.ingress[0].from[0].ipBlock.cidr,
           ele.spec.ingress[0].from[0].ipBlock.except[0],
@@ -112,7 +112,6 @@ export function parseData(relevantData: any[]): kObject[] {
           newIngressPolicy,
           newEgressPolicy,
         )
-        console.log('network',newNetworkPolicy)
         kObjArray.push(newNetworkPolicy)
       } else {
         console.log("rejected: "); //ele
@@ -120,4 +119,5 @@ export function parseData(relevantData: any[]): kObject[] {
     }
   }
   return kObjArray;
+  
 }
