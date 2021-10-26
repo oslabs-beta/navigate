@@ -12,9 +12,8 @@ function FetchLiveData(props: any) {
   }
 
   return  (
-      <div>
-          <h1>wheres my button</h1>
-          <button  value="getKubernetesData" onClick={()=> reRunGetKubernetesData()}> </button>
+      <div style={{display:'coloum',  justifyContent: 'space-around', alignContent:'center', alignItems: 'center'}}>
+          <button  value="getKubernetesData" onClick={()=> reRunGetKubernetesData()}> refresh </button>
       </div>
   )
 }

@@ -204,20 +204,26 @@ function ClusterView(props: any) {
         <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
           {props.view}
         </h1>
-      </div>  
-      <div id="buttonDiv">
+      </div>
+
+      <div id="separateButtons" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+      <div id="buttonDiv" style={{display:'flex', flexDirection: 'row'}}>
             <button onClick={() =>{
               window.alert(namespacesArr)
             }}>Namespaces
             </button>
             <h3>{`${props.masterNode}`}</h3>
-          </div>
+            </div>
+            <div>
+            <FetchLiveData />
+            </div>
+      </div>
+
       <div style={{display:'flex'}}> 
         <div id="pageView">
           <div id="pageCol" style={{display:'flex', flexDirection:'column', justifyContent:'space-around', height:limitSidebarHeight}}>
             <SidebarClusterView deploymentStatus={props.deploymentStatus} namespace={props.namespace}/>
             <Legend/>
-            <FetchLiveData />
           </div>
           <div id="clusterView"
             ref={containerRef}
