@@ -179,7 +179,6 @@ function ClusterView(props: any) {
       padding: 15,
       animate: true,
       animationDuration: 1000,
-
     });
     layout.run();
     cy.on('click',(event)=> {
