@@ -5,6 +5,8 @@ const path = require('path');
 
 const logPath = path.join(__dirname, `../../navigate_logs/`);
 
+const YAMLData = {data: []};
+
 //object of the default namespaces that come with every k8s cluster; we want to ignore these
 const listOfDefaultNamespaces = {
   "kube-node-lease": '',
@@ -15,7 +17,7 @@ const listOfDefaultNamespaces = {
 function getElementsOfKind(kind, writeToDisk = false) {
   try
   {
-    const data = parser.getYAMLFiles();
+    const data = YAMLData.data;
     const output = [];
     data.forEach(k8sObject => {
       if(k8sObject[0].kind === kind) output.push(k8sObject);
@@ -41,9 +43,9 @@ function getNamespaceElementPairs(kind){
       else output["default"].push(element[0].metadata.name);
     }
     //if it is a default namespace, skip it
-    else if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace.name)){
-      if(output[element[0].metadata.namespace.name]) output[element[0].metadata.namespace.name].push(element[0].metadata.name);
-      else output[element[0].metadata.namespace.name] = [element[0].metadata.name];
+    else if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace)){
+      if(output[element[0].metadata.namespace]) output[element[0].metadata.namespace.name].push(element[0].metadata.name);
+      else output[element[0].metadata.namespace] = [element[0].metadata.name];
     }
   })
   return output;
@@ -150,12 +152,10 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
-setInterval(()=>{
-  aggregateLogs();
-}, 60000);
-
 module.exports = {
   parsePodNames,
   getElementsOfKind,
-  getNamespaceDeploymentPairs: getNamespaceElementPairs
+  getNamespaceDeploymentPairs: getNamespaceElementPairs,
+  aggregateLogs,
+  YAMLData
 }

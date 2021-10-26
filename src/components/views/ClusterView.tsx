@@ -8,6 +8,7 @@ import Legend from "./Legend";
 import { electron } from "webpack";
 import { anyObject } from "../../kObjects/__index";
 import { findSelectorMatch } from "../../component_data/findSelectorMatch";
+import FetchLiveData from "./FetchLiveData";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape);
@@ -229,17 +230,21 @@ function ClusterView(props: any) {
           {props.view}
         </h1>
       </div>
-      <div id="buttonDiv">
-        <button
-          onClick={() => {
-            window.alert(namespacesArr);
-          }}
-        >
-          Namespaces
-        </button>
-        <h3>{`${props.masterNode}`}</h3>
+
+      <div id="separateButtons" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+      <div id="buttonDiv" style={{display:'flex', flexDirection: 'row'}}>
+            <button onClick={() =>{
+              window.alert(namespacesArr)
+            }}>Namespaces
+            </button>
+            <h3>{`${props.masterNode}`}</h3>
+            </div>
+            <div>
+            <FetchLiveData />
+            </div>
       </div>
-      <div style={{ display: "flex" }}>
+
+      <div style={{display:'flex'}}> 
         <div id="pageView">
           <div
             id="pageCol"

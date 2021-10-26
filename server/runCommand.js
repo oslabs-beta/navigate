@@ -3,7 +3,7 @@ var exec = require('child_process').exec, child;
 const fs = require('fs');
 const path = require('path');
 
-exportObj = {};
+const exportObj = {};
 
 //default command
 exportObj.command = `kubectl get pods -o=jsonpath='{.items[*].metadata.name}'`;
