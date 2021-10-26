@@ -4,7 +4,7 @@ import { appendFile } from "fs";
 
 const kObjArray: kObject[] = [];
 
-export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
+export function parseData(relevantData: any[]): kObject[] {
   for (let i = 0; i < relevantData.length; i++) {
     let eleArr = relevantData[i];
     for (let j = 0; j < eleArr.length; j++) {

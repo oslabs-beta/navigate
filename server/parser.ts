@@ -17,6 +17,9 @@ function getFiles(fileType: RegExp, root: string): Array<object> {
   return fileObjs;
 }
 
+function readFile(file: string): object {
+  return YAML.loadAll(file);
+}
 
 function getYAMLFiles(localPath: string = '../yaml_files'): object[] {
   try{
@@ -41,7 +44,8 @@ function getJSONFiles(localPath: string = '../navigate_logs'): object[] {
 
 const parser = {
   getYAMLFiles,
-  getJSONFiles
+  getJSONFiles, 
+  readFile
 }
 
 export default parser;

@@ -5,7 +5,11 @@ import {kObject} from "../kObjects/kObject"
 import * as kObjects from "../kObjects/__index";
 import * as dataParser from "../component_data/kDataParser";
 
-function App() {
+interface IProps {
+  jsonFiles: string[]
+}
+
+const App = (props: IProps) => {
   const [dataProp, SetDataProp] = React.useState<kObject[]>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
   const [view, setView] = React.useState('Cluster View')
@@ -18,22 +22,11 @@ function App() {
   const podDeployments: any[] = [];
   const [podDeployInfo, getDeploys] = React.useState<kObject[]>([]);
   const [podInfoObjects, getPods] = React.useState<kObject[]>([]);
-  React.useEffect(getData, []);
+  React.useEffect(parseData, []);
   React.useEffect(fetchDeploymentLive, []);
   React.useEffect(fetchPodLive, []);
   React.useEffect(fetchLiveData, []);
   
-  //fetch data from backend, push to kDeployArray
-  function getData(): void {
-    fetch('http://localhost:3000/getData')
-      .then((data: Response) => data.json())
-      .then((data: any[]) => {
-        // Data will be an array of objects. Each object represents a different YAML file.
-        parseData(data);
-      })
-      .catch((error) => console.log('GET /getData response error: ', error));
-  }
-
   function fetchLiveData(): void {
     fetch('http://localhost:3000/statusConditions')
       .then((data: Response) => data.json())
@@ -48,9 +41,9 @@ function App() {
 
   function fetchDeploymentLive(): void {
     fetch('http://localhost:3000/getLiveDeploymentData')
-      .then((data: any) => data.json())
-      .then((data: any) => {
-        data.forEach((data: any) => {
+      .then((data: Response) => data.json())
+      .then((data: string[]) => {  
+        data.forEach((data: string) => {
           podDeployments.push(data);
         })
         getDeploys(podDeployments)
@@ -60,7 +53,7 @@ function App() {
 
   function fetchPodLive(): void {
     fetch('http://localhost:3000/getLivePodData')
-      .then((data: any) => data.json())
+      .then((data: Response) => data.json())
       .then((data: any) => {
         data.forEach((data: any) => {
           podInfoObjects.push(data);
@@ -70,9 +63,9 @@ function App() {
     .catch((error) => console.log('GET /getLivePodData response error: ', error));
   }
 
-  function parseData(relevantData: kObject[]) 
+  function parseData(): void
   {
-    const data = dataParser.parseData(relevantData);
+    const data = dataParser.parseData(props.jsonFiles);
     SetDataProp(data);
   }
 
