@@ -13,6 +13,7 @@ export {kStatefulSet} from './kStatefulSet';
 export {default as statefulContainer, volumeMount} from './statefulContainer';
 export {default as volumeClaimTemplates} from './volumeClaimTemplates';
 export {default as kService} from './kService';
+export {default as NetworkPolicy} from './kNetworkPolicy'
 
 //allow for object param declarations
 export interface anyObject {
