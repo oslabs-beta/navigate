@@ -21,11 +21,15 @@ app.get("/getData", databaseController.getData, (req: Request, res: Response) =>
   return res.status(200).send(res.locals.data);
 });
 
+<<<<<<< HEAD
 app.options("/upload", (req: Request, res: Response) => {
   res.status(200).send('ok')
 });
 
 app.post("/upload", databaseController.uploadFiles, (req: Request, res: Response) => {
+=======
+app.post("/upload", databaseController.parsePOST, databaseController.uploadFiles, databaseController.updateFiles, (req: Request, res: Response) => {
+>>>>>>> 8fc72ad5ad83c615139fa1c7e79e4f8b54946d34
   return res.status(200).send(res.locals.uploadedData);
 });
 
