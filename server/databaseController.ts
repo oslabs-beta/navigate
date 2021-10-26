@@ -59,12 +59,12 @@ databaseController.getLivePodData = (req: Request, res: Response, next: NextFunc
 
 databaseController.uploadFiles = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const output: object[] = [];
+    const output: any = [];
     req.body.forEach((ele: string) => {
       output.push(parser.readFile(ele));
     });
     res.locals.uploadedData = JSON.stringify(output);  
-    YAMLData['data'] = output;
+    YAMLData.data = output;
     return next();
   } catch (error) {
     console.log('Error in databaseController.uploadFiles: ',  error)
