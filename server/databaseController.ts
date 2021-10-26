@@ -68,7 +68,6 @@ databaseController.uploadFiles = (req: Request, res: Response, next: NextFunctio
     return next();
   } catch (error) {
     console.log('Error in databaseController.uploadFiles: ',  error)
-
   }
 }
 
