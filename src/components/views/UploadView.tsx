@@ -3,8 +3,9 @@ import {useDropzone} from 'react-dropzone';
 import App from '../App';
 
 export default function UploadView() {
-  const loaded = false;
   const yamlFiles: Array<string | ArrayBuffer> = [];
+  const [responseArray, setArray] = React.useState([]);
+  const [loaded, setLoaded] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file: File, index: Number, array: Array<File>) => {
       let isLastElement = false;
@@ -26,8 +27,8 @@ export default function UploadView() {
       }
       reader.readAsText(file);
     })
-  }, [])
-  const {getRootProps, getInputProps} = useDropzone({onDrop, multiple: true})
+  }, []);
+  const {getRootProps, getInputProps} = useDropzone({onDrop, multiple: true});
 
   function postUpload(upload: Array<string | ArrayBuffer>) {
     fetch('http://localhost:3000/upload', {
@@ -37,15 +38,17 @@ export default function UploadView() {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        setArray(data);
+        console.log(data);  
         //show App, pass the data down as props
+        setLoaded(true);
       })
       .catch(error => console.log('POST ERROR: ' + error));
   }
 
-  return ( 
+  return (  
     loaded ? 
-    <App /> :
+    <App jsonFiles={responseArray}/> :
     <div {...getRootProps()}>
       <input {...getInputProps()} />
       {

@@ -5,7 +5,11 @@ import {kObject} from "../kObjects/kObject"
 import * as kObjects from "../kObjects/__index";
 import * as dataParser from "../component_data/kDataParser";
 
-function App(props: object) {
+interface IProps {
+  jsonFiles: string[]
+}
+
+const App = (props: IProps) => {
   const [dataProp, SetDataProp] = React.useState<kObject[]>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
   const [view, setView] = React.useState('Cluster View')
@@ -18,6 +22,7 @@ function App(props: object) {
   const podDeployments: any[] = [];
   const [podDeployInfo, getDeploys] = React.useState<kObject[]>([]);
   const [podInfoObjects, getPods] = React.useState<kObject[]>([]);
+  React.useEffect(parseData, []);
   React.useEffect(fetchDeploymentLive, []);
   React.useEffect(fetchPodLive, []);
   React.useEffect(fetchLiveData, []);
@@ -58,9 +63,9 @@ function App(props: object) {
     .catch((error) => console.log('GET /getLivePodData response error: ', error));
   }
 
-  function parseData(relevantData: kObject[]) 
+  function parseData(): void
   {
-    const data = dataParser.parseData(relevantData);
+    const data = dataParser.parseData(props.jsonFiles);
     SetDataProp(data);
   }
 
