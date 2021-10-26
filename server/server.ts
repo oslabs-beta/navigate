@@ -1,5 +1,6 @@
 import express, {Request, Response, NextFunction} from 'express';
 import databaseController from './databaseController';
+import path from 'path';
 
 const app = express();
 export const PORT = 3000;
@@ -7,14 +8,37 @@ export const PORT = 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(express.static(path.resolve(__dirname, './'))); 
+
 app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", 'http://localhost:8080'); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.status(200);
   next();
 });
 
 app.get("/getData", databaseController.getData, (req: Request, res: Response) => {
-  return res.status(200).json(res.locals.data);
+  return res.status(200).send(res.locals.data);
+});
+
+app.options("/upload", (req: Request, res: Response) => {
+  res.status(200).send('ok')
+});
+
+app.post("/upload", databaseController.uploadFiles, (req: Request, res: Response) => {
+  return res.status(200).send(res.locals.uploadedData);
+});
+
+app.get("/statusConditions", databaseController.getLiveData, (req: Request, res: Response) => {
+  return res.status(200).send(res.locals.pollingData);
+});
+
+app.get("/getLiveDeploymentData", databaseController.getLiveDeploymentData, (req: Request, res: Response) => {
+  return res.status(200).send(res.locals.podDeployData);
+});
+
+app.get("/getLivePodData", databaseController.getLivePodData, (req: Request, res: Response) => {
+  return res.status(200).send(res.locals.podDeployData);
 });
 
 ///////////

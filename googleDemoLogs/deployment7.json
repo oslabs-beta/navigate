@@ -1,0 +1,128 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": {
+        "annotations": {
+            "deployment.kubernetes.io/revision": "1",
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"loadgenerator\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"loadgenerator\"}},\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/rewriteAppHTTPProbers\":\"true\"},\"labels\":{\"app\":\"loadgenerator\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"FRONTEND_ADDR\",\"value\":\"frontend:80\"},{\"name\":\"USERS\",\"value\":\"10\"}],\"image\":\"gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.0\",\"name\":\"main\",\"resources\":{\"limits\":{\"cpu\":\"500m\",\"memory\":\"512Mi\"},\"requests\":{\"cpu\":\"300m\",\"memory\":\"256Mi\"}}}],\"initContainers\":[{\"command\":[\"/bin/sh\",\"-exc\",\"echo \\\"Init container pinging frontend: ${FRONTEND_ADDR}...\\\"\\nSTATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2\\u003e\\u00261 | awk '/^  HTTP/{print $2}')\\nif test $STATUSCODE -ne 200; then\\n    echo \\\"Error: Could not reach frontend - Status code: ${STATUSCODE}\\\"\\n    exit 1\\nfi\\n\"],\"env\":[{\"name\":\"FRONTEND_ADDR\",\"value\":\"frontend:80\"}],\"image\":\"busybox:latest\",\"name\":\"frontend-check\"}],\"restartPolicy\":\"Always\",\"serviceAccountName\":\"default\",\"terminationGracePeriodSeconds\":5}}}}\n"
+        },
+        "creationTimestamp": "2021-10-18T18:50:55Z",
+        "generation": 1,
+        "name": "loadgenerator",
+        "namespace": "default",
+        "resourceVersion": "673915",
+        "uid": "12429422-e50a-47c6-bcab-43858aa0ec3e"
+    },
+    "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+            "matchLabels": {
+                "app": "loadgenerator"
+            }
+        },
+        "strategy": {
+            "rollingUpdate": {
+                "maxSurge": "25%",
+                "maxUnavailable": "25%"
+            },
+            "type": "RollingUpdate"
+        },
+        "template": {
+            "metadata": {
+                "annotations": {
+                    "sidecar.istio.io/rewriteAppHTTPProbers": "true"
+                },
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "loadgenerator"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "FRONTEND_ADDR",
+                                "value": "frontend:80"
+                            },
+                            {
+                                "name": "USERS",
+                                "value": "10"
+                            }
+                        ],
+                        "image": "gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "name": "main",
+                        "resources": {
+                            "limits": {
+                                "cpu": "500m",
+                                "memory": "512Mi"
+                            },
+                            "requests": {
+                                "cpu": "300m",
+                                "memory": "256Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "initContainers": [
+                    {
+                        "command": [
+                            "/bin/sh",
+                            "-exc",
+                            "echo \"Init container pinging frontend: ${FRONTEND_ADDR}...\"\nSTATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2\u003e\u00261 | awk '/^  HTTP/{print $2}')\nif test $STATUSCODE -ne 200; then\n    echo \"Error: Could not reach frontend - Status code: ${STATUSCODE}\"\n    exit 1\nfi\n"
+                        ],
+                        "env": [
+                            {
+                                "name": "FRONTEND_ADDR",
+                                "value": "frontend:80"
+                            }
+                        ],
+                        "image": "busybox:latest",
+                        "imagePullPolicy": "Always",
+                        "name": "frontend-check",
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 5
+            }
+        }
+    },
+    "status": {
+        "availableReplicas": 1,
+        "conditions": [
+            {
+                "lastTransitionTime": "2021-10-18T18:53:07Z",
+                "lastUpdateTime": "2021-10-18T18:53:07Z",
+                "message": "Deployment has minimum availability.",
+                "reason": "MinimumReplicasAvailable",
+                "status": "True",
+                "type": "Available"
+            },
+            {
+                "lastTransitionTime": "2021-10-18T18:50:56Z",
+                "lastUpdateTime": "2021-10-18T18:53:07Z",
+                "message": "ReplicaSet \"loadgenerator-656dfb64b4\" has successfully progressed.",
+                "reason": "NewReplicaSetAvailable",
+                "status": "True",
+                "type": "Progressing"
+            }
+        ],
+        "observedGeneration": 1,
+        "readyReplicas": 1,
+        "replicas": 1,
+        "updatedReplicas": 1
+    }
+}

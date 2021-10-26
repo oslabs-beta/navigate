@@ -1,3 +1,91 @@
-p {
-  color: blue;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+*{
+  color: rgb(255, 255, 255);
+  font-family: 'Calibri', sans-serif;
 }
+h3{
+  color: rgb(255, 255, 255);
+  font-family: 'Calibri', sans-serif;
+}
+html{
+  background-color: rgb(26, 26, 26);
+}
+p {
+  text-align: left;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-size: 1.5rem;
+}
+button {
+  // background-color: rgb(26, 26, 26);
+  border: 2px solid white;
+  background-color: rgb(26, 26, 26);
+  border-radius: 5px;
+  color: white;
+  padding: 7px 14px;
+  font-size: 16px;
+  cursor: pointer;
+}
+button:hover {
+  background: #e7e7e7;
+  color: black;
+}
+#buttonDiv{
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+h4 {
+  margin-left: 1%;
+  margin-top: 2%;
+  color: #932af5;
+  font-size: 2em;
+}
+button + h3 {
+  margin-left: 1%;
+  color: #932af5;
+  font-size: 2em;
+}
+#sidebar {
+  display:flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 200px;
+  height: 100%;
+  border: 5px solid lightgray;
+  box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
+  font-family: 'Calibri', sans-serif;
+}
+#clusterHeader {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+#nodeHeader {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+#circle {
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#pageView {
+  display: flex;
+  flex-direction: row;
+  #pageCol{
+    display: flex;
+    flex-direction: column;
+  }
+}
+#nodeSidebar{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
