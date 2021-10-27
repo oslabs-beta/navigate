@@ -111,7 +111,7 @@ async function aggregateLogs()
         exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i]}`,
           (err, data) => {
             if(err) console.log(err);
-            namespacePodKVP[namespaces[0][i].metadata.name] = Buffer.from(data).toString('utf8').split(' ');
+            namespacePodKVP[namespaces[i]] = Buffer.from(data).toString('utf8').split(' ');
         });
       }
     getDeployments();
