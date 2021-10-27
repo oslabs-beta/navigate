@@ -116,10 +116,17 @@ function ClusterView(props: any) {
                   data: {
                     source: ele.label + " deployment",
                     target: array[i].label,
-                    label: `stateful`,
+                    label: `connection`,
                   },
                 };
-                relevantData.push(edge);
+                let edge2 = {
+                  data: {
+                    source: array[i].namespace,
+                    target: array[i].label,
+                    label: "deployment",
+                  },
+                };
+                relevantData.push(edge,edge2);
               }
             });
             relevantData.push(newNode);
