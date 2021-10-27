@@ -112,10 +112,12 @@ async function aggregateLogs()
           (err, data) => {
             if(err) console.log(err);
             namespacePodKVP[namespaces[i]] = Buffer.from(data).toString('utf8').split(' ');
+            if(i === namespaces.length-1){
+              getDeployments();
+              getPodInfo(namespacePodKVP);
+            }
         });
       }
-    getDeployments();
-    getPodInfo(namespacePodKVP);
   });
 }
 
@@ -151,7 +153,7 @@ async function getPodInfo(namespacePodKVP){
     {
       filePath = path.join(__dirname, `../../navigate_logs/pod${index}.json`);
       try{
-        await exportObj.runCommand(`kubectl get pod ${namespacePodKVP[currentKey][j]} --namespace=${Object.keys(namespacePodKVP)[i]} -o json &> ${filePath}`);
+        await exportObj.runCommand(`kubectl get pod ${namespacePodKVP[currentKey][j]} --namespace=${currentKey} -o json &> ${filePath}`);
       }
       catch(error){
         console.log(error);
