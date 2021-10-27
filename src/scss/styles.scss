@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+$circle-color: purple;
+
 *{
   color: rgb(255, 255, 255);
   font-family: 'Calibri', sans-serif;
@@ -133,8 +135,8 @@ li a:hover {
 .middle,
 .inner {
   border: 3px solid transparent;
-  border-top-color: #3cefff;
-  border-right-color: #3cefff;
+  border-top-color: $circle-color;
+  border-right-color: $circle-color;
   border-radius: 50%;
   position: absolute;
   top: 50%;
