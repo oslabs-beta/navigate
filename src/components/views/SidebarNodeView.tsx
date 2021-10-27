@@ -57,10 +57,10 @@ function SidebarNodeView(props: any) {
       )
     }
   })
-  let displayPodInfo = [<PodInfoInNodeView displayPod = {displayPod} clusterNotRunning={props.clusterNotRunning}/>];
+  let displayPodInfo = [<PodInfoInNodeView displayPod = {displayPod}/>];
 
 
-  if(props.clusterNotRunning) {
+  if(deploymentMain[0] === undefined) {
     deploymentMain.push(<NotLiveMessage />);
     displayPodInfo = [<NotLiveMessage />];
   }

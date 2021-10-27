@@ -10,7 +10,6 @@ export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
   const [responseArray, setArray] = React.useState<string[]>([]);
   const [loaded, setLoaded] = React.useState(false);
-  let [clusterNotRunning, checkError] = React.useState(false);
   const [showLoading, setLoading] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
     setLoading(true);
@@ -52,12 +51,7 @@ export default function UploadView() {
         //show App, pass the data down as props
         setLoaded(true);
       })
-      .catch(error => {
-        if(error){
-          clusterNotRunning = true;
-          checkError(clusterNotRunning)
-        }
-        console.log('POST ERROR: ' + error)});
+      .catch(error => {console.log('POST ERROR: ' + error)});
   }
 
   return (  
@@ -70,7 +64,6 @@ export default function UploadView() {
           <Route exact path="/">
             <App 
             jsonFiles={responseArray}
-            clusterNotRunning={clusterNotRunning}
             />
           </Route>
           <Route exact path="/networkPolicy">

@@ -20,7 +20,7 @@ function SidebarClusterView(props: any) {
       </table>
       </div>)
   })
-  if(props.clusterNotRunning === false) statuses.push(<NotLiveMessage />)
+  if(statuses[0] === undefined) statuses.push(<NotLiveMessage />)
 
   return props.namespace !== "Kubernetes Cluster" ? (
     //Node view
