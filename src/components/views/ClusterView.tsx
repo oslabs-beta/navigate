@@ -116,10 +116,17 @@ function ClusterView(props: any) {
                   data: {
                     source: ele.label + " deployment",
                     target: array[i].label,
-                    label: `stateful`,
+                    label: `connection`,
                   },
                 };
-                relevantData.push(edge);
+                let edge2 = {
+                  data: {
+                    source: array[i].namespace,
+                    target: array[i].label,
+                    label: "deployment",
+                  },
+                };
+                relevantData.push(edge,edge2);
               }
             });
             relevantData.push(newNode);
@@ -143,10 +150,18 @@ function ClusterView(props: any) {
                   data: {
                     source: ele.label + " deployment",
                     target: array[i].label + " service",
-                    label: `stateful`,
+                    label: `connection`,
                   },
                 };
-                relevantData.push(edge);
+                let edge2 = {
+                  data: {
+                    source: array[i].namespace,
+                    target: array[i].label + " service",
+                    label: "deployment",
+                  },
+                };
+                relevantData.push(edge,edge2);
+                
               }
             });
             relevantData.push(newNode);
@@ -237,9 +252,6 @@ function ClusterView(props: any) {
             }}>Namespaces
             </button>
             <h3>{`${props.masterNode}`}</h3>
-            </div>
-            <div>
-            <FetchLiveData />
             </div>
       </div>
 
