@@ -102,7 +102,7 @@ async function aggregateLogs()
       console.log(err);
     }
     rawNames = Buffer.from(data).toString('utf8');
-  }).on('close', () => {
+  }).on('close', async () => {
     const podArray = rawNames.split(' ');
     namespacePodKVP["default"] = podArray;
     //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
@@ -111,7 +111,7 @@ async function aggregateLogs()
         exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i]}`,
           (err, data) => {
             if(err) console.log(err);
-            namespacePodKVP[namespaces[i]] = Buffer.from(data).toString('utf8').split(' ');
+            namespacePodKVP[namespaces[i]] = await Buffer.from(data).toString('utf8').split(' ');
             if(i === namespaces.length-1){
               getDeployments();
               getPodInfo(namespacePodKVP);
