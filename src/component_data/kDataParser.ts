@@ -5,8 +5,8 @@ import IngressPolicy from "../kObjects/ingressPolicy";
 import EgressPolicy from "../kObjects/egressPolicy";
 
 let kObjArray: kObject[] = [];
-
-export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
+//kObjects.anyObject// passing in string[] now, but .kind doesnt exist on type string[]
+export function parseData(relevantData: any[]): kObject[] {
   kObjArray = [];
   for (let i = 0; i < relevantData.length; i++) {
     let eleArr = relevantData[i];

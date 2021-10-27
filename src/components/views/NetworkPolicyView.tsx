@@ -31,7 +31,7 @@ function NetworkPolicyView(props: IProps) {
     if(networkPolicies.length === 1) setNetworkPolicy(networkPolicies[0].label);
     setNetworkPoliciesArr(networkPolicies);
   };
-  function parseData(json: any) : anyObject[] 
+  function parseData(json: any[]) : anyObject[] 
   {
     const data = dataParser.parseData(json);
     return data;
@@ -58,7 +58,7 @@ function NetworkPolicyView(props: IProps) {
           data: {
             id: "egress",
             label: `IPs: ${array[i].egressPolicy.ipBlock}
-                    :${array[i].egressPolicy.port} ${array[i].egressPolicy.protocol}`,
+                    Port:${array[i].egressPolicy.port} ${array[i].egressPolicy.protocol}`,
             class: "egress",
 
           }
