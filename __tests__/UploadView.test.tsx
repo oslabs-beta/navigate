@@ -1,34 +1,28 @@
 import React from 'react';
-import fetch from 'node-fetch';
-import {rest, setupWorker} from 'msw';
+import {rest} from 'msw';
 import {setupServer} from 'msw/node';
 import {render, fireEvent, waitFor, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import UploadView from '../src/components/views/UploadView';
+import axios from 'axios';
 
-const mockURL = '/mockUpload'
+const mockURL = 'http://localhost:3000/upload'
 const server = setupServer(
-  rest.post(mockURL, (req, res, ctx) => {
+  rest.post(mockURL, (req: any, res: any, ctx: any) => {
     return res(ctx.json(mockJSON));
   })
 );
 
-
-beforeAll(() => server.listen);
+beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }));
 afterEach(() => server.resetHandlers);
 afterAll(() => server.close);
 
 test('loads and renders the next page', async () => {
   render(<UploadView />)
   fireEvent.click(screen.getByText('Click here to upload your YAML config files and begin using Navigate...'));
-  fetch(mockURL, {
-    method: "POST",
-    body: mockYAML
-  });
-  await waitFor(() => {
-    screen.getByText('Cluster View');
-  })
-})
+  const response = await axios.post(mockURL, {test: mockYAML});
+  expect(response.data).toStrictEqual(mockJSON);
+});
 
 //example of a json that the uploadView expects back from post req
 const mockJSON = {
