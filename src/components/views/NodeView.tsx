@@ -193,6 +193,17 @@ function NodeView(props: any) {
         registerPod(clickedPod);
       }
     })
+    cy.on("mouseover","node[class = 'pod']", function(event) {
+      event.target.style("background-image", ["https://i.ibb.co/N1fXVdp/podhover.png"]);
+      event.target.style("background-color",'rgb(230,74,0)');
+      event.target.style("border-color",'rgb(230,74,0)');
+      event.target.style("border-width","2");
+    })
+    cy.on("mouseout","node[class = 'pod']", function(event) {
+      event.target.style("background-image", ["https://i.ibb.co/zNx6TML/podicon.png"]);
+      event.target.style("background-color",'white');
+      event.target.style("border-width","0");
+    })
     }, []);
 
   return (
@@ -214,7 +225,7 @@ function NodeView(props: any) {
       <h3>{`${props.masterNode}`}</h3>
 
       </div>
-      <div style={{display:'flex'}}>
+      <div style={{display:'flex', justifyContent:'center', alignItems: 'space-between'}}>
         <div id='nodeView'
           ref={nodeViewRef}
           style={ { width: '100%', height: '600px' }}

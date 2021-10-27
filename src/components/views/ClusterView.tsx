@@ -60,7 +60,7 @@ function ClusterView(props: any) {
             data: {
               source: array[i].namespace,
               target: `${array[i].label} deployment`,
-              label: `deployment`,
+              label: `service`,
             },
           };
           relevantData.push(newNode, edge);
@@ -224,11 +224,16 @@ function ClusterView(props: any) {
         console.log(event.target._private.data.id);
       }
     });
-    cy.on("mouseover","node", (e) => {
-      e.target.addClass("hover");
+    cy.on("mouseover","node[class = 'deployment']", function(event) {
+      event.target.style("background-image", ["https://i.ibb.co/N1fXVdp/podhover.png"]);
+      event.target.style("background-color",'rgb(230,74,0)');
+      event.target.style("border-color",'rgb(230,74,0)');
+      event.target.style("border-width","1");
     })
-    cy.on("mouseout","node", (e) => {
-      e.target.removeClass("hover");
+    cy.on("mouseout","node[class = 'deployment']", function(event) {
+      event.target.style("background-image", ["https://i.ibb.co/zNx6TML/podicon.png"]);
+      event.target.style("background-color",'white');
+      event.target.style("border-width","0");
     })
     return () =>{
       console.log('cleanup');
