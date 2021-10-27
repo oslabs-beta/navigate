@@ -4,8 +4,7 @@ import App from '../App';
 import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NetworkPolicyView from './NetworkPolicyView';
-import { anyObject } from '../../kObjects/__index';
-import { transpileModule } from 'typescript';
+
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
   const [responseArray, setArray] = React.useState<string[]>([]);
