@@ -7,6 +7,7 @@ const borderColor = "#932af5"
 const arrowColor = "#932af5"
 const connectionColor = "rgb(63, 63, 63)"
 const font = "Calibri";
+const podIcon = "https://i.ibb.co/j3Q9XgX/podicon2.png"
 
 export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
@@ -45,28 +46,6 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-max-width": "140",
       "background-color": "whitesmoke",
       // "border-color": "none",
-      // "border-width": "2",
-      color: "whitesmoke",
-    },
-  },
-  {
-    selector: 'node[class = "pod"]',
-    style: {
-      shape: "ellipse",
-      width: "40%",
-      height: "40%",
-      "font-size": "14%",
-      "font-weight": "bold",
-      "font-family": font,
-      content: 'data(label)',
-      "text-valign": "bottom",
-      "text-halign": "right",
-      "text-wrap": "wrap",
-      "text-max-width": "140",
-      "background-image": ["https://i.ibb.co/zNx6TML/podicon.png"],
-      // "background-color": "whitesmoke",
-      // "background-image": ["https://cdn.iconscout.com/icon/premium/png-256-thumb/cube-2403569-2010160.png"],
-      // "border-color": "black",
       // "border-width": "2",
       color: "whitesmoke",
     },
@@ -134,11 +113,33 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     },
   },
   {
+    selector: 'node[class = "pod"]',
+    style: {
+      shape: "ellipse",
+      width: "50%",
+      height: "50%",
+      "font-size": "14%",
+      "font-weight": "bold",
+      "font-family": font,
+      content: 'data(label)',
+      "text-valign": "bottom",
+      "text-halign": "right",
+      "text-wrap": "wrap",
+      "text-max-width": "140",
+      "background-image": [podIcon],
+      // "background-color": "whitesmoke",
+      // "background-image": ["https://cdn.iconscout.com/icon/premium/png-256-thumb/cube-2403569-2010160.png"],
+      // "border-color": "black",
+      // "border-width": "2",
+      color: "whitesmoke",
+    },
+  },
+  {
     selector: 'node[class = "deployment"]',
     style: {
       shape: "ellipse",
-      width: "40%",
-      height: "40%",
+      width: "50%",
+      height: "50%",
       "font-size": "14%",
       "font-weight": "bold",
       "font-family": font,
@@ -148,7 +149,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-wrap": "wrap",
       "text-max-width": "140",
       "background-color": "whitesmoke",
-      "background-image": ["https://i.ibb.co/zNx6TML/podicon.png"],
+      "background-image": [podIcon],
       color: "whitesmoke",
     },
   },
@@ -205,7 +206,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-max-width": "10%",
       // "background-image": ["https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_250,h_195/https://assets.ubuntu.com/v1/767f38a4-kubernetes-stacked-color.svg"],
       // "background-color": "whitesmoke",
-      "background-image": ["https://i.ibb.co/X5wCv7S/network-Icon.png"],
+      "background-image": ["https://i.ibb.co/j3Q9XgX/podicon2.png"],
       "border-color": connectionColor,
       "border-width": "2",
       color: "whitesmoke",

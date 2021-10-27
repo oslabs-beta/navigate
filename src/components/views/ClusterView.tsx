@@ -231,7 +231,7 @@ function ClusterView(props: any) {
       event.target.style("border-width","1");
     })
     cy.on("mouseout","node[class = 'deployment']", function(event) {
-      event.target.style("background-image", ["https://i.ibb.co/zNx6TML/podicon.png"]);
+      event.target.style("background-image", ["https://i.ibb.co/j3Q9XgX/podicon2.png"]);
       event.target.style("background-color",'white');
       event.target.style("border-width","0");
     })
@@ -284,10 +284,11 @@ function ClusterView(props: any) {
           <div
             id="clusterView"
             ref={containerRef}
-            style={{ width: "1600px", height: "750px" }}
+            style={{ width: "75%", height: "750px" }}
           />
+          <Legend />
         </div>
-        <Legend />
+        
       </div>
     </div>
   );
