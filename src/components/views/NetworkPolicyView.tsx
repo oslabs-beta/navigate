@@ -21,7 +21,6 @@ function NetworkPolicyView(props: any) {
   const [networkPolicy, setNetworkPolicy] = React.useState('');
   const [networkPoliciesArr, setNetworkPoliciesArr] = React.useState<kNetworkPolicy[]>([])
   const networkPolicies: any[] = [];
-  const [dataProp, SetDataProp] = React.useState<kObject[]>([]);
   const populateNetworkPolicies = (array: any[]) => {
     array.forEach(kObject => {
       if(kObject.kind === "NetworkPolicy") networkPolicies.push(kObject);
@@ -157,15 +156,11 @@ function NetworkPolicyView(props: any) {
     })
   }, [props.jsonFiles, networkPolicy]);
 
-
-  const limitSidebarHeight = document.getElementById('clusterView')?.style.height;
-
   return(
     <div>
       <div >
         <h1 id="clusterHeader">
         <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
-          {/* {props.view} */}
           {"Network Policy View"}
         </h1>
       </div>  
