@@ -1,68 +1,39 @@
-// preload.js
-// const child_process = require('child_process');
-const { Children } = require('react');
-const { isRegExp } = require('util/types');
-
 const {spawn} = require('child_process');
-const { runCommand } = require('../server/runCommand');
-var exec = require('child_process').exec, child;
+// var {execFile} = require('child_process').exec, child;
+const { execFile } = require('child_process');
+const fs = require('fs');
+const path = require('path');
+
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 window.addEventListener('DOMContentLoaded', () => {
-    const replaceText = (selector, text) => {
-      const element = document.getElementById(selector)
-      if (element) element.innerText = text
-    }
 
-  //   function runScript(scriptPath, callback) {
-
-  //     // keep track of whether callback has been invoked to prevent multiple invocations
-  //     var invoked = false;
+    runCommand = async (cmd) => {
+      // if (process.env.NODE_ENV === 'production') {
+      //   const fixPath = require('fix-path');
+      
+      //   fixPath();
+      // import {shellPath} from 'shell-path';
+      console.log(process.env.SHELL);
+      console.log(process.env.PATH);
+      //=> '/usr/bin'
+      // console.log(await shellPath());
+      //=> '/usr/local/bin:/usr/bin:...'
+      execFile(cmd, function (error, stdout, stderr) {
+          if(process.env.NODE_ENV !== 'test')
+          {
+              console.log(stdout);
+              if(stderr)
+              console.log('stderr: ' + stderr);
+              if (error !== null) {
+                   console.log('exec error: ' + error);
+              }
+          }
+      });
+  }
+  const serverFile = path.join(__dirname, '../server/server.ts')
+  // const serverFile = `${process.env.PWD}/server/server.ts`
+  console.log(__dirname)
+  runCommand(`npx ts-node ${serverFile}`)
   
-  //     var process = childProcess.fork(scriptPath);
-  
-  //     // listen for errors as they may prevent the exit event from firing
-  //     process.on('error', function (err) {
-  //         if (invoked) return;
-  //         invoked = true;
-  //         callback(err);
-  //     });
-  
-  //     // execute the callback once the process has finished running
-  //     process.on('exit', function (code) {
-  //         if (invoked) return;
-  //         invoked = true;
-  //         var err = code === 0 ? null : new Error('exit code ' + code);
-  //         callback(err);
-  //     });
-  
-  // }
-  
-  // // Now we can run a script and invoke a callback when complete, e.g.
-  // // runScript("ts-node ./server/server.ts", function (err) {
-  // //     if (err) throw err;
-  // //     console.log('finished running server.ts');
-  // // });
-
-  // child_process.spawn('ts-node ./server/server.ts', (error, stdout, stderr) => {
-  //   if (error) {
-  //     throw error;
-  //   }
-  //   console.log(stdout);
-  // });
-
-  // child();
-  // childProcess.exec("ts-node ./server/server.ts", (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`exec error: ${error}`);
-  //     return;
-  //   }
-  //   console.log(`stdout: ${stdout}`);
-  //   console.error(`stderr: ${stderr}`);
-  // })
-
-  
-    for (const dependency of ['chrome', 'node', 'electron']) {
-      replaceText(`${dependency}-version`, process.versions[dependency])
-    }
   })
