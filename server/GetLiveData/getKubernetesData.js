@@ -40,7 +40,8 @@ function getElementsOfKind(kind, writeToDisk = false) {
 function getNamespacesFromYAML(array){
   const output = {};
   array.forEach(k8sObject => {
-    if(k8sObject)
+    console.log(k8sObject);
+    if(k8sObject.metadata !== undefined)
     if(!output[k8sObject.metadata.namespace]){
       output.push(k8sObject.metadata.namespace);
     }
@@ -92,8 +93,8 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
   */
 async function aggregateLogs()
 {
-  //get namespace: [pods] key value pairs <3
-  const namespaces = getElementsOfKind("Namespace");
+  //get namespace: [pods] key value pairs
+  const namespaces = getNamespacesFromYAML(YAMLData.data);
   const namespacePodKVP = {};
   //overwrite existing podNames txt if it exists already for first namespace, which is always "default"
   let rawNames;

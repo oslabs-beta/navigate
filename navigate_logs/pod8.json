@@ -2,13 +2,13 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:58Z",
-        "generateName": "adservice-5657f795f5-",
+        "creationTimestamp": "2021-10-18T18:50:50Z",
+        "generateName": "paymentservice-5849646947-",
         "labels": {
-            "app": "adservice",
-            "pod-template-hash": "5657f795f5"
+            "app": "paymentservice",
+            "pod-template-hash": "5849646947"
         },
-        "name": "adservice-5657f795f5-bbhvw",
+        "name": "paymentservice-5849646947-xrg84",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,12 +16,12 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "adservice-5657f795f5",
-                "uid": "0de0c56b-9a15-4a2e-be36-94560695f9a6"
+                "name": "paymentservice-5849646947",
+                "uid": "5554fa4e-619d-4754-b725-9d53bfa80183"
             }
         ],
-        "resourceVersion": "1145116",
-        "uid": "93cb046b-1e17-4cc1-be1c-e7df6760128b"
+        "resourceVersion": "1216869",
+        "uid": "bd60606a-e7e5-4c82-b7fa-eb9cdbcbf799"
     },
     "spec": {
         "containers": [
@@ -29,28 +29,27 @@
                 "env": [
                     {
                         "name": "PORT",
-                        "value": "9555"
+                        "value": "50051"
                     }
                 ],
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
+                "image": "gcr.io/google-samples/microservices-demo/paymentservice:v0.3.0",
                 "imagePullPolicy": "IfNotPresent",
                 "livenessProbe": {
                     "exec": {
                         "command": [
                             "/bin/grpc_health_probe",
-                            "-addr=:9555"
+                            "-addr=:50051"
                         ]
                     },
                     "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
+                    "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
                 },
                 "name": "server",
                 "ports": [
                     {
-                        "containerPort": 9555,
+                        "containerPort": 50051,
                         "protocol": "TCP"
                     }
                 ],
@@ -58,23 +57,22 @@
                     "exec": {
                         "command": [
                             "/bin/grpc_health_probe",
-                            "-addr=:9555"
+                            "-addr=:50051"
                         ]
                     },
                     "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
+                    "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
                 },
                 "resources": {
                     "limits": {
-                        "cpu": "300m",
-                        "memory": "300Mi"
+                        "cpu": "200m",
+                        "memory": "128Mi"
                     },
                     "requests": {
-                        "cpu": "200m",
-                        "memory": "180Mi"
+                        "cpu": "100m",
+                        "memory": "64Mi"
                     }
                 },
                 "terminationMessagePath": "/dev/termination-log",
@@ -82,7 +80,7 @@
                 "volumeMounts": [
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-tvftx",
+                        "name": "kube-api-access-cx9sl",
                         "readOnly": true
                     }
                 ]
@@ -115,7 +113,7 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-tvftx",
+                "name": "kube-api-access-cx9sl",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -158,63 +156,63 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-18T18:50:50Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-26T08:06:03Z",
+                "lastTransitionTime": "2021-10-27T00:31:46Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-26T08:06:03Z",
+                "lastTransitionTime": "2021-10-27T00:31:46Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-18T18:50:50Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://1328ea422aede9199006b9a5d809591e4e121f7da0e6703328a38df12dd8ae04",
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/adservice@sha256:989e0689537fcafe48163a8bdac30020ff1def914283d6f6e8bee1ce28f8009d",
+                "containerID": "docker://5157a064f807d3aa81cfe9b05e872d895450eeb4d5f4eaf04bc1339274467e18",
+                "image": "gcr.io/google-samples/microservices-demo/paymentservice:v0.3.0",
+                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/paymentservice@sha256:7e3b5a196b76d93989ada0be9399c6fce8e3fae64a33363a24835d13e3c0db5a",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://a792f8fc62c40b44d82bb669c4f7eec231dd69c5830a7577dac2ab9b06d9c17e",
-                        "exitCode": 143,
-                        "finishedAt": "2021-10-26T08:02:22Z",
+                        "containerID": "docker://12265f335c32bd00c23c2a535bd9bb12df93633683b769e9f0bb0f28f53f6c42",
+                        "exitCode": 137,
+                        "finishedAt": "2021-10-27T00:31:32Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-26T08:01:25Z"
+                        "startedAt": "2021-10-26T22:06:57Z"
                     }
                 },
                 "name": "server",
                 "ready": true,
-                "restartCount": 159,
+                "restartCount": 194,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-26T08:05:14Z"
+                        "startedAt": "2021-10-27T00:31:33Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.143",
+        "podIP": "10.1.0.138",
         "podIPs": [
             {
-                "ip": "10.1.0.143"
+                "ip": "10.1.0.138"
             }
         ],
         "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:58Z"
+        "startTime": "2021-10-18T18:50:50Z"
     }
 }

@@ -2,13 +2,16 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:58Z",
-        "generateName": "adservice-5657f795f5-",
-        "labels": {
-            "app": "adservice",
-            "pod-template-hash": "5657f795f5"
+        "annotations": {
+            "sidecar.istio.io/rewriteAppHTTPProbers": "true"
         },
-        "name": "adservice-5657f795f5-bbhvw",
+        "creationTimestamp": "2021-10-18T18:50:48Z",
+        "generateName": "frontend-7c4fc6584c-",
+        "labels": {
+            "app": "frontend",
+            "pod-template-hash": "7c4fc6584c"
+        },
+        "name": "frontend-7c4fc6584c-bwxmc",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,12 +19,12 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "adservice-5657f795f5",
-                "uid": "0de0c56b-9a15-4a2e-be36-94560695f9a6"
+                "name": "frontend-7c4fc6584c",
+                "uid": "84bb4e28-ec35-420c-b914-a55145d746ac"
             }
         ],
-        "resourceVersion": "1145116",
-        "uid": "93cb046b-1e17-4cc1-be1c-e7df6760128b"
+        "resourceVersion": "1084823",
+        "uid": "9e2efa51-6f37-4d39-bde1-e9fa72618a85"
     },
     "spec": {
         "containers": [
@@ -29,52 +32,90 @@
                 "env": [
                     {
                         "name": "PORT",
-                        "value": "9555"
+                        "value": "8080"
+                    },
+                    {
+                        "name": "PRODUCT_CATALOG_SERVICE_ADDR",
+                        "value": "productcatalogservice:3550"
+                    },
+                    {
+                        "name": "CURRENCY_SERVICE_ADDR",
+                        "value": "currencyservice:7000"
+                    },
+                    {
+                        "name": "CART_SERVICE_ADDR",
+                        "value": "cartservice:7070"
+                    },
+                    {
+                        "name": "RECOMMENDATION_SERVICE_ADDR",
+                        "value": "recommendationservice:8080"
+                    },
+                    {
+                        "name": "SHIPPING_SERVICE_ADDR",
+                        "value": "shippingservice:50051"
+                    },
+                    {
+                        "name": "CHECKOUT_SERVICE_ADDR",
+                        "value": "checkoutservice:5050"
+                    },
+                    {
+                        "name": "AD_SERVICE_ADDR",
+                        "value": "adservice:9555"
                     }
                 ],
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
+                "image": "gcr.io/google-samples/microservices-demo/frontend:v0.3.0",
                 "imagePullPolicy": "IfNotPresent",
                 "livenessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:9555"
-                        ]
-                    },
                     "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
+                    "httpGet": {
+                        "httpHeaders": [
+                            {
+                                "name": "Cookie",
+                                "value": "shop_session-id=x-liveness-probe"
+                            }
+                        ],
+                        "path": "/_healthz",
+                        "port": 8080,
+                        "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 10,
+                    "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
                 },
                 "name": "server",
                 "ports": [
                     {
-                        "containerPort": 9555,
+                        "containerPort": 8080,
                         "protocol": "TCP"
                     }
                 ],
                 "readinessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:9555"
-                        ]
-                    },
                     "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
+                    "httpGet": {
+                        "httpHeaders": [
+                            {
+                                "name": "Cookie",
+                                "value": "shop_session-id=x-readiness-probe"
+                            }
+                        ],
+                        "path": "/_healthz",
+                        "port": 8080,
+                        "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 10,
+                    "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
                 },
                 "resources": {
                     "limits": {
-                        "cpu": "300m",
-                        "memory": "300Mi"
+                        "cpu": "200m",
+                        "memory": "128Mi"
                     },
                     "requests": {
-                        "cpu": "200m",
-                        "memory": "180Mi"
+                        "cpu": "100m",
+                        "memory": "64Mi"
                     }
                 },
                 "terminationMessagePath": "/dev/termination-log",
@@ -82,7 +123,7 @@
                 "volumeMounts": [
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-tvftx",
+                        "name": "kube-api-access-q9x4b",
                         "readOnly": true
                     }
                 ]
@@ -98,7 +139,7 @@
         "securityContext": {},
         "serviceAccount": "default",
         "serviceAccountName": "default",
-        "terminationGracePeriodSeconds": 5,
+        "terminationGracePeriodSeconds": 30,
         "tolerations": [
             {
                 "effect": "NoExecute",
@@ -115,7 +156,7 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-tvftx",
+                "name": "kube-api-access-q9x4b",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -158,63 +199,63 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-18T18:50:49Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-26T08:06:03Z",
+                "lastTransitionTime": "2021-10-25T19:11:40Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-26T08:06:03Z",
+                "lastTransitionTime": "2021-10-25T19:11:40Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-18T18:50:49Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://1328ea422aede9199006b9a5d809591e4e121f7da0e6703328a38df12dd8ae04",
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/adservice@sha256:989e0689537fcafe48163a8bdac30020ff1def914283d6f6e8bee1ce28f8009d",
+                "containerID": "docker://35287a14bc5f56dc2f9c4a8fee181db3c7ff5f19e522deb470f76a8da2fdede6",
+                "image": "gcr.io/google-samples/microservices-demo/frontend:v0.3.0",
+                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/frontend@sha256:72bbe2194f74705e10a638ddcac24b47a9e6518e3f61151f5e027b51180e11d5",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://a792f8fc62c40b44d82bb669c4f7eec231dd69c5830a7577dac2ab9b06d9c17e",
-                        "exitCode": 143,
-                        "finishedAt": "2021-10-26T08:02:22Z",
+                        "containerID": "docker://f50dec7182644f668db170e52d99cb10630cafed1dbc1e66e88fbae88452d373",
+                        "exitCode": 255,
+                        "finishedAt": "2021-10-25T14:46:34Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-26T08:01:25Z"
+                        "startedAt": "2021-10-25T14:33:38Z"
                     }
                 },
                 "name": "server",
                 "ready": true,
-                "restartCount": 159,
+                "restartCount": 6,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-26T08:05:14Z"
+                        "startedAt": "2021-10-25T19:11:22Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.143",
+        "podIP": "10.1.0.146",
         "podIPs": [
             {
-                "ip": "10.1.0.143"
+                "ip": "10.1.0.146"
             }
         ],
         "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:58Z"
+        "startTime": "2021-10-18T18:50:49Z"
     }
 }

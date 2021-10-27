@@ -2,13 +2,13 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:58Z",
-        "generateName": "adservice-5657f795f5-",
+        "creationTimestamp": "2021-10-18T18:50:57Z",
+        "generateName": "redis-cart-5b569cd47-",
         "labels": {
-            "app": "adservice",
-            "pod-template-hash": "5657f795f5"
+            "app": "redis-cart",
+            "pod-template-hash": "5b569cd47"
         },
-        "name": "adservice-5657f795f5-bbhvw",
+        "name": "redis-cart-5b569cd47-rwzdz",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,73 +16,63 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "adservice-5657f795f5",
-                "uid": "0de0c56b-9a15-4a2e-be36-94560695f9a6"
+                "name": "redis-cart-5b569cd47",
+                "uid": "dc9927a9-da99-478e-b500-fa2ff1f27701"
             }
         ],
-        "resourceVersion": "1145116",
-        "uid": "93cb046b-1e17-4cc1-be1c-e7df6760128b"
+        "resourceVersion": "1084644",
+        "uid": "72732185-8149-4561-bd6d-8ca1d4a4442b"
     },
     "spec": {
         "containers": [
             {
-                "env": [
-                    {
-                        "name": "PORT",
-                        "value": "9555"
-                    }
-                ],
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
+                "image": "redis:alpine",
                 "imagePullPolicy": "IfNotPresent",
                 "livenessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:9555"
-                        ]
-                    },
                     "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
+                    "periodSeconds": 5,
                     "successThreshold": 1,
+                    "tcpSocket": {
+                        "port": 6379
+                    },
                     "timeoutSeconds": 1
                 },
-                "name": "server",
+                "name": "redis",
                 "ports": [
                     {
-                        "containerPort": 9555,
+                        "containerPort": 6379,
                         "protocol": "TCP"
                     }
                 ],
                 "readinessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:9555"
-                        ]
-                    },
                     "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
+                    "periodSeconds": 5,
                     "successThreshold": 1,
+                    "tcpSocket": {
+                        "port": 6379
+                    },
                     "timeoutSeconds": 1
                 },
                 "resources": {
                     "limits": {
-                        "cpu": "300m",
-                        "memory": "300Mi"
+                        "cpu": "125m",
+                        "memory": "256Mi"
                     },
                     "requests": {
-                        "cpu": "200m",
-                        "memory": "180Mi"
+                        "cpu": "70m",
+                        "memory": "200Mi"
                     }
                 },
                 "terminationMessagePath": "/dev/termination-log",
                 "terminationMessagePolicy": "File",
                 "volumeMounts": [
                     {
+                        "mountPath": "/data",
+                        "name": "redis-data"
+                    },
+                    {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-tvftx",
+                        "name": "kube-api-access-6mtzf",
                         "readOnly": true
                     }
                 ]
@@ -98,7 +88,7 @@
         "securityContext": {},
         "serviceAccount": "default",
         "serviceAccountName": "default",
-        "terminationGracePeriodSeconds": 5,
+        "terminationGracePeriodSeconds": 30,
         "tolerations": [
             {
                 "effect": "NoExecute",
@@ -115,7 +105,11 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-tvftx",
+                "emptyDir": {},
+                "name": "redis-data"
+            },
+            {
+                "name": "kube-api-access-6mtzf",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -164,13 +158,13 @@
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-26T08:06:03Z",
+                "lastTransitionTime": "2021-10-25T19:11:26Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-26T08:06:03Z",
+                "lastTransitionTime": "2021-10-25T19:11:26Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
@@ -183,35 +177,35 @@
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://1328ea422aede9199006b9a5d809591e4e121f7da0e6703328a38df12dd8ae04",
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/adservice@sha256:989e0689537fcafe48163a8bdac30020ff1def914283d6f6e8bee1ce28f8009d",
+                "containerID": "docker://cd5d15b5d9518d2dc42e007c11b92df4de093df46eb639b27a3ecc6faf57650c",
+                "image": "redis:alpine",
+                "imageID": "docker-pullable://redis@sha256:58132ff3162cf9ecc8e2042c77b2ec46f6024c35e83bda3cabde76437406f8ac",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://a792f8fc62c40b44d82bb669c4f7eec231dd69c5830a7577dac2ab9b06d9c17e",
-                        "exitCode": 143,
-                        "finishedAt": "2021-10-26T08:02:22Z",
+                        "containerID": "docker://19e40ff9611dae552b64ff3dc25ee7cec32752a73579872a870f3a009ba18e4f",
+                        "exitCode": 255,
+                        "finishedAt": "2021-10-25T14:46:34Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-26T08:01:25Z"
+                        "startedAt": "2021-10-25T14:33:40Z"
                     }
                 },
-                "name": "server",
+                "name": "redis",
                 "ready": true,
-                "restartCount": 159,
+                "restartCount": 3,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-26T08:05:14Z"
+                        "startedAt": "2021-10-25T19:11:25Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.143",
+        "podIP": "10.1.0.150",
         "podIPs": [
             {
-                "ip": "10.1.0.143"
+                "ip": "10.1.0.150"
             }
         ],
         "qosClass": "Burstable",
