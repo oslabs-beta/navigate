@@ -27,6 +27,12 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+select{
+  color: black;
+}
+option{
+  color: black;
+}
 button:hover {
   background: #e7e7e7;
   color: black;
@@ -57,13 +63,7 @@ button + h3 {
   box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
   font-family: 'Calibri', sans-serif;
 }
-#clusterHeader {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  
-}
-#nodeHeader {
+.header{
   display:flex;
   justify-content: center;
   align-items: center;
@@ -87,5 +87,31 @@ button + h3 {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li .link {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
 }
 

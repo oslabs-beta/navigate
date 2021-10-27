@@ -6,7 +6,7 @@ import * as kObjects from "../kObjects/__index";
 import * as dataParser from "../component_data/kDataParser";
 
 interface IProps {
-  jsonFiles: string[]
+  jsonFiles: string[],
 }
 
 const App = (props: IProps) => {
