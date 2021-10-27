@@ -17,9 +17,6 @@ const listOfDefaultNamespaces = {
 function getElementsOfKind(kind, writeToDisk = false) {
   try
   {
-    if(kind === "Namespace"){
-      return getNamespacesFromYAML(YAMLData.data);
-    }
     const data = YAMLData.data;
     const output = [];
     data.forEach(k8sObject => {
@@ -40,7 +37,6 @@ function getElementsOfKind(kind, writeToDisk = false) {
 function getNamespacesFromYAML(array){
   const output = {};
   array.forEach(k8sObject => {
-    console.log(k8sObject);
     if(k8sObject[0].metadata !== undefined)
     if(!output[k8sObject[0].metadata.namespace]){
       output[k8sObject[0].metadata.namespace] = '';
@@ -111,8 +107,8 @@ async function aggregateLogs()
     namespacePodKVP["default"] = podArray;
     //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
     if(namespaces[0])
-      for(let i = 0; i < namespaces[0].length; i++){
-        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[0][i].metadata.name}`,
+      for(let i = 0; i < namespaces.length; i++){
+        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i].metadata.name}`,
           (err, data) => {
             if(err) console.log(err);
             namespacePodKVP[namespaces[0][i].metadata.name] = Buffer.from(data).toString('utf8').split(' ');
