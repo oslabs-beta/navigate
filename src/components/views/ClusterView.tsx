@@ -186,7 +186,7 @@ function ClusterView(props: any) {
       elements: relevantData,
     };
     let cy = Cytoscape(config);
-    let layout = cy.layout({
+    let layout: OtherRandomOptions = cy.layout({
       name: "dagre",
       nodeDimensionsIncludeLabels: true,
       padding: 15,
@@ -266,6 +266,15 @@ function ClusterView(props: any) {
       </div>
     </div>
   );
+}
+
+type LayoutOptions =
+        Cytoscape.NullLayoutOptions | Cytoscape.RandomLayoutOptions | Cytoscape.PresetLayoutOptions |
+        Cytoscape.GridLayoutOptions | Cytoscape.CircleLayoutOptions | Cytoscape.ConcentricLayoutOptions |
+        Cytoscape.BreadthFirstLayoutOptions | Cytoscape.CoseLayoutOptions | Cytoscape.BaseLayoutOptions | OtherRandomOptions;
+
+interface OtherRandomOptions {
+  [key:string]: any
 }
 
 export default ClusterView;
