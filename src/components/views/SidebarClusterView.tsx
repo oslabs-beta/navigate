@@ -22,13 +22,7 @@ function SidebarClusterView(props: any) {
   })
   if(statuses[0] === undefined) statuses.push(<NotLiveMessage />)
 
-  return props.namespace !== "Kubernetes Cluster" ? (
-    //Node view
-    <div>
-      <h1>{props.masterNode}</h1>
-    </div>
-  ) : (
-    // Cluster View
+  return (
     <div>
       <div className="nodeSchedulerHeader">
         <h2>Node Scheduler Logs</h2>
