@@ -6,7 +6,9 @@ export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
   const [responseArray, setArray] = React.useState([]);
   const [loaded, setLoaded] = React.useState(false);
+  const [showLoading, setLoading] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
+    setLoading(true);
     acceptedFiles.forEach((file: File, index: Number, array: Array<File>) => {
       let isLastElement = false;
       const reader = new FileReader();
@@ -28,6 +30,7 @@ export default function UploadView() {
       reader.readAsText(file);
     })
   }, []);
+
   const {getRootProps, getInputProps} = useDropzone({onDrop, multiple: true});
 
   function postUpload(upload: Array<string | ArrayBuffer>) {
@@ -49,15 +52,30 @@ export default function UploadView() {
 
   return (  
     loaded ? 
-    <App jsonFiles={responseArray}/> :
-    <div {...getRootProps()}>
-      <input {...getInputProps()} />
-      {
-        //some logo here
-          <div>
-          <p>Click here to upload your YAML config files and begin using Navigate...</p>
-          </div>
-      }
+    <App jsonFiles={responseArray}/>
+    :
+    !showLoading ? 
+    <div className="inputContainer">
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          //some logo here
+            <div>
+            <p>Click here to upload your YAML config files and begin using Navigate...</p>
+            </div>
+        }
+      </div> 
+    </div>:
+    <div className="inputContainer">
+      <div className="text">Loading...</div>
+      <div className="animation">
+        <div className="loader">
+        <div className="outer"></div>
+        <div className="middle"></div>
+        <div className="inner"></div>
+      </div>
+      </div>
     </div>
+
   );
 }
