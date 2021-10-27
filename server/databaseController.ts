@@ -47,7 +47,7 @@ databaseController.getLivePodData = (req: Request, res: Response, next: NextFunc
   }
 }
 
-databaseController.uploadFiles = (req: Request, res: Response, next: NextFunction) => {
+databaseController.uploadFiles = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const output: any = [];
     req.body.forEach((ele: string) => {
@@ -55,9 +55,11 @@ databaseController.uploadFiles = (req: Request, res: Response, next: NextFunctio
     });
     res.locals.uploadedData = JSON.stringify(output);  
     YAMLData.data = output;
+    await aggregateLogs();
     return next();
   } catch (error) {
     console.log('Error in databaseController.uploadFiles: ',  error)
+    return next();
   }
 }
 
