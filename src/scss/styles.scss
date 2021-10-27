@@ -151,7 +151,11 @@ li a:hover {
   top: 50%;
   left: 50%;
 }
-
+.cytoContainer{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .outer {
   width: 3.5em;
   height: 3.5em;

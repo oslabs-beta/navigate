@@ -123,7 +123,7 @@ function ClusterView(props: any) {
                   data: {
                     source: array[i].namespace,
                     target: array[i].label,
-                    label: "deployment",
+                    label: "service",
                   },
                 };
                 relevantData.push(edge,edge2);
@@ -157,7 +157,7 @@ function ClusterView(props: any) {
                   data: {
                     source: array[i].namespace,
                     target: array[i].label + " service",
-                    label: "deployment",
+                    label: "service",
                   },
                 };
                 relevantData.push(edge,edge2);
@@ -224,6 +224,12 @@ function ClusterView(props: any) {
         console.log(event.target._private.data.id);
       }
     });
+    cy.on("mouseover","node", (e) => {
+      e.target.addClass("hover");
+    })
+    cy.on("mouseout","node", (e) => {
+      e.target.removeClass("hover");
+    })
     return () =>{
       console.log('cleanup');
     } 
@@ -254,8 +260,7 @@ function ClusterView(props: any) {
             <h3>{`${props.masterNode}`}</h3>
             </div>
       </div>
-
-      <div style={{display:'flex'}}> 
+      <div className="cytoContainer"> 
         <div id="pageView">
           <div
             id="pageCol"
@@ -270,14 +275,14 @@ function ClusterView(props: any) {
               deploymentStatus={props.deploymentStatus}
               namespace={props.namespace}
             />
-            <Legend />
           </div>
           <div
             id="clusterView"
             ref={containerRef}
-            style={{ width: "1500px", height: "750px" }}
+            style={{ width: "1600px", height: "750px" }}
           />
         </div>
+        <Legend />
       </div>
     </div>
   );
