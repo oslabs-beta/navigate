@@ -1,9 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
-const {spawn} = require('child_process');
-
-const { runCommand } = require('../server/runCommand');
-var exec = require('child_process').exec, child;
 
 const createWindow = () => {
   // Create the browser window.
