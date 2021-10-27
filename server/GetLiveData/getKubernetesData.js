@@ -18,7 +18,7 @@ function getElementsOfKind(kind, writeToDisk = false) {
   try
   {
     if(kind === "Namespace"){
-      return getNamespacesFromYAML(YAML.data);
+      return getNamespacesFromYAML(YAMLData.data);
     }
     const data = YAMLData.data;
     const output = [];
@@ -40,6 +40,7 @@ function getElementsOfKind(kind, writeToDisk = false) {
 function getNamespacesFromYAML(array){
   const output = {};
   array.forEach(k8sObject => {
+    if(k8sObject)
     if(!output[k8sObject.metadata.namespace]){
       output.push(k8sObject.metadata.namespace);
     }
@@ -75,7 +76,6 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
 }
 
 /*
-
     1. Get namespaces via "kubectl get namespaces" command 
         a. Store namespaces into an array
             [can also get namespaces from yaml files]
@@ -89,7 +89,6 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
         b. Store list of pod names as an array, inside an object, where key is <namespace>
     4. Get deployment logs via  "kubectl get deployment <deploymentname> -o json >> deployment[i].json"
     5. Get pod logs via "kubectl get pod <podName> -o json >> pod[i].json"
-  
   */
 async function aggregateLogs()
 {
