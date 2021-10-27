@@ -2,13 +2,16 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:58Z",
-        "generateName": "adservice-5657f795f5-",
-        "labels": {
-            "app": "adservice",
-            "pod-template-hash": "5657f795f5"
+        "annotations": {
+            "sidecar.istio.io/rewriteAppHTTPProbers": "true"
         },
-        "name": "adservice-5657f795f5-bbhvw",
+        "creationTimestamp": "2021-10-18T18:50:56Z",
+        "generateName": "loadgenerator-656dfb64b4-",
+        "labels": {
+            "app": "loadgenerator",
+            "pod-template-hash": "656dfb64b4"
+        },
+        "name": "loadgenerator-656dfb64b4-r5szr",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,65 +19,37 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "adservice-5657f795f5",
-                "uid": "0de0c56b-9a15-4a2e-be36-94560695f9a6"
+                "name": "loadgenerator-656dfb64b4",
+                "uid": "105bb1aa-d1c0-4e19-96f1-beafa6757528"
             }
         ],
-        "resourceVersion": "674171",
-        "uid": "93cb046b-1e17-4cc1-be1c-e7df6760128b"
+        "resourceVersion": "1084813",
+        "uid": "7721a111-effb-4ce9-a3bc-e659102e0794"
     },
     "spec": {
         "containers": [
             {
                 "env": [
                     {
-                        "name": "PORT",
-                        "value": "9555"
-                    }
-                ],
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
-                "imagePullPolicy": "IfNotPresent",
-                "livenessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:9555"
-                        ]
+                        "name": "FRONTEND_ADDR",
+                        "value": "frontend:80"
                     },
-                    "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
-                    "successThreshold": 1,
-                    "timeoutSeconds": 1
-                },
-                "name": "server",
-                "ports": [
                     {
-                        "containerPort": 9555,
-                        "protocol": "TCP"
+                        "name": "USERS",
+                        "value": "10"
                     }
                 ],
-                "readinessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:9555"
-                        ]
-                    },
-                    "failureThreshold": 3,
-                    "initialDelaySeconds": 20,
-                    "periodSeconds": 15,
-                    "successThreshold": 1,
-                    "timeoutSeconds": 1
-                },
+                "image": "gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.0",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "main",
                 "resources": {
                     "limits": {
-                        "cpu": "300m",
-                        "memory": "300Mi"
+                        "cpu": "500m",
+                        "memory": "512Mi"
                     },
                     "requests": {
-                        "cpu": "200m",
-                        "memory": "180Mi"
+                        "cpu": "300m",
+                        "memory": "256Mi"
                     }
                 },
                 "terminationMessagePath": "/dev/termination-log",
@@ -82,7 +57,7 @@
                 "volumeMounts": [
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-tvftx",
+                        "name": "kube-api-access-7vnjx",
                         "readOnly": true
                     }
                 ]
@@ -90,6 +65,34 @@
         ],
         "dnsPolicy": "ClusterFirst",
         "enableServiceLinks": true,
+        "initContainers": [
+            {
+                "command": [
+                    "/bin/sh",
+                    "-exc",
+                    "echo \"Init container pinging frontend: ${FRONTEND_ADDR}...\"\nSTATUSCODE=$(wget --server-response http://${FRONTEND_ADDR} 2\u003e\u00261 | awk '/^  HTTP/{print $2}')\nif test $STATUSCODE -ne 200; then\n    echo \"Error: Could not reach frontend - Status code: ${STATUSCODE}\"\n    exit 1\nfi\n"
+                ],
+                "env": [
+                    {
+                        "name": "FRONTEND_ADDR",
+                        "value": "frontend:80"
+                    }
+                ],
+                "image": "busybox:latest",
+                "imagePullPolicy": "Always",
+                "name": "frontend-check",
+                "resources": {},
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                    {
+                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                        "name": "kube-api-access-7vnjx",
+                        "readOnly": true
+                    }
+                ]
+            }
+        ],
         "nodeName": "docker-desktop",
         "preemptionPolicy": "PreemptLowerPriority",
         "priority": 0,
@@ -115,7 +118,7 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-tvftx",
+                "name": "kube-api-access-7vnjx",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -158,63 +161,83 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-25T19:11:29Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:55:43Z",
+                "lastTransitionTime": "2021-10-25T19:11:30Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:55:43Z",
+                "lastTransitionTime": "2021-10-25T19:11:30Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-18T18:50:56Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://3035f511b6220e9bfee43424acc0feb9d807f2c4f58bdee433945f613946e48f",
-                "image": "gcr.io/google-samples/microservices-demo/adservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/adservice@sha256:989e0689537fcafe48163a8bdac30020ff1def914283d6f6e8bee1ce28f8009d",
+                "containerID": "docker://ce82c2548394e9847cb98449ad633e587b8d119316a2557c5bbd517bf6369f3e",
+                "image": "gcr.io/google-samples/microservices-demo/loadgenerator:v0.3.0",
+                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/loadgenerator@sha256:30d17d053ee28ceaed8662efa0dd2f04104d717f392fa9c32c2f5a4f7187d79c",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://13cd213d59c4a0bfc7305846031fc791547bbbd6751c411f21b7e84fee0cdc1e",
-                        "exitCode": 143,
-                        "finishedAt": "2021-10-18T18:54:45Z",
+                        "containerID": "docker://2350b3826a4080c01550f456e1f80049f6c3fc27cf0931e2c4da793023f5fa16",
+                        "exitCode": 255,
+                        "finishedAt": "2021-10-25T14:46:34Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-18T18:53:45Z"
+                        "startedAt": "2021-10-25T14:33:44Z"
                     }
                 },
-                "name": "server",
+                "name": "main",
                 "ready": true,
-                "restartCount": 2,
+                "restartCount": 3,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-18T18:54:45Z"
+                        "startedAt": "2021-10-25T19:11:29Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
+        "initContainerStatuses": [
+            {
+                "containerID": "docker://c4aa0cae65b03ec6d04b66cd80271819a1068e62560155012ffe1ad576ba6241",
+                "image": "busybox:latest",
+                "imageID": "docker-pullable://busybox@sha256:f7ca5a32c10d51aeda3b4d01c61c6061f497893d7f6628b92f822f7117182a57",
+                "lastState": {},
+                "name": "frontend-check",
+                "ready": true,
+                "restartCount": 5,
+                "state": {
+                    "terminated": {
+                        "containerID": "docker://c4aa0cae65b03ec6d04b66cd80271819a1068e62560155012ffe1ad576ba6241",
+                        "exitCode": 0,
+                        "finishedAt": "2021-10-25T19:11:29Z",
+                        "reason": "Completed",
+                        "startedAt": "2021-10-25T19:11:19Z"
+                    }
+                }
+            }
+        ],
         "phase": "Running",
-        "podIP": "10.1.0.24",
+        "podIP": "10.1.0.137",
         "podIPs": [
             {
-                "ip": "10.1.0.24"
+                "ip": "10.1.0.137"
             }
         ],
         "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:58Z"
+        "startTime": "2021-10-18T18:50:56Z"
     }
 }

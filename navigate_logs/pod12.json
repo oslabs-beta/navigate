@@ -20,7 +20,7 @@
                 "uid": "d1298426-452e-4256-8207-85d77a2d5073"
             }
         ],
-        "resourceVersion": "694486",
+        "resourceVersion": "1215694",
         "uid": "e321b27e-22ed-4042-bd6a-3ee6a6a502e7"
     },
     "spec": {
@@ -162,13 +162,13 @@
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T23:01:05Z",
+                "lastTransitionTime": "2021-10-27T00:19:14Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T23:01:05Z",
+                "lastTransitionTime": "2021-10-27T00:19:14Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
@@ -181,27 +181,35 @@
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://d723fc5545bd72cc2fc3e845f68ecce6bad907e4c31bf960488a42e83c61bf11",
+                "containerID": "docker://2fd8a9eda4c617f1878d4b1f3b378fa7abaff1d309988b347206465ef7c7dfb5",
                 "image": "gcr.io/google-samples/microservices-demo/shippingservice:v0.3.0",
                 "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/shippingservice@sha256:f93bfc3ce7547047cb77e6e59cf8be18c2da780bc4e98d3dc19e2cd60172eef8",
-                "lastState": {},
+                "lastState": {
+                    "terminated": {
+                        "containerID": "docker://113e570873759372c235539ed63e6d8aeff88381f13ad54093cde05abd502c46",
+                        "exitCode": 2,
+                        "finishedAt": "2021-10-26T22:10:23Z",
+                        "reason": "Error",
+                        "startedAt": "2021-10-26T22:09:50Z"
+                    }
+                },
                 "name": "server",
                 "ready": true,
-                "restartCount": 0,
+                "restartCount": 203,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-18T18:52:18Z"
+                        "startedAt": "2021-10-26T22:11:55Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.23",
+        "podIP": "10.1.0.142",
         "podIPs": [
             {
-                "ip": "10.1.0.23"
+                "ip": "10.1.0.142"
             }
         ],
         "qosClass": "Burstable",

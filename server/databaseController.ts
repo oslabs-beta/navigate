@@ -11,16 +11,6 @@ interface someObject {
 
 const databaseController: someObject = {};
 
-databaseController.getData = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = parser.getYAMLFiles();
-    res.locals.data = data;
-  return next();
-  } catch (error) {
-    console.log('Error in databaseController.getData: ', error)
-  }
-}
-
 databaseController.getLiveData = (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = parser.getJSONFiles();
