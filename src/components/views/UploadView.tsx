@@ -1,10 +1,13 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
 import App from '../App';
-
+import NavBar from './NavBar';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import NetworkPolicyView from './NetworkPolicyView';
+import { anyObject } from '../../kObjects/__index';
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
-  const [responseArray, setArray] = React.useState([]);
+  const [responseArray, setArray] = React.useState<string[]>([]);
   const [loaded, setLoaded] = React.useState(false);
   const [showLoading, setLoading] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
@@ -52,28 +55,45 @@ export default function UploadView() {
 
   return (  
     loaded ? 
-    <App jsonFiles={responseArray}/>
+    <div>
+      <Router>
+      <NavBar></NavBar>
+      <div className="content">
+        <Switch>
+          <Route exact path="/">
+            <App 
+            jsonFiles={responseArray}
+            />
+          </Route>
+          <Route exact path="/networkPolicy">
+            <NetworkPolicyView 
+            jsonFiles={responseArray}
+            />
+          </Route>
+        </Switch>
+      </div>
+      </Router>
+    </div>
     :
-    !showLoading ? 
-    <div className="inputContainer">
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {
-          //some logo here
-            <div>
-            <p>Click here to upload your YAML config files and begin using Navigate...</p>
-            </div>
-        }
-      </div> 
-    </div>:
+    !showLoading ?
+    <div {...getRootProps()}>
+      <input {...getInputProps()} />
+      {
+        //some logo here
+          <div>
+          <p>Click here to upload your YAML config files and begin using Navigate...</p>
+          </div>
+      }
+    </div>
+    :
     <div className="inputContainer">
       <div className="text">Loading...</div>
-      <div className="animation">
-        <div className="loader">
-        <div className="outer"></div>
-        <div className="middle"></div>
-        <div className="inner"></div>
-      </div>
+        <div className="animation">
+          <div className="loader">
+          <div className="outer"></div>
+          <div className="middle"></div>
+          <div className="inner"></div>
+        </div>
       </div>
     </div>
 
