@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: blah-network-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      role: db
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 172.22.0.0/16
+        except:
+        - 172.27.1.0/24
+    - namespaceSelector:
+        matchLabels:
+          app: example
+    - podSelector:
+        matchLabels:
+          role: backend
+    ports:
+    - protocol: TCP
+      port: 6969
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 15.0.0.0/24
+    ports:
+    - protocol: TCP
+      port: 9090
