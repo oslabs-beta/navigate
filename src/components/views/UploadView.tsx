@@ -1,10 +1,13 @@
 import React from 'react';
 import {useDropzone} from 'react-dropzone';
 import App from '../App';
-
+import NavBar from './NavBar';
+import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import NetworkPolicyView from './NetworkPolicyView';
+import { anyObject } from '../../kObjects/__index';
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
-  const [responseArray, setArray] = React.useState([]);
+  const [responseArray, setArray] = React.useState<string[]>([]);
   const [loaded, setLoaded] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file: File, index: Number, array: Array<File>) => {
@@ -49,7 +52,29 @@ export default function UploadView() {
 
   return (  
     loaded ? 
-    <App jsonFiles={responseArray}/> :
+    <div>
+      <Router>
+      <NavBar></NavBar>
+      <div className="content">
+        <Switch>
+          <Route exact path="/">
+            <App 
+            jsonFiles={responseArray}
+            />
+          </Route>
+          <Route exact path="/networkPolicy">
+            <NetworkPolicyView 
+            jsonFiles={responseArray}
+            />
+          </Route>
+        </Switch>
+      </div>
+      </Router>
+    </div>
+    
+
+    :
+
     <div {...getRootProps()}>
       <input {...getInputProps()} />
       {

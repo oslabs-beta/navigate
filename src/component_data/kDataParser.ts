@@ -1,10 +1,13 @@
 import * as kObjects from "../kObjects/__index";
 import { kObject } from "../kObjects/kObject";
 import { appendFile } from "fs";
+import IngressPolicy from "../kObjects/ingressPolicy";
+import EgressPolicy from "../kObjects/egressPolicy";
 
-const kObjArray: kObject[] = [];
+let kObjArray: kObject[] = [];
 
-export function parseData(relevantData: any[]): kObject[] {
+export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
+  kObjArray = [];
   for (let i = 0; i < relevantData.length; i++) {
     let eleArr = relevantData[i];
     for (let j = 0; j < eleArr.length; j++) {
@@ -86,10 +89,35 @@ export function parseData(relevantData: any[]): kObject[] {
           //want more info?
         );
         kObjArray.push(newkDaemonSet);
+      } else if(ele.kind === "NetworkPolicy"){
+        const newIngressPolicy = new IngressPolicy(
+          ele.spec.ingress[0].from[0].ipBlock.cidr,
+          ele.spec.ingress[0].from[0].ipBlock.except[0],
+          ele.spec.ingress[0].from[1].namespaceSelector.matchLabels,
+          ele.spec.ingress[0].from[2].podSelector.matchLabels,
+          ele.spec.ingress[0].ports[0].protocol,
+          ele.spec.ingress[0].ports[0].port,
+        )
+        const newEgressPolicy = new EgressPolicy(
+          ele.spec.egress[0].to[0].ipBlock.cidr,
+          ele.spec.egress[0].ports[0].protocol,
+          ele.spec.egress[0].ports[0].port,
+        )
+        const newNetworkPolicy = new kObjects.NetworkPolicy(
+          ele.metadata.namespace,
+          ele.kind,
+          ele.metadata.name,
+          ele.spec.podSelector.matchLabels,
+          ele.spec.policyTypes,
+          newIngressPolicy,
+          newEgressPolicy,
+        )
+        kObjArray.push(newNetworkPolicy)
       } else {
         console.log("rejected: "); //ele
       }
     }
   }
   return kObjArray;
+  
 }
