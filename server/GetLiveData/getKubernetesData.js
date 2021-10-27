@@ -41,9 +41,9 @@ function getNamespacesFromYAML(array){
   const output = {};
   array.forEach(k8sObject => {
     console.log(k8sObject);
-    if(k8sObject.metadata !== undefined)
-    if(!output[k8sObject.metadata.namespace]){
-      output.push(k8sObject.metadata.namespace);
+    if(k8sObject[0].metadata !== undefined)
+    if(!output[k8sObject[0].metadata.namespace]){
+      output[k8sObject[0].metadata.namespace] = '';
     }
   });
   return Object.keys(output);
