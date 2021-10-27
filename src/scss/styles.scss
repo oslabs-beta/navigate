@@ -68,6 +68,11 @@ button + h3 {
   justify-content: center;
   align-items: center;
 }
+.nodeSchedulerHeader{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
 #circle {
   display:flex;
   align-items: center;

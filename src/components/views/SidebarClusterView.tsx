@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef, useCallback, useState } from "react";
-
+import FetchLiveData from "./FetchLiveData";
 function SidebarClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
@@ -32,7 +32,11 @@ function SidebarClusterView(props: any) {
   ) : (
     // Cluster View
     <div>
-    <h2>Node Scheduler Logs</h2>
+      <div className="nodeSchedulerHeader">
+        <h2>Node Scheduler Logs</h2>
+        <FetchLiveData></FetchLiveData>
+      </div>
+    
     <div id='statusBox' style={{ display:'flex', flexDirection:'column', height:'400px', overflow: 'scroll'}}>
     {statuses}
     </div>
