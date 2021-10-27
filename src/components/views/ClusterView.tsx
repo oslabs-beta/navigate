@@ -238,9 +238,6 @@ function ClusterView(props: any) {
             </button>
             <h3>{`${props.masterNode}`}</h3>
             </div>
-            <div>
-            <FetchLiveData />
-            </div>
       </div>
 
       <div style={{display:'flex'}}> 
