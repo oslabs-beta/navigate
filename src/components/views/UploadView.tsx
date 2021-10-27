@@ -54,6 +54,18 @@ export default function UploadView() {
   }
 
   return (  
+    process.env.NODE_ENV === 'test' ?
+    <div className="inputContainer">
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          //some logo here
+            <div>
+            <p>Click here to upload your YAML config files and begin using Navigate...</p>
+            </div>
+        }
+      </div>
+    </div>: 
     loaded ? 
     <div>
       <Router>
