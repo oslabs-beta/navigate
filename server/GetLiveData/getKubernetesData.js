@@ -21,7 +21,6 @@ function getElementsOfKind(kind, writeToDisk = false) {
     const output = [];
     data.forEach(k8sObject => {
       if(k8sObject[0].kind === kind){ 
-        console.log('k8sObject',k8sObject[0].metadata);
         output.push(k8sObject);}
     });
     if(writeToDisk)
@@ -29,7 +28,6 @@ function getElementsOfKind(kind, writeToDisk = false) {
         if (err)
           return console.error(err);
   });
-    console.log('output,', output);
     return output;
   }
   catch(error) {
@@ -52,7 +50,6 @@ function getNamespacesFromYAML(array){
 function getNamespaceElementPairs(kind){
   const output = {};
   let elements = getElementsOfKind(kind);
-  console.log('elements:', elements)
   elements.forEach(element => {
     if(!element[0].metadata.namespace){
       if(!output["default"]) output["default"] = [element[0].metadata.name];
