@@ -2,67 +2,47 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:57Z",
-        "generateName": "redis-cart-5b569cd47-",
+        "creationTimestamp": "2021-10-09T16:06:12Z",
+        "generateName": "redis-stateful-set-",
         "labels": {
-            "app": "redis-cart",
-            "pod-template-hash": "5b569cd47"
+            "app": "mafia",
+            "controller-revision-hash": "redis-stateful-set-767459788b",
+            "name": "redis",
+            "statefulset.kubernetes.io/pod-name": "redis-stateful-set-0"
         },
-        "name": "redis-cart-5b569cd47-rwzdz",
-        "namespace": "default",
+        "name": "redis-stateful-set-0",
+        "namespace": "mafia",
         "ownerReferences": [
             {
                 "apiVersion": "apps/v1",
                 "blockOwnerDeletion": true,
                 "controller": true,
-                "kind": "ReplicaSet",
-                "name": "redis-cart-5b569cd47",
-                "uid": "dc9927a9-da99-478e-b500-fa2ff1f27701"
+                "kind": "StatefulSet",
+                "name": "redis-stateful-set",
+                "uid": "6ca1f20e-a626-4d63-9121-93e77caab846"
             }
         ],
-        "resourceVersion": "1286186",
-        "uid": "72732185-8149-4561-bd6d-8ca1d4a4442b"
+        "resourceVersion": "1286104",
+        "uid": "7f8dafdc-e76d-4274-8eeb-a36f86d335d5"
     },
     "spec": {
         "containers": [
             {
-                "image": "redis:alpine",
+                "command": [
+                    "redis-server",
+                    "--bind",
+                    "0.0.0.0"
+                ],
+                "image": "redis:5.0.8-buster",
                 "imagePullPolicy": "IfNotPresent",
-                "livenessProbe": {
-                    "failureThreshold": 3,
-                    "periodSeconds": 5,
-                    "successThreshold": 1,
-                    "tcpSocket": {
-                        "port": 6379
-                    },
-                    "timeoutSeconds": 1
-                },
-                "name": "redis",
+                "name": "redis-container",
                 "ports": [
                     {
                         "containerPort": 6379,
                         "protocol": "TCP"
                     }
                 ],
-                "readinessProbe": {
-                    "failureThreshold": 3,
-                    "periodSeconds": 5,
-                    "successThreshold": 1,
-                    "tcpSocket": {
-                        "port": 6379
-                    },
-                    "timeoutSeconds": 1
-                },
-                "resources": {
-                    "limits": {
-                        "cpu": "125m",
-                        "memory": "256Mi"
-                    },
-                    "requests": {
-                        "cpu": "70m",
-                        "memory": "200Mi"
-                    }
-                },
+                "resources": {},
                 "terminationMessagePath": "/dev/termination-log",
                 "terminationMessagePolicy": "File",
                 "volumeMounts": [
@@ -72,7 +52,7 @@
                     },
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-6mtzf",
+                        "name": "kube-api-access-qh7kr",
                         "readOnly": true
                     }
                 ]
@@ -80,14 +60,18 @@
         ],
         "dnsPolicy": "ClusterFirst",
         "enableServiceLinks": true,
+        "hostname": "redis-stateful-set-0",
         "nodeName": "docker-desktop",
         "preemptionPolicy": "PreemptLowerPriority",
         "priority": 0,
         "restartPolicy": "Always",
         "schedulerName": "default-scheduler",
-        "securityContext": {},
+        "securityContext": {
+            "fsGroup": 999
+        },
         "serviceAccount": "default",
         "serviceAccountName": "default",
+        "subdomain": "redis",
         "terminationGracePeriodSeconds": 30,
         "tolerations": [
             {
@@ -105,11 +89,13 @@
         ],
         "volumes": [
             {
-                "emptyDir": {},
-                "name": "redis-data"
+                "name": "redis-data",
+                "persistentVolumeClaim": {
+                    "claimName": "redis-data-redis-stateful-set-0"
+                }
             },
             {
-                "name": "kube-api-access-6mtzf",
+                "name": "kube-api-access-qh7kr",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -152,63 +138,63 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-09T16:06:14Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:36:28Z",
+                "lastTransitionTime": "2021-10-27T19:36:29Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:36:28Z",
+                "lastTransitionTime": "2021-10-27T19:36:29Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-09T16:06:14Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://79a6b384a05cceac6c7c13379e5e41e28fbfa650cbdb6ec0fe47bd6fc7d66884",
-                "image": "redis:alpine",
-                "imageID": "docker-pullable://redis@sha256:58132ff3162cf9ecc8e2042c77b2ec46f6024c35e83bda3cabde76437406f8ac",
+                "containerID": "docker://7448111b5d4d200f4c8d23f72a5abcf70e93bc770a4c35a0d3701527a6f476e6",
+                "image": "redis:5.0.8-buster",
+                "imageID": "docker-pullable://redis@sha256:96bdb5e2984b15e3cf4de74077f650c911cb26ec0981e0772df35a1a5cb19798",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://a9d8b781c5107d4c432602de809f79be0a4839df41bdeb4e334abd24e8f0e13f",
+                        "containerID": "docker://8a8ff4d45d62e20401ffcddaeaf18371105ad12a3b2b8a3f163cb9e2d20f1078",
                         "exitCode": 255,
                         "finishedAt": "2021-10-27T19:35:51Z",
                         "reason": "Error",
                         "startedAt": "2021-10-27T18:15:43Z"
                     }
                 },
-                "name": "redis",
+                "name": "redis-container",
                 "ready": true,
-                "restartCount": 4,
+                "restartCount": 9,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-27T19:36:27Z"
+                        "startedAt": "2021-10-27T19:36:26Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.185",
+        "podIP": "10.1.0.184",
         "podIPs": [
             {
-                "ip": "10.1.0.185"
+                "ip": "10.1.0.184"
             }
         ],
-        "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:58Z"
+        "qosClass": "BestEffort",
+        "startTime": "2021-10-09T16:06:14Z"
     }
 }

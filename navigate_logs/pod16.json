@@ -2,77 +2,57 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:57Z",
-        "generateName": "redis-cart-5b569cd47-",
+        "creationTimestamp": "2021-10-21T16:03:54Z",
+        "generateName": "mafia-ui-78849d96c8-",
         "labels": {
-            "app": "redis-cart",
-            "pod-template-hash": "5b569cd47"
+            "app": "mafia",
+            "name": "mafia-ui",
+            "pod-template-hash": "78849d96c8"
         },
-        "name": "redis-cart-5b569cd47-rwzdz",
-        "namespace": "default",
+        "name": "mafia-ui-78849d96c8-xpcs2",
+        "namespace": "mafia",
         "ownerReferences": [
             {
                 "apiVersion": "apps/v1",
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "redis-cart-5b569cd47",
-                "uid": "dc9927a9-da99-478e-b500-fa2ff1f27701"
+                "name": "mafia-ui-78849d96c8",
+                "uid": "131b9993-af8c-4a28-8cd7-60bb82076656"
             }
         ],
-        "resourceVersion": "1286186",
-        "uid": "72732185-8149-4561-bd6d-8ca1d4a4442b"
+        "resourceVersion": "1286351",
+        "uid": "3ca11ab9-ba82-4a47-ba33-3cf7cefb3e3f"
     },
     "spec": {
         "containers": [
             {
-                "image": "redis:alpine",
-                "imagePullPolicy": "IfNotPresent",
-                "livenessProbe": {
-                    "failureThreshold": 3,
-                    "periodSeconds": 5,
-                    "successThreshold": 1,
-                    "tcpSocket": {
-                        "port": 6379
+                "env": [
+                    {
+                        "name": "HUB_HOST",
+                        "value": "mafia-backend-service.mafia"
                     },
-                    "timeoutSeconds": 1
-                },
-                "name": "redis",
+                    {
+                        "name": "HUB_PORT",
+                        "value": "3000"
+                    }
+                ],
+                "image": "taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "mafia-ui-container",
                 "ports": [
                     {
-                        "containerPort": 6379,
+                        "containerPort": 80,
                         "protocol": "TCP"
                     }
                 ],
-                "readinessProbe": {
-                    "failureThreshold": 3,
-                    "periodSeconds": 5,
-                    "successThreshold": 1,
-                    "tcpSocket": {
-                        "port": 6379
-                    },
-                    "timeoutSeconds": 1
-                },
-                "resources": {
-                    "limits": {
-                        "cpu": "125m",
-                        "memory": "256Mi"
-                    },
-                    "requests": {
-                        "cpu": "70m",
-                        "memory": "200Mi"
-                    }
-                },
+                "resources": {},
                 "terminationMessagePath": "/dev/termination-log",
                 "terminationMessagePolicy": "File",
                 "volumeMounts": [
                     {
-                        "mountPath": "/data",
-                        "name": "redis-data"
-                    },
-                    {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-6mtzf",
+                        "name": "kube-api-access-w7pks",
                         "readOnly": true
                     }
                 ]
@@ -105,11 +85,7 @@
         ],
         "volumes": [
             {
-                "emptyDir": {},
-                "name": "redis-data"
-            },
-            {
-                "name": "kube-api-access-6mtzf",
+                "name": "kube-api-access-w7pks",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -152,63 +128,63 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-21T16:03:54Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:36:28Z",
+                "lastTransitionTime": "2021-10-27T19:37:12Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:36:28Z",
+                "lastTransitionTime": "2021-10-27T19:37:12Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:58Z",
+                "lastTransitionTime": "2021-10-21T16:03:54Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://79a6b384a05cceac6c7c13379e5e41e28fbfa650cbdb6ec0fe47bd6fc7d66884",
-                "image": "redis:alpine",
-                "imageID": "docker-pullable://redis@sha256:58132ff3162cf9ecc8e2042c77b2ec46f6024c35e83bda3cabde76437406f8ac",
+                "containerID": "docker://0bb65bd55bb309d6cff98e69e73afdbb2f47edef354c57a0687727ee72428aa1",
+                "image": "sha256:ef3ccc5d257bab01115a6acd24fd180df418f4228222b19af0fb0f3dc471d2b8",
+                "imageID": "docker-pullable://taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://a9d8b781c5107d4c432602de809f79be0a4839df41bdeb4e334abd24e8f0e13f",
-                        "exitCode": 255,
-                        "finishedAt": "2021-10-27T19:35:51Z",
+                        "containerID": "docker://35c305cf56a37f2f69563028c292f224ba6ad1bac42dedcc4b26bb1778b2b6ef",
+                        "exitCode": 1,
+                        "finishedAt": "2021-10-27T19:36:43Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-27T18:15:43Z"
+                        "startedAt": "2021-10-27T19:36:43Z"
                     }
                 },
-                "name": "redis",
+                "name": "mafia-ui-container",
                 "ready": true,
-                "restartCount": 4,
+                "restartCount": 17,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-27T19:36:27Z"
+                        "startedAt": "2021-10-27T19:37:11Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.185",
+        "podIP": "10.1.0.177",
         "podIPs": [
             {
-                "ip": "10.1.0.185"
+                "ip": "10.1.0.177"
             }
         ],
-        "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:58Z"
+        "qosClass": "BestEffort",
+        "startTime": "2021-10-21T16:03:54Z"
     }
 }
