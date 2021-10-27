@@ -68,6 +68,7 @@
     "test": "jest --verbose --unhandled-rejections=strict --detectOpenHandles",
     "start": "electron-forge start",
     "build": "NODE_ENV=production webpack",
+    "server": "ts-node server/server.ts",
     "electron": "electron .",
     "dev": "NODE_ENV=development webpack serve --open",
     "both": "npm run dev & npm run start",
