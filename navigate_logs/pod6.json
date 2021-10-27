@@ -2,13 +2,16 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:44Z",
-        "generateName": "checkoutservice-58c5f4c5c7-",
-        "labels": {
-            "app": "checkoutservice",
-            "pod-template-hash": "58c5f4c5c7"
+        "annotations": {
+            "sidecar.istio.io/rewriteAppHTTPProbers": "true"
         },
-        "name": "checkoutservice-58c5f4c5c7-xhvkc",
+        "creationTimestamp": "2021-10-18T18:50:48Z",
+        "generateName": "frontend-7c4fc6584c-",
+        "labels": {
+            "app": "frontend",
+            "pod-template-hash": "7c4fc6584c"
+        },
+        "name": "frontend-7c4fc6584c-bwxmc",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,12 +19,12 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "checkoutservice-58c5f4c5c7",
-                "uid": "6fceaf2a-c7d5-40c8-8930-4149066e60b9"
+                "name": "frontend-7c4fc6584c",
+                "uid": "84bb4e28-ec35-420c-b914-a55145d746ac"
             }
         ],
-        "resourceVersion": "673612",
-        "uid": "91df342b-14aa-422a-9a4c-1d3168db504c"
+        "resourceVersion": "1084823",
+        "uid": "9e2efa51-6f37-4d39-bde1-e9fa72618a85"
     },
     "spec": {
         "containers": [
@@ -29,23 +32,11 @@
                 "env": [
                     {
                         "name": "PORT",
-                        "value": "5050"
+                        "value": "8080"
                     },
                     {
                         "name": "PRODUCT_CATALOG_SERVICE_ADDR",
                         "value": "productcatalogservice:3550"
-                    },
-                    {
-                        "name": "SHIPPING_SERVICE_ADDR",
-                        "value": "shippingservice:50051"
-                    },
-                    {
-                        "name": "PAYMENT_SERVICE_ADDR",
-                        "value": "paymentservice:50051"
-                    },
-                    {
-                        "name": "EMAIL_SERVICE_ADDR",
-                        "value": "emailservice:5000"
                     },
                     {
                         "name": "CURRENCY_SERVICE_ADDR",
@@ -54,18 +45,40 @@
                     {
                         "name": "CART_SERVICE_ADDR",
                         "value": "cartservice:7070"
+                    },
+                    {
+                        "name": "RECOMMENDATION_SERVICE_ADDR",
+                        "value": "recommendationservice:8080"
+                    },
+                    {
+                        "name": "SHIPPING_SERVICE_ADDR",
+                        "value": "shippingservice:50051"
+                    },
+                    {
+                        "name": "CHECKOUT_SERVICE_ADDR",
+                        "value": "checkoutservice:5050"
+                    },
+                    {
+                        "name": "AD_SERVICE_ADDR",
+                        "value": "adservice:9555"
                     }
                 ],
-                "image": "gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.0",
+                "image": "gcr.io/google-samples/microservices-demo/frontend:v0.3.0",
                 "imagePullPolicy": "IfNotPresent",
                 "livenessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:5050"
-                        ]
-                    },
                     "failureThreshold": 3,
+                    "httpGet": {
+                        "httpHeaders": [
+                            {
+                                "name": "Cookie",
+                                "value": "shop_session-id=x-liveness-probe"
+                            }
+                        ],
+                        "path": "/_healthz",
+                        "port": 8080,
+                        "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 10,
                     "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
@@ -73,18 +86,24 @@
                 "name": "server",
                 "ports": [
                     {
-                        "containerPort": 5050,
+                        "containerPort": 8080,
                         "protocol": "TCP"
                     }
                 ],
                 "readinessProbe": {
-                    "exec": {
-                        "command": [
-                            "/bin/grpc_health_probe",
-                            "-addr=:5050"
-                        ]
-                    },
                     "failureThreshold": 3,
+                    "httpGet": {
+                        "httpHeaders": [
+                            {
+                                "name": "Cookie",
+                                "value": "shop_session-id=x-readiness-probe"
+                            }
+                        ],
+                        "path": "/_healthz",
+                        "port": 8080,
+                        "scheme": "HTTP"
+                    },
+                    "initialDelaySeconds": 10,
                     "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
@@ -104,7 +123,7 @@
                 "volumeMounts": [
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-2zbx8",
+                        "name": "kube-api-access-q9x4b",
                         "readOnly": true
                     }
                 ]
@@ -137,7 +156,7 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-2zbx8",
+                "name": "kube-api-access-q9x4b",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -180,55 +199,63 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:46Z",
+                "lastTransitionTime": "2021-10-18T18:50:49Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:51:27Z",
+                "lastTransitionTime": "2021-10-25T19:11:40Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:51:27Z",
+                "lastTransitionTime": "2021-10-25T19:11:40Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:45Z",
+                "lastTransitionTime": "2021-10-18T18:50:49Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://38889eff5ea8ac90faaac9fdeb0bc74873a5318f8f4815a1e0867bbad0ff723c",
-                "image": "gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/checkoutservice@sha256:8ccc510a91f2459f89f572bc6bce0a4fb3f629115d509cd1ebb2699ebfa8a62f",
-                "lastState": {},
+                "containerID": "docker://35287a14bc5f56dc2f9c4a8fee181db3c7ff5f19e522deb470f76a8da2fdede6",
+                "image": "gcr.io/google-samples/microservices-demo/frontend:v0.3.0",
+                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/frontend@sha256:72bbe2194f74705e10a638ddcac24b47a9e6518e3f61151f5e027b51180e11d5",
+                "lastState": {
+                    "terminated": {
+                        "containerID": "docker://f50dec7182644f668db170e52d99cb10630cafed1dbc1e66e88fbae88452d373",
+                        "exitCode": 255,
+                        "finishedAt": "2021-10-25T14:46:34Z",
+                        "reason": "Error",
+                        "startedAt": "2021-10-25T14:33:38Z"
+                    }
+                },
                 "name": "server",
                 "ready": true,
-                "restartCount": 0,
+                "restartCount": 6,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-18T18:51:22Z"
+                        "startedAt": "2021-10-25T19:11:22Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.14",
+        "podIP": "10.1.0.146",
         "podIPs": [
             {
-                "ip": "10.1.0.14"
+                "ip": "10.1.0.146"
             }
         ],
         "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:46Z"
+        "startTime": "2021-10-18T18:50:49Z"
     }
 }

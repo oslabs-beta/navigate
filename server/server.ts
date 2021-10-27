@@ -17,10 +17,6 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
-app.get("/getData", databaseController.getData, (req: Request, res: Response) => {
-  return res.status(200).send(res.locals.data);
-});
-
 app.options("/upload", (req: Request, res: Response) => {
   return res.status(200).send('ok');
 });
