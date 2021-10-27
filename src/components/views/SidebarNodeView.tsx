@@ -3,6 +3,7 @@ import * as React from "react";
 import kDeploymentLive from '../../../server/kDeploymentLive';
 import kPodLive from '../../../server/kPodLive'
 import PodInfoInNodeView from './PodInfoInNodeView';
+import NotLiveMessage from "./NotLiveMessage";
 
 function SidebarNodeView(props: any) {
   const deployObjs = props.podDeployments;
@@ -56,8 +57,13 @@ function SidebarNodeView(props: any) {
       )
     }
   })
+  let displayPodInfo = [<PodInfoInNodeView displayPod = {displayPod} clusterNotRunning={props.clusterNotRunning}/>];
 
-  
+
+  if(props.clusterNotRunning) {
+    deploymentMain.push(<NotLiveMessage />);
+    displayPodInfo = [<NotLiveMessage />];
+  }
   
   return props.clickedPod === undefined ? (
     <div>
@@ -65,7 +71,7 @@ function SidebarNodeView(props: any) {
     </div>
   ) : (
     <div>
-      <PodInfoInNodeView displayPod = {displayPod}/>
+      {displayPodInfo}
   </div>
   )
 }
