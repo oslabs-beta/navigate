@@ -7,6 +7,7 @@ import * as dataParser from "../component_data/kDataParser";
 
 interface IProps {
   jsonFiles: string[],
+  clusterNotRunning: boolean,
 }
 
 const App = (props: IProps) => {
@@ -83,6 +84,7 @@ const App = (props: IProps) => {
         setNamespace={setNamespace}
         view={view}
         setView={setView}
+        clusterNotRunning={props.clusterNotRunning}
         />
       </div>
       
@@ -101,6 +103,7 @@ const App = (props: IProps) => {
         setNamespace={setNamespace}
         view={view}
         setView={setView}
+        clusterNotRunning={props.clusterNotRunning}
       />
     </div>
   )

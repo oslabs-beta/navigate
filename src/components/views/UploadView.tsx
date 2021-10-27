@@ -5,10 +5,12 @@ import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NetworkPolicyView from './NetworkPolicyView';
 import { anyObject } from '../../kObjects/__index';
+import { transpileModule } from 'typescript';
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
   const [responseArray, setArray] = React.useState<string[]>([]);
   const [loaded, setLoaded] = React.useState(false);
+  let [clusterNotRunning, checkError] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file: File, index: Number, array: Array<File>) => {
       let isLastElement = false;
@@ -47,7 +49,12 @@ export default function UploadView() {
         //show App, pass the data down as props
         setLoaded(true);
       })
-      .catch(error => console.log('POST ERROR: ' + error));
+      .catch(error => {
+        if(error){
+          clusterNotRunning = true;
+          checkError(clusterNotRunning)
+        }
+        console.log('POST ERROR: ' + error)});
   }
 
   return (  
@@ -60,6 +67,7 @@ export default function UploadView() {
           <Route exact path="/">
             <App 
             jsonFiles={responseArray}
+            clusterNotRunning={clusterNotRunning}
             />
           </Route>
           <Route exact path="/networkPolicy">

@@ -257,6 +257,7 @@ function ClusterView(props: any) {
             <SidebarClusterView
               deploymentStatus={props.deploymentStatus}
               namespace={props.namespace}
+              clusterNotRunning={props.clusterNotRunning}
             />
             <Legend />
           </div>
