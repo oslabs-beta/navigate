@@ -7,6 +7,8 @@ import {GraphStyles} from "../../scss/GraphStyles";
 import Legend from './Legend';
 import { electron } from "webpack";
 import { anyObject } from "../../kObjects/__index";
+import { findSelectorMatch } from "../../component_data/findSelectorMatch";
+import FetchLiveData from "./FetchLiveData";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -34,7 +36,6 @@ function ClusterView(props: any) {
   props.dataArray.forEach((ele:any) => {
     if(ele.label !== undefined) allLabels.push(ele.label);      
   })
-  
   const populateArray = (array: any[]): void => {
     for (let i = 0; i < array.length; i++) {
       if (array[i].kind === "Deployment") {
@@ -83,7 +84,6 @@ function ClusterView(props: any) {
         });
       } 
       else if (array[i].kind === "Service") {
-        //change class to include servicetype
         if (!namespacesArr.includes(array[i].label)){
             let newNode = {
               data: {
@@ -96,7 +96,7 @@ function ClusterView(props: any) {
               if (
                 ele.kind === "Deployment" &&
                 ele.namespace === array[i].namespace &&
-                findSelectorMatch(ele.selectors,array[i].selectors)
+                findSelectorMatch(ele,array[i])
               ) {
                 let edge = {
                   data: {
@@ -115,18 +115,28 @@ function ClusterView(props: any) {
             let newNode = {
               data: {
                 id: `${array[i].label} service`,
-                label: `${array[i].label} service`,
+                label: (array[i].type) ? `${array[i].label} ${array[i].type}` : `${array[i].label} ClusterIP`,
                 class: "service",
               },
             };
-            let edge = {
-              data: {
-                source: array[i].label,
-                target: `${array[i].label} service`,
-                label: `deployment`,
-              },
-            };
-            relevantData.push(newNode, edge);
+            props.dataArray.forEach((ele: any) => {
+              if (
+                ele.kind === "Deployment" &&
+                ele.namespace === array[i].namespace &&
+                findSelectorMatch(ele,array[i])
+              ) {
+                let edge = {
+                  data: {
+                    source: ele.label + " deployment",
+                    target: array[i].label + ' service',
+                    label: `stateful`,
+                  },
+                };
+                relevantData.push(edge);
+           
+              }
+            });
+            relevantData.push(newNode);
           }
         } else if(array[i].kind === "DaemonSet") {
           let newDaemonSet = {
@@ -155,14 +165,6 @@ function ClusterView(props: any) {
       }
     }
   }
-  const findSelectorMatch = (obj1: anyObject, obj2: anyObject) => {
-    for(let key in obj1){
-      if(obj2[key] === obj1[key]){
-        return true;
-      }
-    }
-    return false;
-  }
   React.useEffect(() => {
     populateNamespaces(props.dataArray);
     populateArray(props.dataArray);
@@ -187,7 +189,7 @@ function ClusterView(props: any) {
         props.setNamespace(getNamespace(event.target._private.data.id));
         props.setMasterNode(event.target._private.data.id);
         props.setTrigger(true);
-        console.log(event.target._private.data.label);
+        console.log(event.target._private.data.id);
       }
     })
   }, [props.dataArray]);
@@ -202,14 +204,21 @@ function ClusterView(props: any) {
         <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
           {props.view}
         </h1>
-      </div>  
-      <div id="buttonDiv">
+      </div>
+
+      <div id="separateButtons" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
+      <div id="buttonDiv" style={{display:'flex', flexDirection: 'row'}}>
             <button onClick={() =>{
               window.alert(namespacesArr)
             }}>Namespaces
             </button>
             <h3>{`${props.masterNode}`}</h3>
-          </div>
+            </div>
+            <div>
+            <FetchLiveData />
+            </div>
+      </div>
+
       <div style={{display:'flex'}}> 
         <div id="pageView">
           <div id="pageCol" style={{display:'flex', flexDirection:'column', justifyContent:'space-around', height:limitSidebarHeight}}>

@@ -1,10 +1,10 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path');
 const {spawn} = require('child_process');
-var waitOn = require('wait-on');
+// var waitOn = require('wait-on');
 const { runCommand } = require('../server/runCommand');
 var exec = require('child_process').exec, child;
 // const server = require('/Users/hemwatie/OSP/navigate/server/server.ts')
@@ -16,10 +16,13 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
-    
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true
+    },  
   })
+
+  mainWindow.webContents.setDevToolsWebContents(devtools.webContents);
+  mainWindow.webContents.openDevTools();
   // and load the index.html of the app.
   mainWindow.loadFile('build/index.html');
   // runCommand = (cmd) => {
@@ -44,7 +47,7 @@ const createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then( async() => {
+app.whenReady().then(() => {
   // runCommand(`ts-node ./server/server.ts`)
   // await exec(`ts-node ./server/server.ts`, function (err, stdout, stderr) {
   //   if (err && err.length > 1) {
