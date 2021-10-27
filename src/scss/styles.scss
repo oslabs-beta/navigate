@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
+$circle-color: purple;
+
 *{
   color: rgb(255, 255, 255);
   font-family: 'Calibri', sans-serif;
@@ -26,6 +28,12 @@ button {
   padding: 7px 14px;
   font-size: 16px;
   cursor: pointer;
+}
+select{
+  color: black;
+}
+option{
+  color: black;
 }
 button:hover {
   background: #e7e7e7;
@@ -57,13 +65,7 @@ button + h3 {
   box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
   font-family: 'Calibri', sans-serif;
 }
-#clusterHeader {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  
-}
-#nodeHeader {
+.header{
   display:flex;
   justify-content: center;
   align-items: center;
@@ -88,4 +90,85 @@ button + h3 {
   justify-content: center;
   align-items: flex-start;
 }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
 
+li {
+  float: left;
+}
+
+li .link {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-style: solid;
+  border-width: 1px;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+
+.loader {
+  position: relative;
+}
+
+.inputContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20%;
+  .text{
+    padding: 5%;
+  }
+}
+.outer,
+.middle,
+.inner {
+  border: 3px solid transparent;
+  border-top-color: $circle-color;
+  border-right-color: $circle-color;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.outer {
+  width: 3.5em;
+  height: 3.5em;
+  margin-left: -1.75em;
+  margin-top: -1.75em;
+  animation: spin 2s linear infinite;
+}
+
+.middle {
+  width: 2.1em;
+  height: 2.1em;
+  margin-left: -1.05em;
+  margin-top: -1.05em;
+  animation: spin 1.75s linear reverse infinite;
+}
+
+.inner {
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: -0.4em;
+  margin-top: -0.4em;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

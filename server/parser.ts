@@ -45,7 +45,7 @@ function getJSONFiles(localPath: string = '../navigate_logs'): object[] {
 const parser = {
   getYAMLFiles,
   getJSONFiles, 
-  readFile
+  readFile, 
 }
 
 export default parser;

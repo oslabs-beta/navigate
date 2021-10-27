@@ -2,13 +2,13 @@
     "apiVersion": "v1",
     "kind": "Pod",
     "metadata": {
-        "creationTimestamp": "2021-10-18T18:50:44Z",
-        "generateName": "emailservice-6f5cf8db6c-",
+        "creationTimestamp": "2021-10-18T18:50:54Z",
+        "generateName": "productcatalogservice-7cdd54f7c7-",
         "labels": {
-            "app": "emailservice",
-            "pod-template-hash": "6f5cf8db6c"
+            "app": "productcatalogservice",
+            "pod-template-hash": "7cdd54f7c7"
         },
-        "name": "emailservice-6f5cf8db6c-k49tr",
+        "name": "productcatalogservice-7cdd54f7c7-b8nl2",
         "namespace": "default",
         "ownerReferences": [
             {
@@ -16,12 +16,12 @@
                 "blockOwnerDeletion": true,
                 "controller": true,
                 "kind": "ReplicaSet",
-                "name": "emailservice-6f5cf8db6c",
-                "uid": "b1207b73-b04f-4ea4-bf02-0364bf96414c"
+                "name": "productcatalogservice-7cdd54f7c7",
+                "uid": "68d388d4-6253-4c88-ac43-f1fd9402a2a6"
             }
         ],
-        "resourceVersion": "694564",
-        "uid": "ec2535ad-2a53-4dde-a4dc-67812d3d7f79"
+        "resourceVersion": "1215736",
+        "uid": "53d91e46-1afc-46a6-af48-fd48007f8ce3"
     },
     "spec": {
         "containers": [
@@ -29,31 +29,27 @@
                 "env": [
                     {
                         "name": "PORT",
-                        "value": "8080"
-                    },
-                    {
-                        "name": "DISABLE_PROFILER",
-                        "value": "1"
+                        "value": "3550"
                     }
                 ],
-                "image": "gcr.io/google-samples/microservices-demo/emailservice:v0.3.0",
+                "image": "gcr.io/google-samples/microservices-demo/productcatalogservice:v0.3.0",
                 "imagePullPolicy": "IfNotPresent",
                 "livenessProbe": {
                     "exec": {
                         "command": [
                             "/bin/grpc_health_probe",
-                            "-addr=:8080"
+                            "-addr=:3550"
                         ]
                     },
                     "failureThreshold": 3,
-                    "periodSeconds": 5,
+                    "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
                 },
                 "name": "server",
                 "ports": [
                     {
-                        "containerPort": 8080,
+                        "containerPort": 3550,
                         "protocol": "TCP"
                     }
                 ],
@@ -61,11 +57,11 @@
                     "exec": {
                         "command": [
                             "/bin/grpc_health_probe",
-                            "-addr=:8080"
+                            "-addr=:3550"
                         ]
                     },
                     "failureThreshold": 3,
-                    "periodSeconds": 5,
+                    "periodSeconds": 10,
                     "successThreshold": 1,
                     "timeoutSeconds": 1
                 },
@@ -84,7 +80,7 @@
                 "volumeMounts": [
                     {
                         "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-zn6xb",
+                        "name": "kube-api-access-89s7d",
                         "readOnly": true
                     }
                 ]
@@ -117,7 +113,7 @@
         ],
         "volumes": [
             {
-                "name": "kube-api-access-zn6xb",
+                "name": "kube-api-access-89s7d",
                 "projected": {
                     "defaultMode": 420,
                     "sources": [
@@ -160,63 +156,63 @@
         "conditions": [
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:45Z",
+                "lastTransitionTime": "2021-10-18T18:50:55Z",
                 "status": "True",
                 "type": "Initialized"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T23:01:34Z",
+                "lastTransitionTime": "2021-10-27T00:19:20Z",
                 "status": "True",
                 "type": "Ready"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T23:01:34Z",
+                "lastTransitionTime": "2021-10-27T00:19:20Z",
                 "status": "True",
                 "type": "ContainersReady"
             },
             {
                 "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-18T18:50:45Z",
+                "lastTransitionTime": "2021-10-18T18:50:54Z",
                 "status": "True",
                 "type": "PodScheduled"
             }
         ],
         "containerStatuses": [
             {
-                "containerID": "docker://4c603424a8cd655a85978ea5a829c4ff4f996152b8687183003eb434073206ae",
-                "image": "gcr.io/google-samples/microservices-demo/emailservice:v0.3.0",
-                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/emailservice@sha256:0bc0f5013cf8ab6d9ba0acf0cab9dedbe5291949a1f18fd8fa48036047e89a99",
+                "containerID": "docker://32c467c0de9c32ef417c7cbd1b13a1573ad8537dbc6a0272ba6d58598cfa8bf3",
+                "image": "gcr.io/google-samples/microservices-demo/productcatalogservice:v0.3.0",
+                "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/productcatalogservice@sha256:d801a0b591eedd83fd5838cb7e677685a022cdadd587a506db65756a99f2fb0f",
                 "lastState": {
                     "terminated": {
-                        "containerID": "docker://b8c066e58e7f7c55877cc7d66029ae5f101dc6a74166553b58a6fe4d3d799b85",
-                        "exitCode": 137,
-                        "finishedAt": "2021-10-18T23:01:24Z",
+                        "containerID": "docker://32f25d2f8b86a3242b379e3d9e1239655ce3440c902dde285bd653d25ac4f559",
+                        "exitCode": 2,
+                        "finishedAt": "2021-10-27T00:19:19Z",
                         "reason": "Error",
-                        "startedAt": "2021-10-18T23:01:05Z"
+                        "startedAt": "2021-10-26T22:06:51Z"
                     }
                 },
                 "name": "server",
                 "ready": true,
-                "restartCount": 3,
+                "restartCount": 184,
                 "started": true,
                 "state": {
                     "running": {
-                        "startedAt": "2021-10-18T23:01:25Z"
+                        "startedAt": "2021-10-27T00:19:19Z"
                     }
                 }
             }
         ],
         "hostIP": "192.168.65.4",
         "phase": "Running",
-        "podIP": "10.1.0.15",
+        "podIP": "10.1.0.136",
         "podIPs": [
             {
-                "ip": "10.1.0.15"
+                "ip": "10.1.0.136"
             }
         ],
         "qosClass": "Burstable",
-        "startTime": "2021-10-18T18:50:45Z"
+        "startTime": "2021-10-18T18:50:55Z"
     }
 }
