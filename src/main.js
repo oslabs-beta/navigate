@@ -22,7 +22,7 @@ const createWindow = () => {
   })
 
   // mainWindow.webContents.setDevToolsWebContents(devtools.webContents);
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
   // and load the index.html of the app.
   mainWindow.loadFile('build/index.html');
   // runCommand = (cmd) => {
