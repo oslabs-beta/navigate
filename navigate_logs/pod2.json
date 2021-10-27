@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 {
     "apiVersion": "v1",
     "kind": "Pod",
@@ -222,4 +220,3 @@
         "startTime": "2021-10-18T18:50:55Z"
     }
 }
->>>>>>> develop
