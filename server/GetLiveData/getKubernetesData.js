@@ -34,6 +34,7 @@ function getElementsOfKind(kind, writeToDisk = false) {
   }
 }
 
+//get non-default namespaces from YAML files by pushing their metadata.namespace values into an array and returning it
 function getNamespacesFromYAML(array){
   const output = {};
   array.forEach(k8sObject => {
@@ -125,7 +126,7 @@ async function getDeployments(){
   const deploymentKVP = getNamespaceElementPairs("Deployment");
   const keys = Object.keys(deploymentKVP);
   let index = 1;
-  // get deployment logs
+  // get deployment logs, saving them to disk using filePath + index
   for(let i = 0; i < keys.length; i++){
     for(let j = 0; j < deploymentKVP[keys[i]].length; j++){
       let filePath = path.join(__dirname, `../../navigate_logs/deployment${index}.json`);
@@ -139,7 +140,6 @@ async function getDeployments(){
       index++;
     }
   }
-  index = 1;
 }
 
 // gets updated pods object (with status from kubernetes)
@@ -147,6 +147,8 @@ async function getPodInfo(namespacePodKVP){
   let filePath;
   let index = 1;
   let currentKey;
+  //loop through each key (kubernetes namespace) and each value (kubernetes pods attached to namespace)
+  //get log data from each pod and save to disk, overwriting if previous already exist
   for(let i = 0; i < Object.keys(namespacePodKVP).length; i++){
     currentKey = Object.keys(namespacePodKVP)[i];
     for(let j = 0; j < namespacePodKVP[currentKey].length; j++)
