@@ -108,7 +108,7 @@ async function aggregateLogs()
     //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
     if(namespaces[0])
       for(let i = 0; i < namespaces.length; i++){
-        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i].metadata.name}`,
+        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i]}`,
           (err, data) => {
             if(err) console.log(err);
             namespacePodKVP[namespaces[0][i].metadata.name] = Buffer.from(data).toString('utf8').split(' ');
