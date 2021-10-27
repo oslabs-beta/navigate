@@ -102,14 +102,14 @@ async function aggregateLogs()
       console.log(err);
     }
     rawNames = Buffer.from(data).toString('utf8');
-  }).on('close', async () => {
+  }).on('close', () => {
     const podArray = rawNames.split(' ');
     namespacePodKVP["default"] = podArray;
     //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
     if(namespaces[0])
       for(let i = 0; i < namespaces.length; i++){
         exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i]}`,
-          (err, data) => {
+          async (err, data) => {
             if(err) console.log(err);
             namespacePodKVP[namespaces[i]] = await Buffer.from(data).toString('utf8').split(' ');
             if(i === namespaces.length-1){
