@@ -17,6 +17,9 @@ const listOfDefaultNamespaces = {
 function getElementsOfKind(kind, writeToDisk = false) {
   try
   {
+    if(kind === "Namespace"){
+      return getNamespacesFromYAML(YAML.data);
+    }
     const data = YAMLData.data;
     const output = [];
     data.forEach(k8sObject => {
@@ -32,6 +35,16 @@ function getElementsOfKind(kind, writeToDisk = false) {
   catch(error) {
     return error;
   }
+}
+
+function getNamespacesFromYAML(array){
+  const output = {};
+  array.forEach(k8sObject => {
+    if(!output[k8sObject.metadata.namespace]){
+      output.push(k8sObject.metadata.namespace);
+    }
+  });
+  return Object.keys(output);
 }
 
 function getNamespaceElementPairs(kind){
