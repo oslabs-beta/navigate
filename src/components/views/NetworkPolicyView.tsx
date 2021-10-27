@@ -15,7 +15,10 @@ Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
 
-function NetworkPolicyView(props: any) {
+interface IProps {
+  jsonFiles: Array<string>,
+}
+function NetworkPolicyView(props: IProps) {
   const networkPolicyRef = React.useRef<HTMLDivElement>(null);
   const relevantData: any[] = [];
   const [networkPolicy, setNetworkPolicy] = React.useState('');
@@ -28,12 +31,12 @@ function NetworkPolicyView(props: any) {
     if(networkPolicies.length === 1) setNetworkPolicy(networkPolicies[0].label);
     setNetworkPoliciesArr(networkPolicies);
   };
-  function parseData(json: any)
+  function parseData(json: any) : anyObject[] 
   {
     const data = dataParser.parseData(json);
     return data;
   }
-  const populateArray = (array: any[]): void => {
+  const populateArray = (array: anyObject[]): void => {
     for (let i = 0; i < array.length; i++) {
       if (array[i].kind === "NetworkPolicy" && array[i].label === networkPolicy) {
         const getSelectors = (obj: anyObject) => {
@@ -147,19 +150,14 @@ function NetworkPolicyView(props: any) {
     });
     layout.run();
     cy.on('click',(event)=> {
-      if(event.target._private.data.class === "deployment" && event.target._private.data.label !== undefined && event.target._private.data.target === undefined && event.target._private.data.label !== 'Kubernetes Cluster' && !namespacesArr.includes(event.target._private.data.label)){
-        props.setView("Node View");
-        props.setMasterNode(event.target._private.data.id);
-        props.setTrigger(true);
-        console.log(event.target._private.data.id);
-      }
+      console.log(event.target._private.data.id);
     })
   }, [props.jsonFiles, networkPolicy]);
 
   return(
     <div>
       <div >
-        <h1 id="clusterHeader">
+        <h1 className="header">
         <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
           {"Network Policy View"}
         </h1>

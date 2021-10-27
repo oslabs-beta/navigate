@@ -63,13 +63,7 @@ button + h3 {
   box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
   font-family: 'Calibri', sans-serif;
 }
-#clusterHeader {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  
-}
-#nodeHeader {
+.header{
   display:flex;
   justify-content: center;
   align-items: center;

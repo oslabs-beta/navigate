@@ -6,7 +6,7 @@ import EgressPolicy from "../kObjects/egressPolicy";
 
 let kObjArray: kObject[] = [];
 
-export function parseData(relevantData: any[]): kObject[] {
+export function parseData(relevantData: kObjects.anyObject[]): kObject[] {
   kObjArray = [];
   for (let i = 0; i < relevantData.length; i++) {
     let eleArr = relevantData[i];

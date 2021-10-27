@@ -7,11 +7,9 @@ import * as dataParser from "../component_data/kDataParser";
 
 interface IProps {
   jsonFiles: string[],
-  rendered: boolean,
-  //needone for function
 }
 
-const App = (props: any) => {
+const App = (props: IProps) => {
   const [dataProp, SetDataProp] = React.useState<kObject[]>([]);
   const [nodeViewPage, setNodeViewPage] = React.useState(false);
   const [view, setView] = React.useState('Cluster View')

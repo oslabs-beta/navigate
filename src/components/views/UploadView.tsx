@@ -4,11 +4,11 @@ import App from '../App';
 import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NetworkPolicyView from './NetworkPolicyView';
+import { anyObject } from '../../kObjects/__index';
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
-  const [responseArray, setArray] = React.useState([]);
+  const [responseArray, setArray] = React.useState<string[]>([]);
   const [loaded, setLoaded] = React.useState(false);
-  const [rendered, setRendered] = React.useState(false);
   const onDrop = React.useCallback(acceptedFiles => {
     acceptedFiles.forEach((file: File, index: Number, array: Array<File>) => {
       let isLastElement = false;
@@ -60,15 +60,11 @@ export default function UploadView() {
           <Route exact path="/">
             <App 
             jsonFiles={responseArray}
-            rendered={rendered}
-            setRendered={setRendered}
             />
           </Route>
           <Route exact path="/networkPolicy">
             <NetworkPolicyView 
             jsonFiles={responseArray}
-            rendered={rendered}
-            setRendered={setRendered}
             />
           </Route>
         </Switch>

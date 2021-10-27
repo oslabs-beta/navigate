@@ -20,7 +20,6 @@ function ClusterView(props: any) {
   ];
   const namespacesArr: string[] = [];
   const populateNamespaces = (array: any[]): void => {
-    if(!props.rendered){
       array.forEach((kObject) => {
         if (
           !namespacesArr.includes(kObject.namespace) &&
@@ -41,7 +40,7 @@ function ClusterView(props: any) {
           }
         );
       });
-    }
+    
   };
   const allLabels: any[] = [];
   props.dataArray.forEach((ele: any) => {
@@ -221,7 +220,7 @@ function ClusterView(props: any) {
   return (
     <div>
       <div>
-        <h1 id="clusterHeader">
+        <h1 className="header">
           <img
             src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png"
             width="3.5%"
