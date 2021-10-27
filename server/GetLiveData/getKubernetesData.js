@@ -20,7 +20,8 @@ function getElementsOfKind(kind, writeToDisk = false) {
     const data = YAMLData.data;
     const output = [];
     data.forEach(k8sObject => {
-      if(k8sObject[0].kind === kind) output.push(k8sObject);
+      if(k8sObject[0].kind === kind){ 
+        output.push(k8sObject);}
     });
     if(writeToDisk)
       fs.writeFile(path.join(logPath, `/${kind}.json`), JSON.stringify(output, null, 2), { flag: 'w' }, function(err) {
@@ -56,7 +57,7 @@ function getNamespaceElementPairs(kind){
     }
     //if it is a default namespace, skip it
     else if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace)){
-      if(output[element[0].metadata.namespace]) output[element[0].metadata.namespace.name].push(element[0].metadata.name);
+      if(output[element[0].metadata.namespace]) output[element[0].metadata.namespace].push(element[0].metadata.name);
       else output[element[0].metadata.namespace] = [element[0].metadata.name];
     }
   })

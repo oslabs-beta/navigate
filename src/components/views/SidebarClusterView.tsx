@@ -1,15 +1,12 @@
 import * as React from "react";
 import { useEffect, useRef, useCallback, useState } from "react";
+import NotLiveMessage from "./NotLiveMessage";
+
 import FetchLiveData from "./FetchLiveData";
 function SidebarClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
 
-
-  //kind
-  //name
-  //event
-  //time
   const statuses: any[] = [];
   deploymentStatus.forEach((ele: any, index: number) => {
     statuses.push(<div style={{width:"300px", borderBottom:"thin solid gray", borderTop:"thin solid gray"}} key={index}>
@@ -23,6 +20,7 @@ function SidebarClusterView(props: any) {
       </table>
       </div>)
   })
+  if(statuses[0] === undefined) statuses.push(<NotLiveMessage />)
 
   return props.namespace !== "Kubernetes Cluster" ? (
     //Node view

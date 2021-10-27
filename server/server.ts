@@ -21,7 +21,7 @@ app.options("/upload", (req: Request, res: Response) => {
   return res.status(200).send('ok');
 });
 
-app.post("/upload", databaseController.parsePOST, databaseController.uploadFiles,databaseController.updateFiles, (req: Request, res: Response) => {
+app.post("/upload", databaseController.parsePOST, databaseController.uploadFiles, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.uploadedData);
 });
 
@@ -49,8 +49,8 @@ app.use("*", (req: Request, res: Response) => {
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const errorObj = {
-    log: "global error handler in express server",
-    message: { err: "global error handler in express server" },
+    log: "global error handler in express app",
+    message: { err: "global error handler in express app" },
   };
   const errorObject = Object.assign({}, errorObj, err);
   console.log(errorObject);
