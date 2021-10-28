@@ -1,27 +1,33 @@
-### NAVIGATE
 
-An all-in-one Kubernetes visualizer.
+<b><p align="center">NAVIGATES</b></p>
+  <br></br>
+  
+<p align="center"><img src='https://camo.githubusercontent.com/676841d37493a8028b6f708c5c0ee876b146b9d1b8e976400ed28bb071713525/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f6f736c6162732d626574612f4b757238'></p>
 
-Use it:
+<p align="center">
+A visual overview of Kubernetes clusters + network policies with aggregated live logs.
+</p>
 
-  -  before your cluster is running to visualize your cluster from config files
-  -  while your cluster is running to monitor the health of your nodes
-  -  to visualize the decisions your node scheduler has made, for a customizable period of time
+## Visualize your cluster before it starts running
+Whether the cluster is live or not, upload your YAML config files to **Navigates**. Here you can see the network structure of your cluster, observing
+the connections between your stateful sets, deployments, services, and other Kubernetes objects. <br/><br/> <br/><br/> You can double check for mistakes!<br/><br/>
+Click on the deployment nodes in your graph to zoom into the Node View, seeing the various containers and connections each deployment brings.
+<br/>
+
+## Visualize all your network policies
+Want to check that your network policies are correct? Use the "Network Policies" tab to view them all, one at a time.
 
 
-**Technologies Used**
-- TypeScript
-- Docker
-- Kubernetes
-- React
-- Cytoscape
-- Github Actions
-- Jest
-- Supertest
-- NodeJS
-- Webpack
-- Babel
-- YAML
-- JSON
-- SCSS
-- HTML
+## Get aggregated Live Logs
+
+While the cluster is live, see: 
+  -  etcd/node scheduler decisions, aggregated across many different logs
+  -  live deployment data, including statuses and conditions
+  -  live pod data that you would normally only get with `kubectl` commands
+
+## How to contribute
+We're actively developing! If you've found a bug or want to help, feel free to take a look at our <a href="https://github.com/oslabs-beta/navigate/issues">Issues</a>.
+
+## Contributors
+
+<a href="https://github.com/brkg">Brian Kang</a> | <a href="https://github.com/joelparkk">Joel Park</a> | <a href="https://github.com/hemwatie">Hemwatie Persaud</a>
