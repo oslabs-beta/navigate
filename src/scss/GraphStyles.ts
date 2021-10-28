@@ -6,9 +6,11 @@ const backgroundColor = ""
 const borderColor = "rgb(87,39,199)"
 //orange rgb(255, 136, 0)
 const arrowColor = "rgb(87,39,199)"
-const connectionColor = "rgb(39, 39, 39)"
+const connectionColor = "rgb(75, 75, 75)"
 const font = "Calibri";
 const podIcon = "https://i.ibb.co/VDG8MVh/podicon3.png"
+const labelColor = "whitesmoke";
+const networkPolicyNodeSize = '10%';
 
 export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
@@ -48,7 +50,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "background-color": "whitesmoke",
       // "border-color": "none",
       // "border-width": "2",
-      color: "whitesmoke",
+      color: "black",
     },
   },
   {
@@ -84,13 +86,13 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "font-family": font,
       content: 'data(label)',
       "text-valign": "bottom",
-      "text-halign": "right",
+      "text-halign": "center",
       "text-wrap": "wrap",
       "text-max-width": "140",
       // "background-color": "whitesmoke",
       // "border-color": "black",
       // "border-width": "2",
-      color: "whitesmoke",
+      color: labelColor,
     },
   },
   {
@@ -104,13 +106,13 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "font-family": font,
       content: 'data(label)',
       "text-valign": "bottom",
-      "text-halign": "right",
+      "text-halign": "center",
       "text-wrap": "wrap",
       "text-max-width": "140",
       "background-color": "whitesmoke",
       // "border-color": "black",
       // "border-width": "2",
-      color: "whitesmoke",
+      color: labelColor
     },
   },
   {
@@ -124,7 +126,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "font-family": font,
       content: 'data(label)',
       "text-valign": "bottom",
-      "text-halign": "right",
+      "text-halign": "center",
       "text-wrap": "wrap",
       "text-max-width": "140",
       "background-image": [podIcon],
@@ -132,7 +134,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       // "background-image": ["https://cdn.iconscout.com/icon/premium/png-256-thumb/cube-2403569-2010160.png"],
       // "border-color": "black",
       // "border-width": "2",
-      color: "whitesmoke",
+      color: labelColor,
     },
   },
   {
@@ -151,11 +153,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-max-width": "140",
       "background-color": "whitesmoke",
       "background-image": [podIcon],
-      color: "whitesmoke",
-      "text-background-color": "black",
-      "text-background-opacity": 1,
-      "text-background-shape": "roundrectangle",
-      "text-background-padding": "3px",
+      color: labelColor,
     },
   },
   {
@@ -211,7 +209,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "font-weight": "bold",
       content: 'data(label)',
       "text-valign": "bottom",
-      "text-halign": "right",
+      "text-halign": "center",
       "text-wrap": "wrap",
       "text-max-width": "10%",
       // "background-image": ["https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_250,h_195/https://assets.ubuntu.com/v1/767f38a4-kubernetes-stacked-color.svg"],
@@ -219,7 +217,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "background-image": ["https://i.ibb.co/X5wCv7S/network-Icon.png"],
       "border-color": connectionColor,
       "border-width": "2",
-      color: "whitesmoke",
+      color: labelColor,
     },
   },
   {
@@ -255,9 +253,9 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-halign": "left",
       "text-wrap": "wrap",
       "text-max-width": "140",
-      "background-image": ["https://i.ibb.co/Fh86bJr/replicaseticon.png"],
+      // "background-image": ["https://i.ibb.co/Fh86bJr/replicaseticon.png"],
       "background-color": "whitesmoke",
-      "color": "whitesmoke"
+      "color": labelColor
     },
   },
   {
@@ -336,8 +334,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "allowed"]',
     style: {
       shape: "triangle",
-      width: "25%",
-      height: "25%",
+      width: networkPolicyNodeSize,
+      height:networkPolicyNodeSize,
       "font-size": "10%",
       "font-weight": "bold",
       content: 'data(label)',
@@ -361,8 +359,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "egress"]',
     style: {
       shape: "triangle",
-      width: "25%",
-      height: "25%",
+      width:  networkPolicyNodeSize,
+      height: networkPolicyNodeSize,
       "font-size": "10%",
       "font-weight": "bold",
       content: 'data(label)',
@@ -386,8 +384,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "except"]',
     style: {
       shape: "triangle",
-      width: "25%",
-      height: "25%",
+      width: networkPolicyNodeSize,
+      height: networkPolicyNodeSize,
       "font-size": "10%",
       content: 'data(label)',
       "text-halign": 'center',
@@ -414,7 +412,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "2",
+      width: "3",
       "target-arrow-shape": "triangle",
       "line-color": arrowColor,
       "target-arrow-color": arrowColor,
@@ -458,7 +456,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "2",
+      width: "3",
       "target-arrow-shape": "triangle",
       "line-color": "orange",
       "target-arrow-color": "orange",
@@ -474,7 +472,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "2",
+      width: "3",
       "target-arrow-shape": "none",
       "line-color": connectionColor,
       "font-weight": "bold",
@@ -489,7 +487,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "1",
+      width: "3",
       "target-arrow-shape": "triangle",
       "line-color": arrowColor,
       "target-arrow-color": arrowColor,

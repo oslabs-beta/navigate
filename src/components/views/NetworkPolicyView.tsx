@@ -57,7 +57,6 @@ function NetworkPolicyView(props: IProps) {
             id: "egress",
             label: `IPs: ${array[i].egressPolicy.ipBlock} \n Port:${array[i].egressPolicy.port} ${array[i].egressPolicy.protocol}`,
             class: "egress",
-
           }
         }
         let edge = {
@@ -128,7 +127,6 @@ function NetworkPolicyView(props: IProps) {
       padding: 15,
       animate: true,
       animationDuration: 1000,
-
     });
     layout.run();
     cy.zoomingEnabled(false);
@@ -156,15 +154,13 @@ function NetworkPolicyView(props: IProps) {
         <h3 className="networkLabel">{networkPolicy}</h3>
         <NetworkPolicyLegend/>
       </div>
-        
           <div id="clusterView"
             ref={networkPolicyRef}
             style={ {width: '100%', height: '750px' }}>
           </div>
         </div>
-    
   </div> 
-)
+  )
 }
 // return(
 //   <div>
