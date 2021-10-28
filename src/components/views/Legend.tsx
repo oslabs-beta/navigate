@@ -6,7 +6,7 @@ export default function Legend(props: object) {
       <table id="legendID"> 
       <tbody>
       <tr><th>Legend</th></tr>
-      <tr><td>◇</td><td>Kubernetes Cluster</td><td>○</td><td>Deployment</td></tr>
+      <tr><td>◇</td><td>Kubernetes Cluster</td><td><img src="https://i.ibb.co/XXjPChx/podicon2.png" height="100%" width="100%"></img></td><td>Deployment</td></tr>
       <tr></tr>
       <tr><td>▭ </td><td>Namespace</td><td>◇</td><td>Kubernetes Cluster</td></tr>
       <tr></tr>
