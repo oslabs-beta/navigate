@@ -11,7 +11,9 @@ h3{
   font-family: 'Calibri', sans-serif;
 }
 html{
-  background-color: rgb(26, 26, 26);
+  // background-color: rgb(26, 26, 26);
+  background: rgb(68,64,70);
+  background: radial-gradient(circle, rgba(68,64,70,1) 0%, rgba(18,11,27,0.9486169467787114) 100%);
 }
 p {
   text-align: left;
@@ -55,6 +57,14 @@ button + h3 {
   color: #932af5;
   font-size: 2em;
 }
+
+#uploadPage{
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 300px;
+  overflow-wrap: break-word;
+}
 #sidebar {
   display:flex;
   align-items: flex-start;
@@ -87,6 +97,7 @@ button + h3 {
   #pageCol{
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
   }
 }
 #nodeSidebar{

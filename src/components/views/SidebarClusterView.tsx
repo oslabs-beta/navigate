@@ -33,7 +33,7 @@ function SidebarClusterView(props: any) {
     // Cluster View
     <div>
       <div className="nodeSchedulerHeader">
-        <h2>Node Scheduler Logs</h2>
+        <h2> Scheduler Logs</h2>
         <FetchLiveData></FetchLiveData>
       </div>
     

@@ -81,7 +81,7 @@ export default function UploadView() {
         <input {...getInputProps()} />
         {
           //some logo here
-            <div>
+            <div id="uploadPage">
             <p>Click here to upload your YAML config files and begin using Navigate...</p>
             </div>
         }

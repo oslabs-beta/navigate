@@ -210,7 +210,6 @@ function NodeView(props: any) {
     <div id="nodeView"> 
       <div >
         <h1 className="header">
-          <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
           {props.view}
         </h1>
       </div>

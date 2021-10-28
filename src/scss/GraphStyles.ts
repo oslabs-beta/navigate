@@ -2,12 +2,13 @@ import Cytoscape from 'cytoscape';
 const kubernetesIcon = "https://image.pngaaa.com/630/3063630-middle.png"
 const textColor = "black"
 const backgroundColor = ""
-const borderColor = "#932af5"
+//#932af5
+const borderColor = "rgb(87,39,199)"
 //orange rgb(255, 136, 0)
-const arrowColor = "#932af5"
-const connectionColor = "rgb(63, 63, 63)"
+const arrowColor = "rgb(87,39,199)"
+const connectionColor = "rgb(39, 39, 39)"
 const font = "Calibri";
-const podIcon = "https://i.ibb.co/j3Q9XgX/podicon2.png"
+const podIcon = "https://i.ibb.co/VDG8MVh/podicon3.png"
 
 export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
@@ -138,8 +139,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "deployment"]',
     style: {
       shape: "ellipse",
-      width: "50%",
-      height: "50%",
+      width: "40%",
+      height: "40%",
       "font-size": "14%",
       "font-weight": "bold",
       "font-family": font,
@@ -156,9 +157,9 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[id = "Kubernetes Cluster"]',
     style: {
-      shape: "diamond",
-      width: "200%",
-      height: "200%",
+      shape: "round-heptagon",
+      width: "130%",
+      height: "130%",
       // "background-image": ["https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_250,h_195/https://assets.ubuntu.com/v1/767f38a4-kubernetes-stacked-color.svg"],
       "font-size": "18",
       "font-family": font,
@@ -167,7 +168,12 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-halign": "center",
       "text-wrap": "wrap",
       "text-max-width": "",
-      "background-color": arrowColor,
+      // "background-color": arrowColor,
+      "background-color": "rgb(87,39,199)",
+      // "background-fill": "linear-gradient",
+      // "background-gradient-stop-colors": "rgba(87,39,199,1),rgba(98,52,204,1),rgba(123,86,209,1)",
+      
+      // "background-color": "linear-gradient(180deg, rgba(87,39,199,1) 0%, rgba(98,52,204,1) 49%, rgba(123,86,209,1) 100%)",
       "border-color": borderColor,
       "border-width": "2",
       color: textColor,
@@ -206,7 +212,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-max-width": "10%",
       // "background-image": ["https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_250,h_195/https://assets.ubuntu.com/v1/767f38a4-kubernetes-stacked-color.svg"],
       // "background-color": "whitesmoke",
-      "background-image": ["https://i.ibb.co/j3Q9XgX/podicon2.png"],
+      "background-image": ["https://i.ibb.co/X5wCv7S/network-Icon.png"],
       "border-color": connectionColor,
       "border-width": "2",
       color: "whitesmoke",
@@ -215,7 +221,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[class = "namespace"]',
     style: {
-      shape: "rectangle",
+      shape: "round-rectangle",
       width: "150%",
       height: "50%",
       "font-size": "18",

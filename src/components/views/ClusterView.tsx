@@ -231,7 +231,7 @@ function ClusterView(props: any) {
       event.target.style("border-width","1");
     })
     cy.on("mouseout","node[class = 'deployment']", function(event) {
-      event.target.style("background-image", ["https://i.ibb.co/j3Q9XgX/podicon2.png"]);
+      event.target.style("background-image", ["https://i.ibb.co/VDG8MVh/podicon3.png"]);
       event.target.style("background-color",'white');
       event.target.style("border-width","0");
     })
@@ -247,11 +247,6 @@ function ClusterView(props: any) {
     <div>
       <div>
         <h1 className="header">
-          <img
-            src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png"
-            width="3.5%"
-            height="3.5%"
-          ></img>
           {props.view}
         </h1>
       </div>
@@ -270,9 +265,6 @@ function ClusterView(props: any) {
           <div
             id="pageCol"
             style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-around",
               height: limitSidebarHeight,
             }}
           >
