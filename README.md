@@ -16,6 +16,7 @@ Click on the deployment nodes in your graph to zoom into the Node View, seeing t
 
 ## Visualize all your network policies
 Want to check that your network policies are correct? Use the "Network Policies" tab to view them all, one at a time.
+![image](https://user-images.githubusercontent.com/5425746/139293239-f8c0db76-b6df-491a-a005-563456ca9060.png)
 
 
 ## Get aggregated Live Logs
