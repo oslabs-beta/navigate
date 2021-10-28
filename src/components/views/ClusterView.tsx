@@ -247,24 +247,30 @@ function ClusterView(props: any) {
     <div>
       <h1 className="header">{props.view}</h1>
       <div className="pageViewTest2">
-      <div className="sidebarTest2">
-          <div id="buttonDiv" style={{ display: "flex", flexDirection: "row" }}>
-          </div>
-          <div style={{height:limitSidebarHeight}}>
-          <SidebarClusterView
+        <div className="sidebarTest2">
+          <div
+            id="buttonDiv"
+            style={{ display: "flex", flexDirection: "row" }}
+          ></div>
+          <div>
+            <SidebarClusterView
               deploymentStatus={props.deploymentStatus}
               namespace={props.namespace}
-            />  
-            <Legend view={props.view}/>
+            />
+          </div>
+          <div style={{width: "100%"}}>
+             <Legend view={props.view} />
           </div>
           
+        </div>
+        <div id="cytoscapeDiv">
+          <div
+            id="clusterView"
+            ref={containerRef}
+            style={{ width: window.innerWidth * .7, height: window.outerHeight *.5}}
+          />
+        </div>
       </div>
-        <div
-          id="clusterView"
-          ref={containerRef}
-          style={{ width: "75%", height: "750px" }}
-        />
-    </div>
     </div>
   );
 }
