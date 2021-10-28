@@ -208,6 +208,13 @@ li a:hover {
   color: whitesmoke;
   font-size: 1.5em;
 }
+#podInfoTable{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 450px;
+  overflow: scroll;
+}
 .legendID {
   font-size: 1em;
   border-style: solid;
@@ -253,7 +260,7 @@ option {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  flex-grow: 0.5;
+  // flex-grow: 0.5;
   width: 30%;
   height: 70%;
   

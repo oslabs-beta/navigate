@@ -227,9 +227,9 @@ function NodeView(props: any) {
           <div id="pageView">
             <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly',height:limitSidebarHeight}}>
             <SidebarNodeView clickedPod = {clickedPod} podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
-            <Legend/>
             </div>
         </div>
+        <Legend/>
         </div>
         <div>
         <div id='nodeView'
