@@ -10,7 +10,6 @@ interface IProps{
 
 import FetchLiveData from "./FetchLiveData";
 function SidebarClusterView(props: IProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
 
   const statuses: any[] = [];
@@ -32,7 +31,7 @@ function SidebarClusterView(props: IProps) {
   return (
     <div>
       <div className="nodeSchedulerHeader">
-        <h2>Node Scheduler Logs</h2>
+        <h2> Scheduler Logs</h2>
         <FetchLiveData></FetchLiveData>
       </div>
     

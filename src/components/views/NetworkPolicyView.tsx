@@ -4,13 +4,11 @@ import SidebarClusterView from "./SidebarClusterView";
 import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
-import Legend from './Legend';
 import { electron } from "webpack";
 import { anyObject } from "../../kObjects/__index";
 import { findSelectorMatch } from "../../component_data/findSelectorMatch";
 import kNetworkPolicy from "../../kObjects/kNetworkPolicy";
 import * as dataParser from "../../component_data/kDataParser"
-import { kObject } from "../../kObjects/kObject";
 import NetworkPolicyLegend from "./NetworkPolicyLegend";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
@@ -50,7 +48,7 @@ function NetworkPolicyView(props: IProps) {
         let ingress = {
           data: {
             id: "ingress",
-            label: `Pods label: ${getSelectors(array[i].podSelectors)} \n Port:${array[i].ingressPolicy.port} ${array[i].ingressPolicy.protocol}`,
+            label: `Pods labeled: ${getSelectors(array[i].podSelectors)} \n Port:${array[i].ingressPolicy.port} ${array[i].ingressPolicy.protocol}`,
             class: "ingress",
           },
         };
@@ -59,7 +57,6 @@ function NetworkPolicyView(props: IProps) {
             id: "egress",
             label: `IPs: ${array[i].egressPolicy.ipBlock} \n Port:${array[i].egressPolicy.port} ${array[i].egressPolicy.protocol}`,
             class: "egress",
-
           }
         }
         let edge = {
@@ -130,9 +127,9 @@ function NetworkPolicyView(props: IProps) {
       padding: 15,
       animate: true,
       animationDuration: 1000,
-
     });
     layout.run();
+    cy.zoomingEnabled(false);
     cy.on('click',(event)=> {
       console.log(event.target._private.data.id);
     })
@@ -140,14 +137,11 @@ function NetworkPolicyView(props: IProps) {
 
   return(
     <div>
-      <div >
-        <h1 className="header">
-        <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
-          {"Network Policy View"}
-        </h1>
-      </div>  
+      <h1 className="header">Network Policy View</h1>  
+      <div className="pageViewTest">
+      <div className="sidebarTest">
         <div id="buttonDiv">
-            <h3 className="networkLabelWhite">Choose a Network Policy</h3>
+            <div className="networkLabelWhite">Choose a policy:</div>
             <select id="policies" value={networkPolicy} onChange={(e) => {
               const selected = e.target.value;
               setNetworkPolicy(selected);
@@ -157,19 +151,47 @@ function NetworkPolicyView(props: IProps) {
               })}
             </select>
         </div>
-      <div style={{display:'flex', flexDirection:'column'}}> 
-      <h3 className="networkLabel">{networkPolicy}</h3>
-        <div id="pageView">
-          
-          <NetworkPolicyLegend/>
+        <h3 className="networkLabel">{networkPolicy}</h3>
+        <NetworkPolicyLegend/>
+      </div>
           <div id="clusterView"
             ref={networkPolicyRef}
-            style={ {width: '1250px', height: '750px' }}
-          />
+            style={ {width: '100%', height: '750px' }}>
+          </div>
         </div>
-    </div>
   </div> 
-)
+  )
 }
+// return(
+//   <div>
+//     <div className="sidebarTest">
+//       <h1 className="header">
+//       <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
+//         {"Network Policy View"}
+//       </h1>
+//     </div>  
+//       <div id="buttonDiv">
+//           <h3 className="networkLabelWhite">Choose a Network Policy</h3>
+//           <select id="policies" value={networkPolicy} onChange={(e) => {
+//             const selected = e.target.value;
+//             setNetworkPolicy(selected);
+//           }}>
+//             {networkPoliciesArr.map((ele,i) => {
+//               return <option value={ele.label} key={i}>{ele.label}</option>
+//             })}
+//           </select>
+//       </div>
+//     <div style={{display:'flex', flexDirection:'column'}}> 
+//     <h3 className="networkLabel">{networkPolicy}</h3>
+//       <div id="pageView">
+//         <NetworkPolicyLegend/>
+//         <div id="clusterView"
+//           ref={networkPolicyRef}
+//           style={ {width: '1250px', height: '750px' }}
+//         />
+//       </div>
+//   </div>
+// </div> 
+// )
 
 export default NetworkPolicyView;

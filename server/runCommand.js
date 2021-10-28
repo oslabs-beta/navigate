@@ -1,4 +1,3 @@
-const {spawn} = require('child_process');
 var exec = require('child_process').exec, child;
 const fs = require('fs');
 const path = require('path');
