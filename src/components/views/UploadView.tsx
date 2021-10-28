@@ -76,13 +76,14 @@ export default function UploadView() {
     </div>
     :
     !showLoading ?
-    <div className="inputContainer">
-      <div {...getRootProps()}>
+    <div className="inputView">
+    <img src="https://i.ibb.co/CVcHh4G/unnamed.png"></img>
+      <div className="inputContainer" {...getRootProps()}>
         <input {...getInputProps()} />
         {
           //some logo here
             <div style={styles.container}>
-            <p>Click here to upload your YAML config files!</p>
+            <p className="uploadButton" >Click here to upload your YAML config files!</p>
             </div>
         }
       </div>

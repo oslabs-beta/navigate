@@ -270,3 +270,30 @@ option {
   background-color: whitesmoke;
 
 }
+.inputView{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inputContainer{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.uploadButton{
+  margin: auto;
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: whitesmoke;
+  border-radius: 2px;
+}
+.uploadButton:hover{
+  color: black;
+  background-color: rgb(172, 172, 172);
+}
