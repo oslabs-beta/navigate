@@ -4,7 +4,7 @@ import App from '../App';
 import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NetworkPolicyView from './NetworkPolicyView';
-import { anyObject } from '../../kObjects/__index';
+
 export default function UploadView() {
   const yamlFiles: Array<string | ArrayBuffer> = [];
   const [responseArray, setArray] = React.useState<string[]>([]);
@@ -50,7 +50,7 @@ export default function UploadView() {
         //show App, pass the data down as props
         setLoaded(true);
       })
-      .catch(error => console.log('POST ERROR: ' + error));
+      .catch(error => {console.log('POST ERROR: ' + error)});
   }
 
   return (  
@@ -81,8 +81,8 @@ export default function UploadView() {
         <input {...getInputProps()} />
         {
           //some logo here
-            <div id="uploadPage">
-            <p>Click here to upload your YAML config files and begin using Navigate...</p>
+            <div style={styles.container}>
+            <p>Click here to upload your YAML config files!</p>
             </div>
         }
       </div>
@@ -100,4 +100,10 @@ export default function UploadView() {
     </div>
 
   );
+}
+
+const styles = {
+  container: {
+    width: '120%'
+  }
 }
