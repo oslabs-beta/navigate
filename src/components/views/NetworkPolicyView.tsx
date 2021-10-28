@@ -143,7 +143,7 @@ function NetworkPolicyView(props: IProps) {
       <div className="pageViewTest">
       <div className="sidebarTest">
         <div id="buttonDiv">
-            <div className="networkLabelWhite">Choose a Network Policy</div>
+            <div className="networkLabelWhite">Choose a policy:</div>
             <select id="policies" value={networkPolicy} onChange={(e) => {
               const selected = e.target.value;
               setNetworkPolicy(selected);
