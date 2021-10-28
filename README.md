@@ -8,7 +8,7 @@ A visual overview of Kubernetes clusters + network policies with aggregated live
 </p>
 
 ## Visualize your cluster before it starts running
-Whether the cluster is live or not, upload your YAML config files to **Navigates**. Here you can see the network structure of your cluster, observing
+Whether the cluster is live or not, upload your YAML config files to **Navigate**. Here you can see the network structure of your cluster, observing
 the connections between your stateful sets, deployments, services, and other Kubernetes objects. <br/><br/> <br/><br/> You can double check for mistakes!<br/><br/>
 Click on the deployment nodes in your graph to zoom into the Node View, seeing the various containers and connections each deployment brings.
 <br/>
