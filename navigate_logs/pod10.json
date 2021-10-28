@@ -1,0 +1,222 @@
+{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+      "creationTimestamp": "2021-10-18T18:50:45Z",
+      "generateName": "recommendationservice-b4479f897-",
+      "labels": {
+          "app": "recommendationservice",
+          "pod-template-hash": "b4479f897"
+      },
+      "name": "recommendationservice-b4479f897-wk8td",
+      "namespace": "default",
+      "ownerReferences": [
+          {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "recommendationservice-b4479f897",
+              "uid": "ed31080f-06b1-45bd-8db3-d1e327fb47f2"
+          }
+      ],
+      "resourceVersion": "1360081",
+      "uid": "1908cf30-fb6d-4dbe-838f-43ab8e6ed557"
+  },
+  "spec": {
+      "containers": [
+          {
+              "env": [
+                  {
+                      "name": "PORT",
+                      "value": "8080"
+                  },
+                  {
+                      "name": "PRODUCT_CATALOG_SERVICE_ADDR",
+                      "value": "productcatalogservice:3550"
+                  }
+              ],
+              "image": "gcr.io/google-samples/microservices-demo/recommendationservice:v0.3.0",
+              "imagePullPolicy": "IfNotPresent",
+              "livenessProbe": {
+                  "exec": {
+                      "command": [
+                          "/bin/grpc_health_probe",
+                          "-addr=:8080"
+                      ]
+                  },
+                  "failureThreshold": 3,
+                  "periodSeconds": 5,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+              },
+              "name": "server",
+              "ports": [
+                  {
+                      "containerPort": 8080,
+                      "protocol": "TCP"
+                  }
+              ],
+              "readinessProbe": {
+                  "exec": {
+                      "command": [
+                          "/bin/grpc_health_probe",
+                          "-addr=:8080"
+                      ]
+                  },
+                  "failureThreshold": 3,
+                  "periodSeconds": 5,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+              },
+              "resources": {
+                  "limits": {
+                      "cpu": "200m",
+                      "memory": "450Mi"
+                  },
+                  "requests": {
+                      "cpu": "100m",
+                      "memory": "220Mi"
+                  }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                  {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "kube-api-access-zgm4t",
+                      "readOnly": true
+                  }
+              ]
+          }
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "enableServiceLinks": true,
+      "nodeName": "docker-desktop",
+      "preemptionPolicy": "PreemptLowerPriority",
+      "priority": 0,
+      "restartPolicy": "Always",
+      "schedulerName": "default-scheduler",
+      "securityContext": {},
+      "serviceAccount": "default",
+      "serviceAccountName": "default",
+      "terminationGracePeriodSeconds": 5,
+      "tolerations": [
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          },
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          }
+      ],
+      "volumes": [
+          {
+              "name": "kube-api-access-zgm4t",
+              "projected": {
+                  "defaultMode": 420,
+                  "sources": [
+                      {
+                          "serviceAccountToken": {
+                              "expirationSeconds": 3607,
+                              "path": "token"
+                          }
+                      },
+                      {
+                          "configMap": {
+                              "items": [
+                                  {
+                                      "key": "ca.crt",
+                                      "path": "ca.crt"
+                                  }
+                              ],
+                              "name": "kube-root-ca.crt"
+                          }
+                      },
+                      {
+                          "downwardAPI": {
+                              "items": [
+                                  {
+                                      "fieldRef": {
+                                          "apiVersion": "v1",
+                                          "fieldPath": "metadata.namespace"
+                                      },
+                                      "path": "namespace"
+                                  }
+                              ]
+                          }
+                      }
+                  ]
+              }
+          }
+      ]
+  },
+  "status": {
+      "conditions": [
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-18T18:50:48Z",
+              "status": "True",
+              "type": "Initialized"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-28T15:43:32Z",
+              "status": "True",
+              "type": "Ready"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-28T15:43:32Z",
+              "status": "True",
+              "type": "ContainersReady"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-18T18:50:47Z",
+              "status": "True",
+              "type": "PodScheduled"
+          }
+      ],
+      "containerStatuses": [
+          {
+              "containerID": "docker://bc426ba53c2d5586c167b9d59a76f4cf70720c0de8cdbcb798e18c13f237ac85",
+              "image": "gcr.io/google-samples/microservices-demo/recommendationservice:v0.3.0",
+              "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/recommendationservice@sha256:20446aee55000fc66f97ab6e462f3d093b8788926ba1f204aca4f2eb2dc00adc",
+              "lastState": {
+                  "terminated": {
+                      "containerID": "docker://6f48b7385a6a51b1b51cd7cdaa4c6604eadd14851fd2ef3e8d742d00ca335e95",
+                      "exitCode": 137,
+                      "finishedAt": "2021-10-28T15:43:22Z",
+                      "reason": "Error",
+                      "startedAt": "2021-10-28T15:43:04Z"
+                  }
+              },
+              "name": "server",
+              "ready": true,
+              "restartCount": 284,
+              "started": true,
+              "state": {
+                  "running": {
+                      "startedAt": "2021-10-28T15:43:23Z"
+                  }
+              }
+          }
+      ],
+      "hostIP": "192.168.65.4",
+      "phase": "Running",
+      "podIP": "10.1.0.194",
+      "podIPs": [
+          {
+              "ip": "10.1.0.194"
+          }
+      ],
+      "qosClass": "Burstable",
+      "startTime": "2021-10-18T18:50:48Z"
+  }
+}

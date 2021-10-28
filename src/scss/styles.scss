@@ -46,6 +46,7 @@ button:hover {
 }
 #buttonDiv {
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -57,7 +58,7 @@ h4 {
   font-size: 2em;
 }
 button + h3 {
-  margin-left: 1%;
+  margin-left: 5%;
   color: #932af5;
   font-size: 2em;
 }
