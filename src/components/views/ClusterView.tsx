@@ -199,7 +199,7 @@ function ClusterView(props: any) {
     let layout = cy.layout({
       name: "dagre",
       nodeDimensionsIncludeLabels: true,
-      padding: "-10",
+      padding: "10",
       animate: true,
       animationDuration: 1000,
     });
@@ -230,7 +230,7 @@ function ClusterView(props: any) {
     });
     cy.on("mouseout", "node[class = 'deployment']", function (event) {
       event.target.style("background-image", [
-        "https://i.ibb.co/VDG8MVh/podicon3.png",
+        "https://i.ibb.co/9V5KVmP/icons8-big-parcel-35.png",
       ]);
       event.target.style("background-color", "white");
       event.target.style("border-width", "0");
@@ -256,7 +256,7 @@ function ClusterView(props: any) {
               deploymentStatus={props.deploymentStatus}
               namespace={props.namespace}
             />  
-            <Legend />
+            <Legend view={props.view}/>
           </div>
           
       </div>

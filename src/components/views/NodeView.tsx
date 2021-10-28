@@ -42,7 +42,7 @@ function NodeView(props: any) {
         let newPod = {
           data: {
             id: array[i].label + ' service',
-            label: serviceNode.port ? array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}` : array[i].label + ' service' + "\n" + `Port: N/A`,
+            label: serviceNode.port ? array[i].label + "\n" + `Port:${serviceNode.port}` : array[i].label + "\n" + `Port:N/A`,
             class: "service",
           },
         };
