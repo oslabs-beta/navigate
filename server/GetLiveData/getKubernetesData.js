@@ -39,7 +39,7 @@ function getElementsOfKind(kind, writeToDisk = false) {
 function getNamespacesFromYAML(array){
   const output = {};
   array.forEach(k8sObject => {
-    if(k8sObject[0].metadata !== undefined)
+    if(k8sObject[0].metadata !== undefined && k8sObject[0].metadata.namespace !== undefined)
     if(!output[k8sObject[0].metadata.namespace]){
       output[k8sObject[0].metadata.namespace] = '';
     }
@@ -107,6 +107,7 @@ async function aggregateLogs()
   }).on('close', () => {
     const podArray = rawNames.split(' ');
     namespacePodKVP["default"] = podArray;
+    console.log('all namespace names: ', namespaces);
     //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
     if(namespaces[0])
       for(let i = 0; i < namespaces.length; i++){
@@ -115,6 +116,7 @@ async function aggregateLogs()
             if(err) console.log(err);
             namespacePodKVP[namespaces[i]] = await Buffer.from(data).toString('utf8').split(' ');
             if(i === namespaces.length-1){
+              console.log('namespaces and pods:', namespacePodKVP);
               getDeployments();
               getPodInfo(namespacePodKVP);
             }
