@@ -231,10 +231,12 @@ function NodeView(props: any) {
             </div>
         </div>
         </div>
+        <div>
         <div id='nodeView'
             ref={nodeViewRef}
             style={ { width: '1500px', height: '750px' }}
           /> 
+      </div>
       </div>
       
     </div>
