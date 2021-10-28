@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 $circle-color: purple;
-
+$backgroundColor: rgb(26, 26, 26);
 *{
   color: rgb(255, 255, 255);
   font-family: 'Calibri', sans-serif;
@@ -11,9 +11,13 @@ h3{
   font-family: 'Calibri', sans-serif;
 }
 html{
+<<<<<<< HEAD
   // background-color: rgb(26, 26, 26);
   background: rgb(68,64,70);
   background: radial-gradient(circle, rgba(68,64,70,1) 0%, rgba(18,11,27,0.9486169467787114) 100%);
+=======
+  background-color: $backgroundColor;
+>>>>>>> develop
 }
 p {
   text-align: left;
@@ -43,8 +47,9 @@ button:hover {
 }
 #buttonDiv{
   display:flex;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
 }
 h4 {
   margin-left: 1%;
@@ -190,14 +195,53 @@ li a:hover {
   margin-top: -0.4em;
   animation: spin 1.5s linear infinite;
 }
-
+.red{
+  color: red;
+}
+.green{
+  color:rgb(54, 221, 54);
+}
+.networkLabel{
+  color: #932af5;
+  font-size: 1.5em;
+}
+.networkLabelWhite{
+  color: whitesmoke;
+  font-size: 1.5em;
+}
+#clusterView{
+  height: 100%;
+  width: 100%;
+}
+#legendID{
+  border-style: solid;
+  border-width: 2px;
+  border-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
+<<<<<<< HEAD
 
 #clusterview{
   width: 1000px;
   height: 750px;
+=======
+#policies {
+  color: whitesmoke;
+  height: 25px;
+  width: 10%;
+  font-weight: bold;
+  font-size: 1em;
+  background-color: $backgroundColor;
+}
+option {
+  color: whitesmoke;
+>>>>>>> develop
 }
