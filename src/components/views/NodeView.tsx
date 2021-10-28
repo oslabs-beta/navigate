@@ -220,7 +220,7 @@ function NodeView(props: any) {
           props.setMasterNode('Kubernetes Cluster');
           props.setNamespace('Kubernetes Cluster');
           props.setView('Cluster View');
-        }}>Back to Cluster View
+        }}>Cluster View
         </button>
         <h3>{`${props.masterNode}`}</h3>
         </div> 
