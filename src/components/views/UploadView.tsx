@@ -82,7 +82,7 @@ export default function UploadView() {
         {
           //some logo here
             <div>
-            <p>Click here to upload your YAML config files and begin using Navigate...</p>
+            <p>Click here - upload your YAML files and begin!</p>
             </div>
         }
       </div>
