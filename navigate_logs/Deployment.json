@@ -1,0 +1,206 @@
+[
+  [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "mafia-backend",
+        "namespace": "mafia",
+        "labels": {
+          "name": "mafia-backend",
+          "app": "mafia"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "mafia"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "name": "mafia-backend",
+              "app": "mafia"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "mafia-backend-container",
+                "image": "taleodor/mafia-express@sha256:8328cd7de911367ef2a52a60f8696720e89c152c9a437983c7eccf411b0ede75",
+                "env": [
+                  {
+                    "name": "REDIS_HOST",
+                    "value": "redis-service.mafia"
+                  }
+                ],
+                "ports": [
+                  {
+                    "containerPort": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "example-backend",
+        "namespace": "example",
+        "labels": {
+          "name": "example-backend",
+          "app": "example"
+        }
+      },
+      "spec": {
+        "replicas": 4,
+        "selector": {
+          "matchLabels": {
+            "app": "example"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "name": "example-backend",
+              "app": "example"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "example-backend-container",
+                "image": "taleodor/example-express@sha256:8328cd7de911367ef2a52a60f8696720e89c152c9a437983c7eccf411b0ede75",
+                "env": [
+                  {
+                    "name": "REDIS_HOST",
+                    "value": "redis-service.example"
+                  }
+                ],
+                "ports": [
+                  {
+                    "containerPort": 3000
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "example-ui",
+        "namespace": "example",
+        "labels": {
+          "name": "example-ui",
+          "app": "example"
+        }
+      },
+      "spec": {
+        "replicas": 1,
+        "selector": {
+          "matchLabels": {
+            "app": "example"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "name": "example-ui",
+              "app": "example"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "example-ui-container",
+                "image": "taleodor/example-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
+                "env": [
+                  {
+                    "name": "HUB_HOST",
+                    "value": "example-backend-service.example"
+                  },
+                  {
+                    "name": "HUB_PORT",
+                    "value": "3000"
+                  }
+                ],
+                "ports": [
+                  {
+                    "containerPort": 80
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  [
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "name": "mafia-ui",
+        "namespace": "mafia",
+        "labels": {
+          "name": "mafia-ui",
+          "app": "mafia"
+        }
+      },
+      "spec": {
+        "replicas": 3,
+        "selector": {
+          "matchLabels": {
+            "app": "mafia"
+          }
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "name": "mafia-ui",
+              "app": "mafia"
+            }
+          },
+          "spec": {
+            "containers": [
+              {
+                "name": "mafia-ui-container",
+                "image": "taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
+                "env": [
+                  {
+                    "name": "HUB_HOST",
+                    "value": "mafia-backend-service.mafia"
+                  },
+                  {
+                    "name": "HUB_PORT",
+                    "value": "3000"
+                  }
+                ],
+                "ports": [
+                  {
+                    "containerPort": 80
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+]
