@@ -147,7 +147,6 @@ async function getDeployments(){
 
 // gets updated pods object (with status from kubernetes)
 async function getPodInfo(namespacePodKVP){
-  console.log(namespacePodKVP);
   let filePath;
   let index = 1;
   let currentKey;
