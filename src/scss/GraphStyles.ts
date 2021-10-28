@@ -6,9 +6,11 @@ const backgroundColor = ""
 const borderColor = "rgb(87,39,199)"
 //orange rgb(255, 136, 0)
 const arrowColor = "rgb(87,39,199)"
-const connectionColor = "rgb(39, 39, 39)"
+const connectionColor = "rgb(75, 75, 75)"
 const font = "Calibri";
 const podIcon = "https://i.ibb.co/VDG8MVh/podicon3.png"
+const labelColor = "whitesmoke";
+const networkPolicyNodeSize = '10%';
 
 export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
@@ -121,7 +123,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "background-color": "whitesmoke",
       // "border-color": "black",
       // "border-width": "2",
-      color: "whitesmoke",
+      // color: "whitesmoke",
+      color: labelColor,
       "text-background-color": "black",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
@@ -147,7 +150,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       // "background-image": ["https://cdn.iconscout.com/icon/premium/png-256-thumb/cube-2403569-2010160.png"],
       // "border-color": "black",
       // "border-width": "2",
-      color: "whitesmoke",
+      // color: "whitesmoke",
+      color: labelColor,
       "text-background-color": "black",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
@@ -170,7 +174,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-max-width": "140",
       "background-color": "whitesmoke",
       "background-image": ["https://i.ibb.co/9V5KVmP/icons8-big-parcel-35.png"],
-      color: "whitesmoke",
+      // color: "whitesmoke",
+      color: labelColor,
       "text-background-color": "black",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
@@ -263,11 +268,12 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "background-image": ["https://i.ibb.co/X5wCv7S/network-Icon.png"],
       "border-color": connectionColor,
       "border-width": "2",
-      color: "whitesmoke",
+      // color: "whitesmoke",
       "text-background-color": "black",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
       "text-background-padding": "3px",
+      color: labelColor,
     },
   },
   {
@@ -395,8 +401,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "allowed"]',
     style: {
       shape: "triangle",
-      width: "25%",
-      height: "25%",
+      width: networkPolicyNodeSize,
+      height:networkPolicyNodeSize,
       "font-size": "10%",
       "font-weight": "bold",
       content: 'data(label)',
@@ -420,8 +426,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "egress"]',
     style: {
       shape: "triangle",
-      width: "25%",
-      height: "25%",
+      width:  networkPolicyNodeSize,
+      height: networkPolicyNodeSize,
       "font-size": "10%",
       "font-weight": "bold",
       content: 'data(label)',
@@ -445,8 +451,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "except"]',
     style: {
       shape: "triangle",
-      width: "25%",
-      height: "25%",
+      width: networkPolicyNodeSize,
+      height: networkPolicyNodeSize,
       "font-size": "10%",
       content: 'data(label)',
       "text-halign": 'center',
@@ -473,7 +479,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "2",
+      width: "3",
       "target-arrow-shape": "triangle",
       "line-color": arrowColor,
       "target-arrow-color": arrowColor,
@@ -517,7 +523,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "2",
+      width: "3",
       "target-arrow-shape": "triangle",
       "line-color": "orange",
       "target-arrow-color": "orange",
@@ -533,7 +539,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "2",
+      width: "3",
       "target-arrow-shape": "none",
       "line-color": connectionColor,
       "font-weight": "bold",
@@ -548,7 +554,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "#ffffff",
       "text-background-opacity": 1,
       "text-background-padding": "3",
-      width: "1",
+      width: "3",
       "target-arrow-shape": "triangle",
       "line-color": arrowColor,
       "target-arrow-color": arrowColor,

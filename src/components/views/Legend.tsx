@@ -14,7 +14,7 @@ export default function Legend(props: any) {
       <tr></tr>
       
       <tr></tr>
-      <tr><td style={{color:"purple"}}>---</td><td style={{color:"purple"}}>Deploys</td></tr>
+      <tr><td>⬡</td><td>Control Plane</td></tr>
       </tbody>
       </table>
     </div>
