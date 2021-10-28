@@ -11,13 +11,7 @@ h3{
   font-family: 'Calibri', sans-serif;
 }
 html{
-<<<<<<< HEAD
-  // background-color: rgb(26, 26, 26);
-  background: rgb(68,64,70);
-  background: radial-gradient(circle, rgba(68,64,70,1) 0%, rgba(18,11,27,0.9486169467787114) 100%);
-=======
   background-color: $backgroundColor;
->>>>>>> develop
 }
 p {
   text-align: left;
@@ -104,6 +98,11 @@ button + h3 {
     flex-direction: column;
     justify-content: flex-start;
   }
+}
+.pageViewTest{
+  display:flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 #nodeSidebar{
   display:flex;
@@ -217,31 +216,49 @@ li a:hover {
   border-style: solid;
   border-width: 2px;
   border-color: whitesmoke;
+  border-spacing: 7px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+#policyLegendID{
+  border-style: solid;
+  border-width: 2px;
+  border-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+th, td{
+  padding-left: 10px;
 }
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
-<<<<<<< HEAD
-
-#clusterview{
-  width: 1000px;
-  height: 750px;
-=======
 #policies {
   color: whitesmoke;
   height: 25px;
-  width: 10%;
+  width: 100%;
   font-weight: bold;
   font-size: 1em;
   background-color: $backgroundColor;
 }
 option {
   color: whitesmoke;
->>>>>>> develop
+}
+.sidebarTest2 {
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-width: 20%;
+}
+.pageViewTest2{
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
 }

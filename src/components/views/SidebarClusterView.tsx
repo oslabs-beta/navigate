@@ -10,7 +10,6 @@ interface IProps{
 
 import FetchLiveData from "./FetchLiveData";
 function SidebarClusterView(props: IProps) {
-  const containerRef = React.useRef<HTMLDivElement>(null);
   let deploymentStatus = props.deploymentStatus;
 
   const statuses: any[] = [];

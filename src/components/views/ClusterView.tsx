@@ -20,170 +20,165 @@ function ClusterView(props: any) {
   ];
   const namespacesArr: string[] = [];
   const populateNamespaces = (array: any[]): void => {
-      array.forEach((kObject) => {
-        if (
-          !namespacesArr.includes(kObject.namespace) &&
-          kObject.namespace !== undefined
-        )
-          namespacesArr.push(kObject.namespace);
-      });
-      namespacesArr.forEach((namespace) => {
-        relevantData.push(
-          {
-            data: { id: namespace, label: namespace, class: "namespace" },
+    array.forEach((kObject) => {
+      if (
+        !namespacesArr.includes(kObject.namespace) &&
+        kObject.namespace !== undefined
+      )
+        namespacesArr.push(kObject.namespace);
+    });
+    namespacesArr.forEach((namespace) => {
+      relevantData.push(
+        {
+          data: { id: namespace, label: namespace, class: "namespace" },
+        },
+        {
+          data: {
+            source: "Kubernetes Cluster",
+            target: namespace,
           },
-          {
-            data: {
-              source: "Kubernetes Cluster",
-              target: namespace,
-            },
-          }
-        );
-      });
-    
+        }
+      );
+    });
   };
   const allLabels: any[] = [];
   props.dataArray.forEach((ele: any) => {
     if (ele.label !== undefined) allLabels.push(ele.label);
   });
   const populateArray = (array: any[]): void => {
-      for (let i = 0; i < array.length; i++) {
-        if (array[i].kind === "Deployment") {
-          let newNode = {
-            data: {
-              id: `${array[i].label} deployment`,
-              label: array[i].label,
-              class: "deployment",
-            },
-          };
-          let edge = {
-            data: {
-              source: array[i].namespace,
-              target: `${array[i].label} deployment`,
-              label: `service`,
-            },
-          };
-          relevantData.push(newNode, edge);
-        } else if (array[i].kind === "StatefulSet") {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].kind === "Deployment") {
+        let newNode = {
+          data: {
+            id: `${array[i].label} deployment`,
+            label: array[i].label,
+            class: "deployment",
+          },
+        };
+        let edge = {
+          data: {
+            source: array[i].namespace,
+            target: `${array[i].label} deployment`,
+            label: `service`,
+          },
+        };
+        relevantData.push(newNode, edge);
+      } else if (array[i].kind === "StatefulSet") {
+        let newNode = {
+          data: {
+            id: array[i].label,
+            label: array[i].label,
+            class: "stateful",
+          },
+        };
+        let edge = {
+          data: {
+            source: array[i].namespace,
+            target: array[i].label,
+            label: `stateful`,
+          },
+        };
+        relevantData.push(newNode, edge);
+        props.dataArray.forEach((ele: any) => {
+          if (ele.kind === "Service" && ele.namespace === array[i].namespace) {
+            let edge = {
+              data: {
+                source: ele.label,
+                target: array[i].label,
+                label: `connection`,
+              },
+            };
+            relevantData.push(edge);
+          }
+        });
+      } else if (array[i].kind === "Service") {
+        if (!namespacesArr.includes(array[i].label)) {
           let newNode = {
             data: {
               id: array[i].label,
-              label: array[i].label,
-              class: "stateful",
+              label: array[i].type
+                ? `${array[i].label} ${array[i].type}`
+                : `${array[i].label} ClusterIP`,
+              class: "service",
             },
           };
-          let edge = {
-            data: {
-              source: array[i].namespace,
-              target: array[i].label,
-              label: `stateful`,
-            },
-          };
-          relevantData.push(newNode, edge);
           props.dataArray.forEach((ele: any) => {
             if (
-              ele.kind === "Service" &&
-              ele.namespace === array[i].namespace
+              ele.kind === "Deployment" &&
+              ele.namespace === array[i].namespace &&
+              findSelectorMatch(ele, array[i])
             ) {
               let edge = {
                 data: {
-                  source: ele.label,
+                  source: ele.label + " deployment",
                   target: array[i].label,
                   label: `connection`,
                 },
               };
-              relevantData.push(edge);
+              let edge2 = {
+                data: {
+                  source: array[i].namespace,
+                  target: array[i].label,
+                  label: "service",
+                },
+              };
+              relevantData.push(edge, edge2);
             }
           });
-        } else if (array[i].kind === "Service") {
-          if (!namespacesArr.includes(array[i].label)) {
-            let newNode = {
-              data: {
-                id: array[i].label,
-                label: array[i].type
-                  ? `${array[i].label} ${array[i].type}`
-                  : `${array[i].label} ClusterIP`,
-                class: "service",
-              },
-            };
-            props.dataArray.forEach((ele: any) => {
-              if (
-                ele.kind === "Deployment" &&
-                ele.namespace === array[i].namespace &&
-                findSelectorMatch(ele, array[i])
-              ) {
-                let edge = {
-                  data: {
-                    source: ele.label + " deployment",
-                    target: array[i].label,
-                    label: `connection`,
-                  },
-                };
-                let edge2 = {
-                  data: {
-                    source: array[i].namespace,
-                    target: array[i].label,
-                    label: "service",
-                  },
-                };
-                relevantData.push(edge,edge2);
-              }
-            });
-            relevantData.push(newNode);
-          } else {
-            let newNode = {
-              data: {
-                id: `${array[i].label} service`,
-                label: array[i].type
-                  ? `${array[i].label} ${array[i].type}`
-                  : `${array[i].label} ClusterIP`,
-                class: "service",
-              },
-            };
-            props.dataArray.forEach((ele: any) => {
-              if (
-                ele.kind === "Deployment" &&
-                ele.namespace === array[i].namespace &&
-                findSelectorMatch(ele, array[i])
-              ) {
-                let edge = {
-                  data: {
-                    source: ele.label + " deployment",
-                    target: array[i].label + " service",
-                    label: `connection`,
-                  },
-                };
-                let edge2 = {
-                  data: {
-                    source: array[i].namespace,
-                    target: array[i].label + " service",
-                    label: "service",
-                  },
-                };
-                relevantData.push(edge,edge2);
-                
-              }
-            });
-            relevantData.push(newNode);
-          }
-        } else if (array[i].kind === "DaemonSet") {
-          let newDaemonSet = {
+          relevantData.push(newNode);
+        } else {
+          let newNode = {
             data: {
-              id: array[i].label,
-              label: array[i].label,
-              class: "daemonSet",
+              id: `${array[i].label} service`,
+              label: array[i].type
+                ? `${array[i].label} ${array[i].type}`
+                : `${array[i].label} ClusterIP`,
+              class: "service",
             },
           };
-          let edge = {
-            data: {
-              source: array[i].namespace,
-              target: array[i].label,
-              label: `daemonSet`,
-            },
-          };
-          relevantData.push(newDaemonSet, edge);
+          props.dataArray.forEach((ele: any) => {
+            if (
+              ele.kind === "Deployment" &&
+              ele.namespace === array[i].namespace &&
+              findSelectorMatch(ele, array[i])
+            ) {
+              let edge = {
+                data: {
+                  source: ele.label + " deployment",
+                  target: array[i].label + " service",
+                  label: `connection`,
+                },
+              };
+              let edge2 = {
+                data: {
+                  source: array[i].namespace,
+                  target: array[i].label + " service",
+                  label: "service",
+                },
+              };
+              relevantData.push(edge, edge2);
+            }
+          });
+          relevantData.push(newNode);
         }
-      }  
+      } else if (array[i].kind === "DaemonSet") {
+        let newDaemonSet = {
+          data: {
+            id: array[i].label,
+            label: array[i].label,
+            class: "daemonSet",
+          },
+        };
+        let edge = {
+          data: {
+            source: array[i].namespace,
+            target: array[i].label,
+            label: `daemonSet`,
+          },
+        };
+        relevantData.push(newDaemonSet, edge);
+      }
+    }
   };
   const getNamespace = (id: string) => {
     for (let i = 0; i < props.dataArray.length; i++) {
@@ -204,11 +199,16 @@ function ClusterView(props: any) {
     let layout = cy.layout({
       name: "dagre",
       nodeDimensionsIncludeLabels: true,
-      padding: 15,
+      padding: "-10",
       animate: true,
       animationDuration: 1000,
     });
     layout.run();
+    const zoomLevel: Cytoscape.ZoomOptions = {
+      level: 1, 
+      renderedPosition: { x: 100, y: 100 }
+    }
+    cy.zoom(zoomLevel)
     cy.on("click", (event) => {
       if (
         event.target._private.data.class === "deployment" &&
@@ -224,20 +224,24 @@ function ClusterView(props: any) {
         console.log(event.target._private.data.id);
       }
     });
-    cy.on("mouseover","node[class = 'deployment']", function(event) {
-      event.target.style("background-image", ["https://i.ibb.co/N1fXVdp/podhover.png"]);
-      event.target.style("background-color",'rgb(230,74,0)');
-      event.target.style("border-color",'rgb(230,74,0)');
-      event.target.style("border-width","1");
-    })
-    cy.on("mouseout","node[class = 'deployment']", function(event) {
-      event.target.style("background-image", ["https://i.ibb.co/VDG8MVh/podicon3.png"]);
-      event.target.style("background-color",'white');
-      event.target.style("border-width","0");
-    })
-    return () =>{
-      console.log('cleanup');
-    } 
+    cy.on("mouseover", "node[class = 'deployment']", function (event) {
+      event.target.style("background-image", [
+        "https://i.ibb.co/N1fXVdp/podhover.png",
+      ]);
+      event.target.style("background-color", "rgb(230,74,0)");
+      event.target.style("border-color", "rgb(230,74,0)");
+      event.target.style("border-width", "1");
+    });
+    cy.on("mouseout", "node[class = 'deployment']", function (event) {
+      event.target.style("background-image", [
+        "https://i.ibb.co/VDG8MVh/podicon3.png",
+      ]);
+      event.target.style("background-color", "white");
+      event.target.style("border-width", "0");
+    });
+    return () => {
+      console.log("cleanup");
+    };
   }, [props.dataArray]);
 
   const limitSidebarHeight =
@@ -245,43 +249,28 @@ function ClusterView(props: any) {
 
   return (
     <div>
-      <div>
-        <h1 className="header">
-          {props.view}
-        </h1>
-      </div>
-
-      <div id="separateButtons" style={{display:'flex', flexDirection:'row', justifyContent:'space-between'}}> 
-      <div id="buttonDiv" style={{display:'flex', flexDirection: 'row'}}>
-            <button onClick={() =>{
-              window.alert(namespacesArr)
-            }}>Namespaces
-            </button>
+      <h1 className="header">{props.view}</h1>
+      <div className="pageViewTest2">
+      <div className="sidebarTest2">
+          <div id="buttonDiv" style={{ display: "flex", flexDirection: "row" }}>
             <h3>{`${props.masterNode}`}</h3>
-            </div>
-      </div>
-      <div className="cytoContainer"> 
-        <div id="pageView">
-          <div
-            id="pageCol"
-            style={{
-              height: limitSidebarHeight,
-            }}
-          >
-            <SidebarClusterView
+          </div>
+          <div style={{height:limitSidebarHeight}}>
+          <SidebarClusterView
               deploymentStatus={props.deploymentStatus}
               namespace={props.namespace}
-            />
+            />  
+            <Legend />
           </div>
-          <div
-            id="clusterView"
-            ref={containerRef}
-            style={{ width: "75%", height: "750px" }}
-          />
-          <Legend />
-        </div>
-        
+          
       </div>
+        <div
+          id="clusterView"
+          ref={containerRef}
+          style={{ width: "75%", height: "750px" }}
+        />
+        
+        </div>
     </div>
   );
 }

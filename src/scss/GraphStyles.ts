@@ -146,11 +146,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "font-family": font,
       content: 'data(label)',
       "text-valign": "bottom",
-<<<<<<< HEAD
-      "text-halign": "right",
-=======
       "text-halign": "center",
->>>>>>> develop
       "text-wrap": "wrap",
       "text-max-width": "140",
       "background-color": "whitesmoke",
