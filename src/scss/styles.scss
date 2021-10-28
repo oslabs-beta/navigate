@@ -1,17 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 $circle-color: rgb(86, 39, 197);
 $backgroundColor: rgb(26, 26, 26);
-*{
+* {
   color: rgb(255, 255, 255);
-  font-family: 'Calibri', sans-serif;
+  font-family: "Calibri", sans-serif;
 }
-h3{
+h3 {
   color: rgb(255, 255, 255);
-  font-family: 'Calibri', sans-serif;
+  font-family: "Calibri", sans-serif;
 }
-html{
+html,
+body {
   background-color: $backgroundColor;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
 }
 p {
   text-align: left;
@@ -26,21 +30,21 @@ button {
   border-radius: 5px;
   color: white;
   padding: 7px 14px;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
 }
-select{
+select {
   color: black;
 }
-option{
+option {
   color: black;
 }
 button:hover {
   background: #e7e7e7;
   color: black;
 }
-#buttonDiv{
-  display:flex;
+#buttonDiv {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -56,36 +60,28 @@ button + h3 {
   color: #932af5;
   font-size: 2em;
 }
-
-#uploadPage{
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  height: 300px;
-  overflow-wrap: break-word;
-}
 #sidebar {
-  display:flex;
+  display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 200px;
+  width: 20%;
   height: 100%;
   border: 5px solid lightgray;
   box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
-  font-family: 'Calibri', sans-serif;
+  font-family: "Calibri", sans-serif;
 }
-.header{
-  display:flex;
+.header {
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-.nodeSchedulerHeader{
-  display:flex;
+.nodeSchedulerHeader {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
 #circle {
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: space-around;
 }
@@ -93,19 +89,19 @@ button + h3 {
 #pageView {
   display: flex;
   flex-direction: row;
-  #pageCol{
+  #pageCol {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
   }
 }
-.pageViewTest{
-  display:flex;
+.pageViewTest {
+  display: flex;
   justify-content: flex-start;
   align-items: flex-start;
 }
-#nodeSidebar{
-  display:flex;
+#nodeSidebar {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -141,13 +137,13 @@ li a:hover {
   position: relative;
 }
 
-.inputContainer{
+.inputContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   margin-top: 20%;
-  .text{
+  .text {
     padding: 5%;
   }
   // border-style: solid;
@@ -166,8 +162,8 @@ li a:hover {
   top: 50%;
   left: 50%;
 }
-#pageView{
-  display:flex;
+#pageView {
+  display: flex;
   align-items: center;
   justify-content: stretch;
 }
@@ -194,35 +190,36 @@ li a:hover {
   margin-top: -0.4em;
   animation: spin 1.5s linear infinite;
 }
-.red{
+.red {
   color: red;
 }
-.green{
-  color:rgb(54, 221, 54);
+.green {
+  color: rgb(54, 221, 54);
 }
-.networkLabel{
+.networkLabel {
   color: #932af5;
   font-size: 1.5em;
 }
-.networkLabelWhite{
+.networkLabelWhite {
   color: whitesmoke;
   font-size: 1.5em;
 }
-#clusterView{
+#clusterView {
   height: 100%;
   width: 100%;
 }
-.legendID{
+.legendID {
   border-style: solid;
   border-width: 2px;
   border-color: whitesmoke;
   border-spacing: 7px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
 }
-#policyLegendID{
+#policyLegendID {
   border-style: solid;
   border-width: 2px;
   border-color: whitesmoke;
@@ -231,7 +228,7 @@ li a:hover {
   align-items: flex-start;
   justify-content: flex-start;
 }
-th, td{
+th,td {
   padding-left: 10px;
 }
 @keyframes spin {
@@ -251,39 +248,38 @@ option {
   color: whitesmoke;
 }
 .sidebarTest2 {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   min-width: 20%;
   max-width: 20%;
+  
 }
-.pageViewTest2{
-  display:flex;
+.pageViewTest2 {
+  display: flex;
   justify-content: stretch;
   align-items: center;
 }
-.imgCircle{
-  width:auto;
+.imgCircle {
+  width: auto;
   height: auto;
   border-radius: 50%;
   background-color: whitesmoke;
-
 }
-.inputView{
-  display:flex;
+.inputView {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.inputContainer{
-  display:flex;
+.inputContainer {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 }
-.uploadButton{
+.uploadButton {
   margin: auto;
   text-align: center;
   padding-top: 1px;
@@ -293,7 +289,7 @@ option {
   border-color: whitesmoke;
   border-radius: 2px;
 }
-.uploadButton:hover{
+.uploadButton:hover {
   color: black;
   background-color: rgb(172, 172, 172);
 }
