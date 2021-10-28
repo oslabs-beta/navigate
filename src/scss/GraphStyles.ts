@@ -82,9 +82,9 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[class = "container"]',
     style: {
-      shape: "rectangle",
-      width: "40%",
-      height: "40%",
+      shape: "ellipse",
+      width: "42%",
+      height: "42%",
       "font-size": "14%",
       "font-weight": "bold",
       "font-family": font,
@@ -93,6 +93,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-halign": "center",
       "text-wrap": "wrap",
       "text-max-width": "140",
+      "background-image": ["https://i.ibb.co/kgmDR1k/icons8-shipping-container-35.png"],
       // "background-color": "whitesmoke",
       // "border-color": "black",
       // "border-width": "2",
@@ -102,7 +103,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
     selector: 'node[class = "image"]',
     style: {
-      shape: "star",
+      shape: "ellipse",
       width: "40%",
       height: "40%",
       "font-size": "14%",
@@ -114,6 +115,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-wrap": "wrap",
       "text-max-width": "140",
       "background-color": "whitesmoke",
+      "background-image": ["https://i.ibb.co/hm2qSy8/icons8-image-35.png"],
       // "border-color": "black",
       // "border-width": "2",
       // color: "whitesmoke",
