@@ -81,8 +81,8 @@ export default function UploadView() {
         <input {...getInputProps()} />
         {
           //some logo here
-            <div>
-            <p>Click here - upload your YAML files and begin!</p>
+            <div style={styles.container}>
+            <p>Click here to upload your YAML config files!</p>
             </div>
         }
       </div>
@@ -100,4 +100,10 @@ export default function UploadView() {
     </div>
 
   );
+}
+
+const styles = {
+  container: {
+    width: '120%'
+  }
 }
