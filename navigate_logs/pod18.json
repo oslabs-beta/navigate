@@ -1,265 +1,265 @@
 {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": {
-        "annotations": {
-            "prometheus.io/port": "10254",
-            "prometheus.io/scrape": "true"
-        },
-        "creationTimestamp": "2021-10-09T16:06:12Z",
-        "generateName": "nginx-ingress-controller-65886f4f5d-",
-        "labels": {
-            "app.kubernetes.io/name": "ingress-nginx",
-            "app.kubernetes.io/part-of": "ingress-nginx",
-            "pod-template-hash": "65886f4f5d"
-        },
-        "name": "nginx-ingress-controller-65886f4f5d-cm2wl",
-        "namespace": "ingress-nginx",
-        "ownerReferences": [
-            {
-                "apiVersion": "apps/v1",
-                "blockOwnerDeletion": true,
-                "controller": true,
-                "kind": "ReplicaSet",
-                "name": "nginx-ingress-controller-65886f4f5d",
-                "uid": "9074621a-f068-44c5-94e0-e38bf2c125e0"
-            }
-        ],
-        "resourceVersion": "1286385",
-        "uid": "ba4b13d2-9341-4569-b62a-40370b653672"
-    },
-    "spec": {
-        "containers": [
-            {
-                "args": [
-                    "/nginx-ingress-controller",
-                    "--configmap=$(POD_NAMESPACE)/nginx-configuration",
-                    "--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services",
-                    "--udp-services-configmap=$(POD_NAMESPACE)/udp-services",
-                    "--publish-service=$(POD_NAMESPACE)/ingress-nginx",
-                    "--annotations-prefix=nginx.ingress.kubernetes.io"
-                ],
-                "env": [
-                    {
-                        "name": "POD_NAME",
-                        "valueFrom": {
-                            "fieldRef": {
-                                "apiVersion": "v1",
-                                "fieldPath": "metadata.name"
-                            }
-                        }
-                    },
-                    {
-                        "name": "POD_NAMESPACE",
-                        "valueFrom": {
-                            "fieldRef": {
-                                "apiVersion": "v1",
-                                "fieldPath": "metadata.namespace"
-                            }
-                        }
-                    }
-                ],
-                "image": "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0",
-                "imagePullPolicy": "IfNotPresent",
-                "lifecycle": {
-                    "preStop": {
-                        "exec": {
-                            "command": [
-                                "/wait-shutdown"
-                            ]
-                        }
-                    }
-                },
-                "livenessProbe": {
-                    "failureThreshold": 3,
-                    "httpGet": {
-                        "path": "/healthz",
-                        "port": 10254,
-                        "scheme": "HTTP"
-                    },
-                    "initialDelaySeconds": 10,
-                    "periodSeconds": 10,
-                    "successThreshold": 1,
-                    "timeoutSeconds": 10
-                },
-                "name": "nginx-ingress-controller",
-                "ports": [
-                    {
-                        "containerPort": 80,
-                        "name": "http",
-                        "protocol": "TCP"
-                    },
-                    {
-                        "containerPort": 443,
-                        "name": "https",
-                        "protocol": "TCP"
-                    }
-                ],
-                "readinessProbe": {
-                    "failureThreshold": 3,
-                    "httpGet": {
-                        "path": "/healthz",
-                        "port": 10254,
-                        "scheme": "HTTP"
-                    },
-                    "periodSeconds": 10,
-                    "successThreshold": 1,
-                    "timeoutSeconds": 10
-                },
-                "resources": {},
-                "securityContext": {
-                    "allowPrivilegeEscalation": true,
-                    "capabilities": {
-                        "add": [
-                            "NET_BIND_SERVICE"
-                        ],
-                        "drop": [
-                            "ALL"
-                        ]
-                    },
-                    "runAsUser": 101
-                },
-                "terminationMessagePath": "/dev/termination-log",
-                "terminationMessagePolicy": "File",
-                "volumeMounts": [
-                    {
-                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-kblj4",
-                        "readOnly": true
-                    }
-                ]
-            }
-        ],
-        "dnsPolicy": "ClusterFirst",
-        "enableServiceLinks": true,
-        "nodeName": "docker-desktop",
-        "nodeSelector": {
-            "kubernetes.io/os": "linux"
-        },
-        "preemptionPolicy": "PreemptLowerPriority",
-        "priority": 0,
-        "restartPolicy": "Always",
-        "schedulerName": "default-scheduler",
-        "securityContext": {},
-        "serviceAccount": "nginx-ingress-serviceaccount",
-        "serviceAccountName": "nginx-ingress-serviceaccount",
-        "terminationGracePeriodSeconds": 300,
-        "tolerations": [
-            {
-                "effect": "NoExecute",
-                "key": "node.kubernetes.io/not-ready",
-                "operator": "Exists",
-                "tolerationSeconds": 300
-            },
-            {
-                "effect": "NoExecute",
-                "key": "node.kubernetes.io/unreachable",
-                "operator": "Exists",
-                "tolerationSeconds": 300
-            }
-        ],
-        "volumes": [
-            {
-                "name": "kube-api-access-kblj4",
-                "projected": {
-                    "defaultMode": 420,
-                    "sources": [
-                        {
-                            "serviceAccountToken": {
-                                "expirationSeconds": 3607,
-                                "path": "token"
-                            }
-                        },
-                        {
-                            "configMap": {
-                                "items": [
-                                    {
-                                        "key": "ca.crt",
-                                        "path": "ca.crt"
-                                    }
-                                ],
-                                "name": "kube-root-ca.crt"
-                            }
-                        },
-                        {
-                            "downwardAPI": {
-                                "items": [
-                                    {
-                                        "fieldRef": {
-                                            "apiVersion": "v1",
-                                            "fieldPath": "metadata.namespace"
-                                        },
-                                        "path": "namespace"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "status": {
-        "conditions": [
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-09T16:06:12Z",
-                "status": "True",
-                "type": "Initialized"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:37:19Z",
-                "status": "True",
-                "type": "Ready"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:37:19Z",
-                "status": "True",
-                "type": "ContainersReady"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-09T16:06:12Z",
-                "status": "True",
-                "type": "PodScheduled"
-            }
-        ],
-        "containerStatuses": [
-            {
-                "containerID": "docker://4bce25f16771d2d9fc7c1266e0578ddea66d298caa7b6e35d933178b2aeff4bf",
-                "image": "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0",
-                "imageID": "docker-pullable://quay.io/kubernetes-ingress-controller/nginx-ingress-controller@sha256:b312c91d0de688a21075078982b5e3a48b13b46eda4df743317d3059fc3ca0d9",
-                "lastState": {
-                    "terminated": {
-                        "containerID": "docker://999bffa8bb52fb25114acd8af1fa2041dc63d441c8489cda24bd78fecc8bb2af",
-                        "exitCode": 0,
-                        "finishedAt": "2021-10-27T19:37:11Z",
-                        "reason": "Completed",
-                        "startedAt": "2021-10-27T19:36:22Z"
-                    }
-                },
-                "name": "nginx-ingress-controller",
-                "ready": true,
-                "restartCount": 14,
-                "started": true,
-                "state": {
-                    "running": {
-                        "startedAt": "2021-10-27T19:37:12Z"
-                    }
-                }
-            }
-        ],
-        "hostIP": "192.168.65.4",
-        "phase": "Running",
-        "podIP": "10.1.0.178",
-        "podIPs": [
-            {
-                "ip": "10.1.0.178"
-            }
-        ],
-        "qosClass": "BestEffort",
-        "startTime": "2021-10-09T16:06:12Z"
-    }
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+      "annotations": {
+          "prometheus.io/port": "10254",
+          "prometheus.io/scrape": "true"
+      },
+      "creationTimestamp": "2021-10-09T16:06:12Z",
+      "generateName": "nginx-ingress-controller-65886f4f5d-",
+      "labels": {
+          "app.kubernetes.io/name": "ingress-nginx",
+          "app.kubernetes.io/part-of": "ingress-nginx",
+          "pod-template-hash": "65886f4f5d"
+      },
+      "name": "nginx-ingress-controller-65886f4f5d-cm2wl",
+      "namespace": "ingress-nginx",
+      "ownerReferences": [
+          {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "nginx-ingress-controller-65886f4f5d",
+              "uid": "9074621a-f068-44c5-94e0-e38bf2c125e0"
+          }
+      ],
+      "resourceVersion": "1286385",
+      "uid": "ba4b13d2-9341-4569-b62a-40370b653672"
+  },
+  "spec": {
+      "containers": [
+          {
+              "args": [
+                  "/nginx-ingress-controller",
+                  "--configmap=$(POD_NAMESPACE)/nginx-configuration",
+                  "--tcp-services-configmap=$(POD_NAMESPACE)/tcp-services",
+                  "--udp-services-configmap=$(POD_NAMESPACE)/udp-services",
+                  "--publish-service=$(POD_NAMESPACE)/ingress-nginx",
+                  "--annotations-prefix=nginx.ingress.kubernetes.io"
+              ],
+              "env": [
+                  {
+                      "name": "POD_NAME",
+                      "valueFrom": {
+                          "fieldRef": {
+                              "apiVersion": "v1",
+                              "fieldPath": "metadata.name"
+                          }
+                      }
+                  },
+                  {
+                      "name": "POD_NAMESPACE",
+                      "valueFrom": {
+                          "fieldRef": {
+                              "apiVersion": "v1",
+                              "fieldPath": "metadata.namespace"
+                          }
+                      }
+                  }
+              ],
+              "image": "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0",
+              "imagePullPolicy": "IfNotPresent",
+              "lifecycle": {
+                  "preStop": {
+                      "exec": {
+                          "command": [
+                              "/wait-shutdown"
+                          ]
+                      }
+                  }
+              },
+              "livenessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                      "path": "/healthz",
+                      "port": 10254,
+                      "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 10,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 10
+              },
+              "name": "nginx-ingress-controller",
+              "ports": [
+                  {
+                      "containerPort": 80,
+                      "name": "http",
+                      "protocol": "TCP"
+                  },
+                  {
+                      "containerPort": 443,
+                      "name": "https",
+                      "protocol": "TCP"
+                  }
+              ],
+              "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                      "path": "/healthz",
+                      "port": 10254,
+                      "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 10
+              },
+              "resources": {},
+              "securityContext": {
+                  "allowPrivilegeEscalation": true,
+                  "capabilities": {
+                      "add": [
+                          "NET_BIND_SERVICE"
+                      ],
+                      "drop": [
+                          "ALL"
+                      ]
+                  },
+                  "runAsUser": 101
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                  {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "kube-api-access-kblj4",
+                      "readOnly": true
+                  }
+              ]
+          }
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "enableServiceLinks": true,
+      "nodeName": "docker-desktop",
+      "nodeSelector": {
+          "kubernetes.io/os": "linux"
+      },
+      "preemptionPolicy": "PreemptLowerPriority",
+      "priority": 0,
+      "restartPolicy": "Always",
+      "schedulerName": "default-scheduler",
+      "securityContext": {},
+      "serviceAccount": "nginx-ingress-serviceaccount",
+      "serviceAccountName": "nginx-ingress-serviceaccount",
+      "terminationGracePeriodSeconds": 300,
+      "tolerations": [
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          },
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          }
+      ],
+      "volumes": [
+          {
+              "name": "kube-api-access-kblj4",
+              "projected": {
+                  "defaultMode": 420,
+                  "sources": [
+                      {
+                          "serviceAccountToken": {
+                              "expirationSeconds": 3607,
+                              "path": "token"
+                          }
+                      },
+                      {
+                          "configMap": {
+                              "items": [
+                                  {
+                                      "key": "ca.crt",
+                                      "path": "ca.crt"
+                                  }
+                              ],
+                              "name": "kube-root-ca.crt"
+                          }
+                      },
+                      {
+                          "downwardAPI": {
+                              "items": [
+                                  {
+                                      "fieldRef": {
+                                          "apiVersion": "v1",
+                                          "fieldPath": "metadata.namespace"
+                                      },
+                                      "path": "namespace"
+                                  }
+                              ]
+                          }
+                      }
+                  ]
+              }
+          }
+      ]
+  },
+  "status": {
+      "conditions": [
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-09T16:06:12Z",
+              "status": "True",
+              "type": "Initialized"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-27T19:37:19Z",
+              "status": "True",
+              "type": "Ready"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-27T19:37:19Z",
+              "status": "True",
+              "type": "ContainersReady"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-09T16:06:12Z",
+              "status": "True",
+              "type": "PodScheduled"
+          }
+      ],
+      "containerStatuses": [
+          {
+              "containerID": "docker://4bce25f16771d2d9fc7c1266e0578ddea66d298caa7b6e35d933178b2aeff4bf",
+              "image": "quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.30.0",
+              "imageID": "docker-pullable://quay.io/kubernetes-ingress-controller/nginx-ingress-controller@sha256:b312c91d0de688a21075078982b5e3a48b13b46eda4df743317d3059fc3ca0d9",
+              "lastState": {
+                  "terminated": {
+                      "containerID": "docker://999bffa8bb52fb25114acd8af1fa2041dc63d441c8489cda24bd78fecc8bb2af",
+                      "exitCode": 0,
+                      "finishedAt": "2021-10-27T19:37:11Z",
+                      "reason": "Completed",
+                      "startedAt": "2021-10-27T19:36:22Z"
+                  }
+              },
+              "name": "nginx-ingress-controller",
+              "ready": true,
+              "restartCount": 14,
+              "started": true,
+              "state": {
+                  "running": {
+                      "startedAt": "2021-10-27T19:37:12Z"
+                  }
+              }
+          }
+      ],
+      "hostIP": "192.168.65.4",
+      "phase": "Running",
+      "podIP": "10.1.0.178",
+      "podIPs": [
+          {
+              "ip": "10.1.0.178"
+          }
+      ],
+      "qosClass": "BestEffort",
+      "startTime": "2021-10-09T16:06:12Z"
+  }
 }

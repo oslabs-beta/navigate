@@ -4,7 +4,7 @@ function PodInfoInNodeView(props: any) {
     const pod = props.displayPod[0];
 
     return (
-        <div>
+        <div id="podInfoTable">
             <table >
                 <tbody>
                     <tr>

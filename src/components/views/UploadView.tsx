@@ -76,13 +76,14 @@ export default function UploadView() {
     </div>
     :
     !showLoading ?
-    <div className="inputContainer">
-      <div {...getRootProps()}>
+    <div className="inputView">
+    <img src="https://i.ibb.co/CVcHh4G/unnamed.png"></img>
+      <div className="inputContainer" {...getRootProps()}>
         <input {...getInputProps()} />
         {
           //some logo here
-            <div>
-            <p>Click here to upload your YAML config files and begin using Navigate...</p>
+            <div style={styles.container}>
+            <p className="uploadButton" >Click here to upload your YAML config files!</p>
             </div>
         }
       </div>
@@ -100,4 +101,10 @@ export default function UploadView() {
     </div>
 
   );
+}
+
+const styles = {
+  container: {
+    width: '120%'
+  }
 }

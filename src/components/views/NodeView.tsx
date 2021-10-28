@@ -42,7 +42,7 @@ function NodeView(props: any) {
         let newPod = {
           data: {
             id: array[i].label + ' service',
-            label: serviceNode.port ? array[i].label + ' service' + "\n" + `Port: ${serviceNode.port}` : array[i].label + ' service' + "\n" + `Port: N/A`,
+            label: serviceNode.port ? array[i].label + "\n" + `Port:${serviceNode.port}` : array[i].label + "\n" + `Port:N/A`,
             class: "service",
           },
         };
@@ -184,6 +184,7 @@ function NodeView(props: any) {
       animate: true,
     });
     layout.run();
+    cy.zoomingEnabled(false);
     cy.on('click',(event)=> {
       if(event.target._private.data.class === "container"){
         console.log('nodeViewClick',event.target._private.data.id);
@@ -193,43 +194,51 @@ function NodeView(props: any) {
         registerPod(clickedPod);
       }
     })
+    cy.on("mouseover","node[class = 'pod']", function(event) {
+      event.target.style("background-image", ["https://i.ibb.co/N1fXVdp/podhover.png"]);
+      event.target.style("background-color",'rgb(230,74,0)');
+      event.target.style("border-color",'rgb(230,74,0)');
+      event.target.style("border-width","2");
+    })
+    cy.on("mouseout","node[class = 'pod']", function(event) {
+      event.target.style("background-image", ["https://i.ibb.co/zNx6TML/podicon.png"]);
+      event.target.style("background-color",'white');
+      event.target.style("border-width","0");
+    })
     }, []);
-
+    const limitSidebarHeight = document.getElementById("clusterView")?.style.height;
   return (
     <div id="nodeView"> 
-      <div >
         <h1 className="header">
-          <img src="https://cdn.discordapp.com/attachments/642861879907188736/898223184346775633/grayKubernetes.png" width="3.5%" height="3.5%"></img>
           {props.view}
         </h1>
-      </div>
-       <div id="buttonDiv">
-      <button onClick={() =>{
-        props.setTrigger(false);
-        props.setMasterNode('Kubernetes Cluster');
-        props.setNamespace('Kubernetes Cluster');
-        props.setView('Cluster View');
-      }}>Back to Cluster View
-      </button>
-      <h3>{`${props.masterNode}`}</h3>
-
-      </div>
-      <div style={{display:'flex'}}>
+      <div className="pageViewTest2">
+        <div className="sidebarTest2">
+        <div id="buttonDiv">
+        <button onClick={() =>{
+          props.setTrigger(false);
+          props.setMasterNode('Kubernetes Cluster');
+          props.setNamespace('Kubernetes Cluster');
+          props.setView('Cluster View');
+        }}>Cluster View
+        </button>
+        <h3>{`${props.masterNode}`}</h3>
+        </div> 
+          <div id="pageView">
+            <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly',height:limitSidebarHeight}}>
+            <SidebarNodeView clickedPod = {clickedPod} podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
+            </div>
+        </div>
+        <Legend/>
+        </div>
+        <div>
         <div id='nodeView'
-          ref={nodeViewRef}
-          style={ { width: '100%', height: '600px' }}
-        />   
-        <div id="pageView">
-          <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly'}}>
-          <SidebarNodeView  clickedPod = {clickedPod} podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
-          <Legend/>
-          </div>
-          <div id='nodeView'
             ref={nodeViewRef}
             style={ { width: '1500px', height: '750px' }}
-          />   
-        </div>
+          /> 
       </div>
+      </div>
+      
     </div>
     
  )

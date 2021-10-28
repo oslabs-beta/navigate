@@ -1,190 +1,190 @@
 {
-    "apiVersion": "v1",
-    "kind": "Pod",
-    "metadata": {
-        "creationTimestamp": "2021-10-21T16:03:54Z",
-        "generateName": "mafia-ui-78849d96c8-",
-        "labels": {
-            "app": "mafia",
-            "name": "mafia-ui",
-            "pod-template-hash": "78849d96c8"
-        },
-        "name": "mafia-ui-78849d96c8-xpcs2",
-        "namespace": "mafia",
-        "ownerReferences": [
-            {
-                "apiVersion": "apps/v1",
-                "blockOwnerDeletion": true,
-                "controller": true,
-                "kind": "ReplicaSet",
-                "name": "mafia-ui-78849d96c8",
-                "uid": "131b9993-af8c-4a28-8cd7-60bb82076656"
-            }
-        ],
-        "resourceVersion": "1286351",
-        "uid": "3ca11ab9-ba82-4a47-ba33-3cf7cefb3e3f"
-    },
-    "spec": {
-        "containers": [
-            {
-                "env": [
-                    {
-                        "name": "HUB_HOST",
-                        "value": "mafia-backend-service.mafia"
-                    },
-                    {
-                        "name": "HUB_PORT",
-                        "value": "3000"
-                    }
-                ],
-                "image": "taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
-                "imagePullPolicy": "IfNotPresent",
-                "name": "mafia-ui-container",
-                "ports": [
-                    {
-                        "containerPort": 80,
-                        "protocol": "TCP"
-                    }
-                ],
-                "resources": {},
-                "terminationMessagePath": "/dev/termination-log",
-                "terminationMessagePolicy": "File",
-                "volumeMounts": [
-                    {
-                        "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                        "name": "kube-api-access-w7pks",
-                        "readOnly": true
-                    }
-                ]
-            }
-        ],
-        "dnsPolicy": "ClusterFirst",
-        "enableServiceLinks": true,
-        "nodeName": "docker-desktop",
-        "preemptionPolicy": "PreemptLowerPriority",
-        "priority": 0,
-        "restartPolicy": "Always",
-        "schedulerName": "default-scheduler",
-        "securityContext": {},
-        "serviceAccount": "default",
-        "serviceAccountName": "default",
-        "terminationGracePeriodSeconds": 30,
-        "tolerations": [
-            {
-                "effect": "NoExecute",
-                "key": "node.kubernetes.io/not-ready",
-                "operator": "Exists",
-                "tolerationSeconds": 300
-            },
-            {
-                "effect": "NoExecute",
-                "key": "node.kubernetes.io/unreachable",
-                "operator": "Exists",
-                "tolerationSeconds": 300
-            }
-        ],
-        "volumes": [
-            {
-                "name": "kube-api-access-w7pks",
-                "projected": {
-                    "defaultMode": 420,
-                    "sources": [
-                        {
-                            "serviceAccountToken": {
-                                "expirationSeconds": 3607,
-                                "path": "token"
-                            }
-                        },
-                        {
-                            "configMap": {
-                                "items": [
-                                    {
-                                        "key": "ca.crt",
-                                        "path": "ca.crt"
-                                    }
-                                ],
-                                "name": "kube-root-ca.crt"
-                            }
-                        },
-                        {
-                            "downwardAPI": {
-                                "items": [
-                                    {
-                                        "fieldRef": {
-                                            "apiVersion": "v1",
-                                            "fieldPath": "metadata.namespace"
-                                        },
-                                        "path": "namespace"
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "status": {
-        "conditions": [
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-21T16:03:54Z",
-                "status": "True",
-                "type": "Initialized"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:37:12Z",
-                "status": "True",
-                "type": "Ready"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-27T19:37:12Z",
-                "status": "True",
-                "type": "ContainersReady"
-            },
-            {
-                "lastProbeTime": null,
-                "lastTransitionTime": "2021-10-21T16:03:54Z",
-                "status": "True",
-                "type": "PodScheduled"
-            }
-        ],
-        "containerStatuses": [
-            {
-                "containerID": "docker://0bb65bd55bb309d6cff98e69e73afdbb2f47edef354c57a0687727ee72428aa1",
-                "image": "sha256:ef3ccc5d257bab01115a6acd24fd180df418f4228222b19af0fb0f3dc471d2b8",
-                "imageID": "docker-pullable://taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
-                "lastState": {
-                    "terminated": {
-                        "containerID": "docker://35c305cf56a37f2f69563028c292f224ba6ad1bac42dedcc4b26bb1778b2b6ef",
-                        "exitCode": 1,
-                        "finishedAt": "2021-10-27T19:36:43Z",
-                        "reason": "Error",
-                        "startedAt": "2021-10-27T19:36:43Z"
-                    }
-                },
-                "name": "mafia-ui-container",
-                "ready": true,
-                "restartCount": 17,
-                "started": true,
-                "state": {
-                    "running": {
-                        "startedAt": "2021-10-27T19:37:11Z"
-                    }
-                }
-            }
-        ],
-        "hostIP": "192.168.65.4",
-        "phase": "Running",
-        "podIP": "10.1.0.177",
-        "podIPs": [
-            {
-                "ip": "10.1.0.177"
-            }
-        ],
-        "qosClass": "BestEffort",
-        "startTime": "2021-10-21T16:03:54Z"
-    }
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+      "creationTimestamp": "2021-10-21T16:03:54Z",
+      "generateName": "mafia-ui-78849d96c8-",
+      "labels": {
+          "app": "mafia",
+          "name": "mafia-ui",
+          "pod-template-hash": "78849d96c8"
+      },
+      "name": "mafia-ui-78849d96c8-xpcs2",
+      "namespace": "mafia",
+      "ownerReferences": [
+          {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "mafia-ui-78849d96c8",
+              "uid": "131b9993-af8c-4a28-8cd7-60bb82076656"
+          }
+      ],
+      "resourceVersion": "1286351",
+      "uid": "3ca11ab9-ba82-4a47-ba33-3cf7cefb3e3f"
+  },
+  "spec": {
+      "containers": [
+          {
+              "env": [
+                  {
+                      "name": "HUB_HOST",
+                      "value": "mafia-backend-service.mafia"
+                  },
+                  {
+                      "name": "HUB_PORT",
+                      "value": "3000"
+                  }
+              ],
+              "image": "taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "mafia-ui-container",
+              "ports": [
+                  {
+                      "containerPort": 80,
+                      "protocol": "TCP"
+                  }
+              ],
+              "resources": {},
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                  {
+                      "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                      "name": "kube-api-access-w7pks",
+                      "readOnly": true
+                  }
+              ]
+          }
+      ],
+      "dnsPolicy": "ClusterFirst",
+      "enableServiceLinks": true,
+      "nodeName": "docker-desktop",
+      "preemptionPolicy": "PreemptLowerPriority",
+      "priority": 0,
+      "restartPolicy": "Always",
+      "schedulerName": "default-scheduler",
+      "securityContext": {},
+      "serviceAccount": "default",
+      "serviceAccountName": "default",
+      "terminationGracePeriodSeconds": 30,
+      "tolerations": [
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          },
+          {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+          }
+      ],
+      "volumes": [
+          {
+              "name": "kube-api-access-w7pks",
+              "projected": {
+                  "defaultMode": 420,
+                  "sources": [
+                      {
+                          "serviceAccountToken": {
+                              "expirationSeconds": 3607,
+                              "path": "token"
+                          }
+                      },
+                      {
+                          "configMap": {
+                              "items": [
+                                  {
+                                      "key": "ca.crt",
+                                      "path": "ca.crt"
+                                  }
+                              ],
+                              "name": "kube-root-ca.crt"
+                          }
+                      },
+                      {
+                          "downwardAPI": {
+                              "items": [
+                                  {
+                                      "fieldRef": {
+                                          "apiVersion": "v1",
+                                          "fieldPath": "metadata.namespace"
+                                      },
+                                      "path": "namespace"
+                                  }
+                              ]
+                          }
+                      }
+                  ]
+              }
+          }
+      ]
+  },
+  "status": {
+      "conditions": [
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-21T16:03:54Z",
+              "status": "True",
+              "type": "Initialized"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-27T19:37:12Z",
+              "status": "True",
+              "type": "Ready"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-27T19:37:12Z",
+              "status": "True",
+              "type": "ContainersReady"
+          },
+          {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2021-10-21T16:03:54Z",
+              "status": "True",
+              "type": "PodScheduled"
+          }
+      ],
+      "containerStatuses": [
+          {
+              "containerID": "docker://0bb65bd55bb309d6cff98e69e73afdbb2f47edef354c57a0687727ee72428aa1",
+              "image": "sha256:ef3ccc5d257bab01115a6acd24fd180df418f4228222b19af0fb0f3dc471d2b8",
+              "imageID": "docker-pullable://taleodor/mafia-vue@sha256:04be42ee28a9483166fb1bc0e66fa3f079c056cd2a4545411dfd5ca17b3b4fa2",
+              "lastState": {
+                  "terminated": {
+                      "containerID": "docker://35c305cf56a37f2f69563028c292f224ba6ad1bac42dedcc4b26bb1778b2b6ef",
+                      "exitCode": 1,
+                      "finishedAt": "2021-10-27T19:36:43Z",
+                      "reason": "Error",
+                      "startedAt": "2021-10-27T19:36:43Z"
+                  }
+              },
+              "name": "mafia-ui-container",
+              "ready": true,
+              "restartCount": 17,
+              "started": true,
+              "state": {
+                  "running": {
+                      "startedAt": "2021-10-27T19:37:11Z"
+                  }
+              }
+          }
+      ],
+      "hostIP": "192.168.65.4",
+      "phase": "Running",
+      "podIP": "10.1.0.177",
+      "podIPs": [
+          {
+              "ip": "10.1.0.177"
+          }
+      ],
+      "qosClass": "BestEffort",
+      "startTime": "2021-10-21T16:03:54Z"
+  }
 }
