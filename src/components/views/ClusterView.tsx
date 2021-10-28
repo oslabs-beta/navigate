@@ -222,7 +222,7 @@ function ClusterView(props: any) {
     });
     cy.on("mouseover", "node[class = 'deployment']", function (event) {
       event.target.style("background-image", [
-        "https://i.ibb.co/N1fXVdp/podhover.png",
+        "https://i.ibb.co/crdrm4F/icons8-big-parcel-35-orange.png",
       ]);
       event.target.style("background-color", "rgb(230,74,0)");
       event.target.style("border-color", "rgb(230,74,0)");
