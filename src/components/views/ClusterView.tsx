@@ -249,7 +249,6 @@ function ClusterView(props: any) {
       <div className="pageViewTest2">
       <div className="sidebarTest2">
           <div id="buttonDiv" style={{ display: "flex", flexDirection: "row" }}>
-            <h3>{`${props.masterNode}`}</h3>
           </div>
           <div style={{height:limitSidebarHeight}}>
           <SidebarClusterView

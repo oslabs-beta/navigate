@@ -11,6 +11,7 @@ const font = "Calibri";
 const podIcon = "https://i.ibb.co/VDG8MVh/podicon3.png"
 const labelColor = "whitesmoke";
 const networkPolicyNodeSize = '10%';
+const networkPolicyFontSize = "3%"
 
 export let GraphStyles:Cytoscape.Stylesheet[] = [
   {
@@ -347,34 +348,16 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "ingress"]',
     style: {
       shape: "round-rectangle",
-      width: "120%",
-      height: "35%",
-      "font-size": "10%",
+      width: "40%",
+      height: "10%",
+      "font-size": networkPolicyFontSize,
       "font-weight": "bold",
       content: 'data(label)',
       "text-valign": "center",
       "text-wrap": "wrap",
-      "text-max-width": "140",
+      "text-max-width": "40%",
       "background-color": "whitesmoke",
       "border-color": "black",
-      "border-width": "1",
-      color: textColor,
-    },
-  },
-  {
-    selector: 'node[class = "policy"]',
-    style: {
-      shape: "rectangle",
-      width: "160%",
-      height: "40%",
-      "font-size": "10%",
-      "font-weight": "bold",
-      content: 'data(label)',
-      "text-valign": "center",
-      "text-wrap": "wrap",
-      "text-max-width": "140",
-      "background-color": "rgb(77, 189, 226)",
-      "border-color": "rgb(77, 189, 226)",
       "border-width": "1",
       color: textColor,
     },
@@ -383,10 +366,10 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[class = "namespacePolicy"]',
     style: {
       shape: "rectangle",
-      width: "120%",
-      height: "40%",
-      "text-max-width": "120%",
-      "font-size": "10%",
+      width: "50%",
+      height: "10%",
+      "text-max-width": "50%",
+      "font-size": networkPolicyFontSize,
       "font-weight": "bold",
       content: 'data(label)',
       "text-valign": "center",
@@ -403,13 +386,12 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       shape: "triangle",
       width: networkPolicyNodeSize,
       height:networkPolicyNodeSize,
-      "font-size": "10%",
+      "font-size": networkPolicyFontSize,
       "font-weight": "bold",
       content: 'data(label)',
       "text-halign": "center",
       "text-valign": "bottom",
       "text-wrap": "wrap",
-      "text-max-width": "140",
       "background-color": "whitesmoke",
       "border-color": "green",
       "border-width": "1",
@@ -417,9 +399,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "white",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
-      "text-background-padding": "3px",
-      // "source-text-offset": "1em",
-      "text-margin-y": "5px"
+      "text-background-padding": "1px",
+      "text-margin-y": "3px"
     },
   },
   {
@@ -428,7 +409,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       shape: "triangle",
       width:  networkPolicyNodeSize,
       height: networkPolicyNodeSize,
-      "font-size": "10%",
+      "font-size": networkPolicyFontSize,
       "font-weight": "bold",
       content: 'data(label)',
       "text-halign": "center",
@@ -442,9 +423,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "white",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
-      "text-background-padding": "3px",
-      // "source-text-offset": "1em",
-      "text-margin-y": "5px"
+      "text-background-padding": "1px",
+      "text-margin-y": "3px"
     },
   },
   {
@@ -453,12 +433,11 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       shape: "triangle",
       width: networkPolicyNodeSize,
       height: networkPolicyNodeSize,
-      "font-size": "10%",
+      "font-size": networkPolicyFontSize,
       content: 'data(label)',
       "text-halign": 'center',
       "text-valign": "bottom",
       "text-wrap": "wrap",
-      "text-max-width": "140",
       "background-color": "whitesmoke",
       "border-color": "red",
       "border-width": "1",
@@ -466,9 +445,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-background-color": "white",
       "text-background-opacity": 1,
       "text-background-shape": "roundrectangle",
-      "text-background-padding": "3px",
-      // "source-text-offset": "1em",
-      "text-margin-y": "5px"
+      "text-background-padding": "1px",
+      "text-margin-y": "3px"
     },
   },
   {
@@ -498,6 +476,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "target-arrow-shape": "triangle",
       "line-color": "green",
       "target-arrow-color": "green",
+      "arrow-scale": 0.5,
     },
   },
   {
@@ -512,6 +491,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "target-arrow-shape": "triangle",
       "line-color": "red",
       "target-arrow-color": "red",
+      "arrow-scale": 0.5,
       "font-weight": "bold",
     },
   },

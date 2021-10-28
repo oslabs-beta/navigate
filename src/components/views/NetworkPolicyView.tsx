@@ -122,11 +122,13 @@ function NetworkPolicyView(props: IProps) {
     };
     let cy = Cytoscape(config);
     let layout = cy.layout({
+      fit:true,
       name:'dagre',
       nodeDimensionsIncludeLabels: true,
       padding: 15,
       animate: true,
-      animationDuration: 1000,
+      animationDuration: 750,
+      spacingFactor: .6,
     });
     layout.run();
     cy.zoomingEnabled(false);
@@ -139,7 +141,7 @@ function NetworkPolicyView(props: IProps) {
     <div>
       <h1 className="header">Network Policy View</h1>  
       <div className="pageViewTest">
-      <div className="sidebarTest">
+      <div className="sidebarTest2">
         <div id="buttonDiv">
             <div className="networkLabelWhite">Choose a policy:</div>
             <select id="policies" value={networkPolicy} onChange={(e) => {
