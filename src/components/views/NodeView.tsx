@@ -184,6 +184,7 @@ function NodeView(props: any) {
       animate: true,
     });
     layout.run();
+    cy.zoomingEnabled(false);
     cy.on('click',(event)=> {
       if(event.target._private.data.class === "container"){
         console.log('nodeViewClick',event.target._private.data.id);

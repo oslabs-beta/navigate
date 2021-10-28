@@ -204,11 +204,7 @@ function ClusterView(props: any) {
       animationDuration: 1000,
     });
     layout.run();
-    const zoomLevel: Cytoscape.ZoomOptions = {
-      level: 1, 
-      renderedPosition: { x: 100, y: 100 }
-    }
-    cy.zoom(zoomLevel)
+    cy.zoomingEnabled(false);
     cy.on("click", (event) => {
       if (
         event.target._private.data.class === "deployment" &&

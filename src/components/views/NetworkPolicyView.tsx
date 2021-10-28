@@ -133,6 +133,7 @@ function NetworkPolicyView(props: IProps) {
 
     });
     layout.run();
+    cy.zoomingEnabled(false);
     cy.on('click',(event)=> {
       console.log(event.target._private.data.id);
     })
@@ -140,7 +141,7 @@ function NetworkPolicyView(props: IProps) {
 
   return(
     <div>
-      <h1 className="header"></h1>  
+      <h1 className="header">Network Policy View</h1>  
       <div className="pageViewTest">
       <div className="sidebarTest">
         <div id="buttonDiv">
