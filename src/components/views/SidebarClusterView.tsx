@@ -35,7 +35,7 @@ function SidebarClusterView(props: IProps) {
         <FetchLiveData></FetchLiveData>
       </div>
     
-    <div id='statusBox' style={{ display:'flex', flexDirection:'column', width:"300px",height:'450px', overflow: 'scroll'}}>
+    <div id='statusBox' style={{ display:'flex', flexDirection:'column', width: window.innerWidth * .3,height: window.innerHeight * .5, overflow: 'scroll'}}>
     {statuses}
     </div>
     </div>

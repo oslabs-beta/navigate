@@ -3,7 +3,7 @@ import * as React from 'react';
 export default function Legend(props: any) {
   return props.view === "Cluster View" ? (
     <div>
-      <table className="legendID"> 
+      <table className="legendID" style={{width: window.innerWidth * .3}}> 
       <tbody>
       <tr><th><h3 className="legendTitle">Legend</h3></th></tr>
       <tr><td><img className="imgCircle" src="https://i.ibb.co/rFcjXmq/round-Rect-Purple.png"></img></td><td>Namespace</td><td><img className="imgCircle" src="https://i.ibb.co/9V5KVmP/icons8-big-parcel-35.png"></img></td><td>Deployment</td></tr>
@@ -18,7 +18,7 @@ export default function Legend(props: any) {
   :
   (
   <div>
-      <table className="legendID"> 
+      <table className="legendID" style={{width: window.innerWidth * .3}}> 
       <tbody>
       <tr><th><h3 className="legendTitle">Legend</h3></th></tr>
       <tr><td><img src="https://i.ibb.co/s6YrbyT/round-Rect-Dark.png"></img></td><td>Deployment</td><td><img className="imgCircle" src="https://i.ibb.co/XXjPChx/podicon2.png"></img></td><td>Pod</td></tr>

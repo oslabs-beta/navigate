@@ -258,7 +258,7 @@ function ClusterView(props: any) {
               namespace={props.namespace}
             />
           </div>
-          <div style={{width: "100%"}}>
+          <div style={{width: window.innerWidth * .3}}>
              <Legend view={props.view} />
           </div>
           
