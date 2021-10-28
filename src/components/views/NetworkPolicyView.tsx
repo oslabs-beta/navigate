@@ -73,7 +73,7 @@ function NetworkPolicyView(props: IProps) {
         let namespaceSelector = {
           data: {
             id: "namespaceSelector",
-            label: `Namespace labels: ${getSelectors(array[i].ingressPolicy.namespaceSelectors)}`,
+            label: `Pods with label: ${getSelectors(array[i].ingressPolicy.podSelectors)} in Namespace ${getSelectors(array[i].ingressPolicy.namespaceSelectors)}`,
             class: "policy"
           }
         }
