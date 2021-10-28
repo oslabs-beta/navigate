@@ -4,13 +4,11 @@ import SidebarClusterView from "./SidebarClusterView";
 import dagre from 'cytoscape-dagre';
 import cola from 'cytoscape-cola';
 import {GraphStyles} from "../../scss/GraphStyles";
-import Legend from './Legend';
 import { electron } from "webpack";
 import { anyObject } from "../../kObjects/__index";
 import { findSelectorMatch } from "../../component_data/findSelectorMatch";
 import kNetworkPolicy from "../../kObjects/kNetworkPolicy";
 import * as dataParser from "../../component_data/kDataParser"
-import { kObject } from "../../kObjects/kObject";
 import NetworkPolicyLegend from "./NetworkPolicyLegend";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
@@ -50,7 +48,7 @@ function NetworkPolicyView(props: IProps) {
         let ingress = {
           data: {
             id: "ingress",
-            label: `Pods label: ${getSelectors(array[i].podSelectors)} \n Port:${array[i].ingressPolicy.port} ${array[i].ingressPolicy.protocol}`,
+            label: `Pods labeled: ${getSelectors(array[i].podSelectors)} \n Port:${array[i].ingressPolicy.port} ${array[i].ingressPolicy.protocol}`,
             class: "ingress",
           },
         };
@@ -145,7 +143,7 @@ function NetworkPolicyView(props: IProps) {
       <div className="pageViewTest">
       <div className="sidebarTest">
         <div id="buttonDiv">
-            <h3 className="networkLabelWhite">Choose a Network Policy</h3>
+            <div className="networkLabelWhite">Choose a policy:</div>
             <select id="policies" value={networkPolicy} onChange={(e) => {
               const selected = e.target.value;
               setNetworkPolicy(selected);

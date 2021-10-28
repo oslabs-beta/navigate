@@ -162,8 +162,8 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
     selector: 'node[id = "Kubernetes Cluster"]',
     style: {
       shape: "round-heptagon",
-      width: "130%",
-      height: "130%",
+      width: "80%",
+      height: "80%",
       // "background-image": ["https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_250,h_195/https://assets.ubuntu.com/v1/767f38a4-kubernetes-stacked-color.svg"],
       "font-size": "18",
       "font-family": font,
@@ -173,7 +173,7 @@ export let GraphStyles:Cytoscape.Stylesheet[] = [
       "text-wrap": "wrap",
       "text-max-width": "",
       // "background-color": arrowColor,
-      "background-color": "rgb(87,39,199)",
+      "background-color": "whitesmoke",
       // "background-fill": "linear-gradient",
       // "background-gradient-stop-colors": "rgba(87,39,199,1),rgba(98,52,204,1),rgba(123,86,209,1)",
       
