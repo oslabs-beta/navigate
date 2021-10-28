@@ -265,8 +265,7 @@ function ClusterView(props: any) {
           ref={containerRef}
           style={{ width: "75%", height: "750px" }}
         />
-        
-        </div>
+    </div>
     </div>
   );
 }

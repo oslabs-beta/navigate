@@ -206,41 +206,37 @@ function NodeView(props: any) {
       event.target.style("border-width","0");
     })
     }, []);
-
+    const limitSidebarHeight = document.getElementById("clusterView")?.style.height;
   return (
     <div id="nodeView"> 
-      <div >
         <h1 className="header">
           {props.view}
         </h1>
-      </div>
-       <div id="buttonDiv">
-      <button onClick={() =>{
-        props.setTrigger(false);
-        props.setMasterNode('Kubernetes Cluster');
-        props.setNamespace('Kubernetes Cluster');
-        props.setView('Cluster View');
-      }}>Back to Cluster View
-      </button>
-      <h3>{`${props.masterNode}`}</h3>
-
-      </div>
-      <div style={{display:'flex', justifyContent:'center', alignItems: 'space-between'}}>
+      <div className="pageViewTest2">
+        <div className="sidebarTest2">
+        <div id="buttonDiv">
+        <button onClick={() =>{
+          props.setTrigger(false);
+          props.setMasterNode('Kubernetes Cluster');
+          props.setNamespace('Kubernetes Cluster');
+          props.setView('Cluster View');
+        }}>Back to Cluster View
+        </button>
+        <h3>{`${props.masterNode}`}</h3>
+        </div> 
+          <div id="pageView">
+            <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly',height:limitSidebarHeight}}>
+            <SidebarNodeView clickedPod = {clickedPod} podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
+            <Legend/>
+            </div>
+        </div>
+        </div>
         <div id='nodeView'
-          ref={nodeViewRef}
-          style={ { width: '100%', height: '600px' }}
-        />   
-        <div id="pageView">
-          <div id="columnNodeView" style={{display:'flex', flexDirection:'column', justifyContent:'space-evenly'}}>
-          <SidebarNodeView  clickedPod = {clickedPod} podInfoObjects={props.podInfoObjects} masterNode={props.masterNode} podDeployments={props.podDeployments}/>
-          <Legend/>
-          </div>
-          <div id='nodeView'
             ref={nodeViewRef}
             style={ { width: '1500px', height: '750px' }}
-          />   
-        </div>
+          /> 
       </div>
+      
     </div>
     
  )
