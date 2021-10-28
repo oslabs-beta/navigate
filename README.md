@@ -1,7 +1,6 @@
 
-<b><p align="center">NAVIGATES</b></p>
-  <br></br>
-  
+<p align="center"><img src="https://i.ibb.co/CVcHh4G/unnamed.png"/></p>
+
 <p align="center"><img src='https://camo.githubusercontent.com/676841d37493a8028b6f708c5c0ee876b146b9d1b8e976400ed28bb071713525/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f6f736c6162732d626574612f4b757238'></p>
 
 <p align="center">
