@@ -11,6 +11,7 @@ import { findSelectorMatch } from "../../component_data/findSelectorMatch";
 import kNetworkPolicy from "../../kObjects/kNetworkPolicy";
 import * as dataParser from "../../component_data/kDataParser"
 import { kObject } from "../../kObjects/kObject";
+import NetworkPolicyLegend from "./NetworkPolicyLegend";
 Cytoscape.use(dagre);
 Cytoscape.use(cola);
 dagre(Cytoscape)
@@ -49,16 +50,14 @@ function NetworkPolicyView(props: IProps) {
         let ingress = {
           data: {
             id: "ingress",
-            label: `Pods label: ${getSelectors(array[i].podSelectors)}
-                    Port:${array[i].ingressPolicy.port} ${array[i].ingressPolicy.protocol}`,
+            label: `Pods label: ${getSelectors(array[i].podSelectors)} \n Port:${array[i].ingressPolicy.port} ${array[i].ingressPolicy.protocol}`,
             class: "ingress",
           },
         };
         let egress = {
           data: {
             id: "egress",
-            label: `IPs: ${array[i].egressPolicy.ipBlock}
-                    Port:${array[i].egressPolicy.port} ${array[i].egressPolicy.protocol}`,
+            label: `IPs: ${array[i].egressPolicy.ipBlock} \n Port:${array[i].egressPolicy.port} ${array[i].egressPolicy.protocol}`,
             class: "egress",
 
           }
@@ -67,56 +66,41 @@ function NetworkPolicyView(props: IProps) {
           data: {
             source: "ingress",
             target: "egress",
-            label: "ingress",
+            label: "allowed",
           },
         };
         let namespaceSelector = {
           data: {
             id: "namespaceSelector",
-            label: `Pods with label: ${getSelectors(array[i].ingressPolicy.podSelectors)} in Namespace ${getSelectors(array[i].ingressPolicy.namespaceSelectors)}`,
-            class: "policy"
+            label: `Pods labeled: ${getSelectors(array[i].ingressPolicy.podSelectors)} in Namespace: ${getSelectors(array[i].ingressPolicy.namespaceSelectors)}`,
+            class: "namespacePolicy"
           }
         }
         let edge2 = {
           data: {
             source: "namespaceSelector",
             target: "ingress",
-            label: "ingress",
-          },
-        };
-        let podSelector = {
-          data: {
-            id: "podSelector",
-            label: `Pod labels: 
-                    ${getSelectors(array[i].ingressPolicy.podSelectors)}`,
-            class: "policy"
-          }
-        }
-        let edge3 = {
-          data: {
-            source: "podSelector",
-            target: "ingress",
-            label: "ingress",
+            label: "allowed",
           },
         };
         let ipBlock = {
           data: {
             id: "ipBlock",
             label: `IPs: ${array[i].ingressPolicy.ipBlock}`,
-            class: "policy"
+            class: "allowed"
           }
         }
         let edge4 = {
           data: {
             source: "ipBlock",
             target: "ingress",
-            label: "ingress",
+            label: "allowed",
           },
         };
         let except = {
           data: {
             id: "except",
-            label: `Blocked IPs: ${array[i].ingressPolicy.except}`,
+            label: `IPs: ${array[i].ingressPolicy.except}`,
             class: "except"
           }
         }
@@ -127,7 +111,7 @@ function NetworkPolicyView(props: IProps) {
             label: "except",
           },
         };
-        relevantData.push(ingress,egress,edge,namespaceSelector,edge2,podSelector,edge3,ipBlock,edge4,except,edge5);
+        relevantData.push(ingress,egress,edge,namespaceSelector,edge2,ipBlock,edge4,except,edge5);
       } 
     }
   }
@@ -162,23 +146,25 @@ function NetworkPolicyView(props: IProps) {
           {"Network Policy View"}
         </h1>
       </div>  
-      <div id="buttonDiv">
-              <label>Choose a Network Policy</label>
-              <select id="policies" value={networkPolicy} onChange={(e) => {
-                const selected = e.target.value;
-                setNetworkPolicy(selected);
-              }}>
-                {networkPoliciesArr.map((ele,i) => {
-                  return <option value={ele.label} key={i}>{ele.label}</option>
-                })}
-              </select>
-            <h3>{networkPolicy}</h3>
-          </div>
-      <div style={{display:'flex'}}> 
+        <div id="buttonDiv">
+            <h3 className="networkLabelWhite">Choose a Network Policy</h3>
+            <select id="policies" value={networkPolicy} onChange={(e) => {
+              const selected = e.target.value;
+              setNetworkPolicy(selected);
+            }}>
+              {networkPoliciesArr.map((ele,i) => {
+                return <option value={ele.label} key={i}>{ele.label}</option>
+              })}
+            </select>
+        </div>
+      <div style={{display:'flex', flexDirection:'column'}}> 
+      <h3 className="networkLabel">{networkPolicy}</h3>
         <div id="pageView">
+          
+          <NetworkPolicyLegend/>
           <div id="clusterView"
             ref={networkPolicyRef}
-            style={ {width: '1500px', height: '750px' }}
+            style={ {width: '1250px', height: '750px' }}
           />
         </div>
     </div>
