@@ -16,7 +16,7 @@ dagre(Cytoscape);
 function ClusterView(props: any) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const relevantData: any[] = [
-    { data: { id: "Kubernetes Cluster", label: "Kubernetes Cluster" } },
+    { data: { id: "Kubernetes Cluster", label: "Control \n Plane" } },
   ];
   const namespacesArr: string[] = [];
   const populateNamespaces = (array: any[]): void => {
