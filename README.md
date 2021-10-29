@@ -29,7 +29,7 @@ While the cluster is live, see:
   -  live deployment data, including statuses and conditions
   -  live pod data that you would normally only get with `kubectl` commands
 
-<p align="center"><img src="https://media.giphy.com/media/3M20VkknSAtKVHR9US/giphy.gif"></p>
+<p align="center"><img src="https://media.giphy.com/media/I5qq9gUm9o67LkU4tf/giphy.gif"></p>
 
 ## How to contribute
 We're actively developing! If you've found a bug or want to help, feel free to take a look at our <a href="https://github.com/oslabs-beta/navigate/issues">Issues</a>.
