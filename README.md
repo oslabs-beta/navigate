@@ -15,7 +15,7 @@ the connections between your stateful sets, deployments, services, and other Kub
 Click on the deployment nodes in your graph to zoom into the Node View, seeing the various containers and connections each deployment brings.
 <br/>
 
-<img src="https://media.giphy.com/media/jqBmD2EP2WPrLihOoo/giphy.gif"/>
+<p align="center"><img src="https://media.giphy.com/media/jqBmD2EP2WPrLihOoo/giphy.gif"/></p>
 
 ## Visualize all your network policies
 Want to check that your network policies are correct? Use the "Network Policies" tab to view them all, one at a time.
@@ -28,6 +28,8 @@ While the cluster is live, see:
   -  etcd/node scheduler decisions, aggregated across many different logs
   -  live deployment data, including statuses and conditions
   -  live pod data that you would normally only get with `kubectl` commands
+
+<p align="center"><img src="https://media.giphy.com/media/3M20VkknSAtKVHR9US/giphy.gif"></p>
 
 ## How to contribute
 We're actively developing! If you've found a bug or want to help, feel free to take a look at our <a href="https://github.com/oslabs-beta/navigate/issues">Issues</a>.
