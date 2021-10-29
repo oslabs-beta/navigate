@@ -78,7 +78,8 @@
     "compile": "tsc && copyfiles -f src/index.html build/",
     "make-mac": "npx @electron-forge/cli make --platform darwin",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "eslint:github-action": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "repository": {
     "type": "git",
