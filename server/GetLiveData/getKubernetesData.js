@@ -5,6 +5,8 @@ const path = require('path');
 
 const logPath = path.join(__dirname, `../../navigate_logs/`);
 
+const YAMLData = {data: []};
+
 //object of the default namespaces that come with every k8s cluster; we want to ignore these
 const listOfDefaultNamespaces = {
   "kube-node-lease": '',
@@ -15,10 +17,11 @@ const listOfDefaultNamespaces = {
 function getElementsOfKind(kind, writeToDisk = false) {
   try
   {
-    const data = parser.getYAMLFiles();
+    const data = YAMLData.data;
     const output = [];
     data.forEach(k8sObject => {
-      if(k8sObject[0].kind === kind) output.push(k8sObject);
+      if(k8sObject[0].kind === kind){ 
+        output.push(k8sObject);}
     });
     if(writeToDisk)
       fs.writeFile(path.join(logPath, `/${kind}.json`), JSON.stringify(output, null, 2), { flag: 'w' }, function(err) {
@@ -32,6 +35,18 @@ function getElementsOfKind(kind, writeToDisk = false) {
   }
 }
 
+//get non-default namespaces from YAML files by pushing their metadata.namespace values into an array and returning it
+function getNamespacesFromYAML(array){
+  const output = {};
+  array.forEach(k8sObject => {
+    if(k8sObject[0].metadata !== undefined && k8sObject[0].metadata.namespace !== undefined)
+    if(!output[k8sObject[0].metadata.namespace]){
+      output[k8sObject[0].metadata.namespace] = '';
+    }
+  });
+  return Object.keys(output);
+}
+
 function getNamespaceElementPairs(kind){
   const output = {};
   let elements = getElementsOfKind(kind);
@@ -41,9 +56,9 @@ function getNamespaceElementPairs(kind){
       else output["default"].push(element[0].metadata.name);
     }
     //if it is a default namespace, skip it
-    else if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace.name)){
-      if(output[element[0].metadata.namespace.name]) output[element[0].metadata.namespace.name].push(element[0].metadata.name);
-      else output[element[0].metadata.namespace.name] = [element[0].metadata.name];
+    else if(!Object.keys(listOfDefaultNamespaces).includes(element[0].metadata.namespace)){
+      if(output[element[0].metadata.namespace]) output[element[0].metadata.namespace].push(element[0].metadata.name);
+      else output[element[0].metadata.namespace] = [element[0].metadata.name];
     }
   })
   return output;
@@ -60,7 +75,6 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
 }
 
 /*
-
     1. Get namespaces via "kubectl get namespaces" command 
         a. Store namespaces into an array
             [can also get namespaces from yaml files]
@@ -74,12 +88,11 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
         b. Store list of pod names as an array, inside an object, where key is <namespace>
     4. Get deployment logs via  "kubectl get deployment <deploymentname> -o json >> deployment[i].json"
     5. Get pod logs via "kubectl get pod <podName> -o json >> pod[i].json"
-  
   */
 async function aggregateLogs()
 {
-  //get namespace: [pods] key value pairs <3
-  const namespaces = getElementsOfKind("Namespace");
+  //get namespace: [pods] key value pairs
+  const namespaces = getNamespacesFromYAML(YAMLData.data);
   const namespacePodKVP = {};
   //overwrite existing podNames txt if it exists already for first namespace, which is always "default"
   let rawNames;
@@ -94,17 +107,21 @@ async function aggregateLogs()
   }).on('close', () => {
     const podArray = rawNames.split(' ');
     namespacePodKVP["default"] = podArray;
+    console.log('all namespace names: ', namespaces);
     //sometimes all the pods are just in the "default" namespace, in which case this array will be empty
     if(namespaces[0])
-      for(let i = 0; i < namespaces[0].length; i++){
-        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[0][i].metadata.name}`,
-          (err, data) => {
+      for(let i = 0; i < namespaces.length; i++){
+        exportObj.runAndSave(`kubectl get pods -o=jsonpath=\'{.items[*].metadata.name}\' -n ${namespaces[i]}`,
+          async (err, data) => {
             if(err) console.log(err);
-            namespacePodKVP[namespaces[0][i].metadata.name] = Buffer.from(data).toString('utf8').split(' ');
+            namespacePodKVP[namespaces[i]] = await Buffer.from(data).toString('utf8').split(' ');
+            if(i === namespaces.length-1){
+              console.log('namespaces and pods:', namespacePodKVP);
+              getDeployments();
+              getPodInfo(namespacePodKVP);
+            }
         });
       }
-    getDeployments();
-    getPodInfo(namespacePodKVP);
   });
 }
 
@@ -112,7 +129,7 @@ async function getDeployments(){
   const deploymentKVP = getNamespaceElementPairs("Deployment");
   const keys = Object.keys(deploymentKVP);
   let index = 1;
-  // get deployment logs
+  // get deployment logs, saving them to disk using filePath + index
   for(let i = 0; i < keys.length; i++){
     for(let j = 0; j < deploymentKVP[keys[i]].length; j++){
       let filePath = path.join(__dirname, `../../navigate_logs/deployment${index}.json`);
@@ -126,7 +143,6 @@ async function getDeployments(){
       index++;
     }
   }
-  index = 1;
 }
 
 // gets updated pods object (with status from kubernetes)
@@ -134,13 +150,15 @@ async function getPodInfo(namespacePodKVP){
   let filePath;
   let index = 1;
   let currentKey;
+  //loop through each key (kubernetes namespace) and each value (kubernetes pods attached to namespace)
+  //get log data from each pod and save to disk, overwriting if previous already exist
   for(let i = 0; i < Object.keys(namespacePodKVP).length; i++){
     currentKey = Object.keys(namespacePodKVP)[i];
     for(let j = 0; j < namespacePodKVP[currentKey].length; j++)
     {
       filePath = path.join(__dirname, `../../navigate_logs/pod${index}.json`);
       try{
-        await exportObj.runCommand(`kubectl get pod ${namespacePodKVP[currentKey][j]} --namespace=${Object.keys(namespacePodKVP)[i]} -o json &> ${filePath}`);
+        await exportObj.runCommand(`kubectl get pod ${namespacePodKVP[currentKey][j]} --namespace=${currentKey} -o json &> ${filePath}`);
       }
       catch(error){
         console.log(error);
@@ -150,12 +168,10 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
-setInterval(()=>{
-  aggregateLogs();
-}, 60000);
-
 module.exports = {
   parsePodNames,
   getElementsOfKind,
-  getNamespaceDeploymentPairs: getNamespaceElementPairs
+  getNamespaceDeploymentPairs: getNamespaceElementPairs,
+  aggregateLogs,
+  YAMLData
 }

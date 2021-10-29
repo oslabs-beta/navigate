@@ -2,57 +2,109 @@
   "apiVersion": "v1",
   "kind": "Pod",
   "metadata": {
-      "creationTimestamp": "2021-10-09T16:06:12Z",
-      "generateName": "redis-stateful-set-",
+      "creationTimestamp": "2021-10-18T18:50:44Z",
+      "generateName": "checkoutservice-58c5f4c5c7-",
       "labels": {
-          "app": "mafia",
-          "controller-revision-hash": "redis-stateful-set-767459788b",
-          "name": "redis",
-          "statefulset.kubernetes.io/pod-name": "redis-stateful-set-0"
+          "app": "checkoutservice",
+          "pod-template-hash": "58c5f4c5c7"
       },
-      "name": "redis-stateful-set-0",
-      "namespace": "mafia",
+      "name": "checkoutservice-58c5f4c5c7-xhvkc",
+      "namespace": "default",
       "ownerReferences": [
           {
               "apiVersion": "apps/v1",
               "blockOwnerDeletion": true,
               "controller": true,
-              "kind": "StatefulSet",
-              "name": "redis-stateful-set",
-              "uid": "6ca1f20e-a626-4d63-9121-93e77caab846"
+              "kind": "ReplicaSet",
+              "name": "checkoutservice-58c5f4c5c7",
+              "uid": "6fceaf2a-c7d5-40c8-8930-4149066e60b9"
           }
       ],
-      "resourceVersion": "1047",
-      "uid": "7f8dafdc-e76d-4274-8eeb-a36f86d335d5"
+      "resourceVersion": "1360048",
+      "uid": "91df342b-14aa-422a-9a4c-1d3168db504c"
   },
   "spec": {
       "containers": [
           {
-              "command": [
-                  "redis-server",
-                  "--bind",
-                  "0.0.0.0"
+              "env": [
+                  {
+                      "name": "PORT",
+                      "value": "5050"
+                  },
+                  {
+                      "name": "PRODUCT_CATALOG_SERVICE_ADDR",
+                      "value": "productcatalogservice:3550"
+                  },
+                  {
+                      "name": "SHIPPING_SERVICE_ADDR",
+                      "value": "shippingservice:50051"
+                  },
+                  {
+                      "name": "PAYMENT_SERVICE_ADDR",
+                      "value": "paymentservice:50051"
+                  },
+                  {
+                      "name": "EMAIL_SERVICE_ADDR",
+                      "value": "emailservice:5000"
+                  },
+                  {
+                      "name": "CURRENCY_SERVICE_ADDR",
+                      "value": "currencyservice:7000"
+                  },
+                  {
+                      "name": "CART_SERVICE_ADDR",
+                      "value": "cartservice:7070"
+                  }
               ],
-              "image": "redis:5.0.8-buster",
+              "image": "gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.0",
               "imagePullPolicy": "IfNotPresent",
-              "name": "redis-container",
+              "livenessProbe": {
+                  "exec": {
+                      "command": [
+                          "/bin/grpc_health_probe",
+                          "-addr=:5050"
+                      ]
+                  },
+                  "failureThreshold": 3,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+              },
+              "name": "server",
               "ports": [
                   {
-                      "containerPort": 6379,
+                      "containerPort": 5050,
                       "protocol": "TCP"
                   }
               ],
-              "resources": {},
+              "readinessProbe": {
+                  "exec": {
+                      "command": [
+                          "/bin/grpc_health_probe",
+                          "-addr=:5050"
+                      ]
+                  },
+                  "failureThreshold": 3,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 1
+              },
+              "resources": {
+                  "limits": {
+                      "cpu": "200m",
+                      "memory": "128Mi"
+                  },
+                  "requests": {
+                      "cpu": "100m",
+                      "memory": "64Mi"
+                  }
+              },
               "terminationMessagePath": "/dev/termination-log",
               "terminationMessagePolicy": "File",
               "volumeMounts": [
                   {
-                      "mountPath": "/data",
-                      "name": "redis-data"
-                  },
-                  {
                       "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                      "name": "kube-api-access-qh7kr",
+                      "name": "kube-api-access-2zbx8",
                       "readOnly": true
                   }
               ]
@@ -60,18 +112,14 @@
       ],
       "dnsPolicy": "ClusterFirst",
       "enableServiceLinks": true,
-      "hostname": "redis-stateful-set-0",
       "nodeName": "docker-desktop",
       "preemptionPolicy": "PreemptLowerPriority",
       "priority": 0,
       "restartPolicy": "Always",
       "schedulerName": "default-scheduler",
-      "securityContext": {
-          "fsGroup": 999
-      },
+      "securityContext": {},
       "serviceAccount": "default",
       "serviceAccountName": "default",
-      "subdomain": "redis",
       "terminationGracePeriodSeconds": 30,
       "tolerations": [
           {
@@ -89,13 +137,7 @@
       ],
       "volumes": [
           {
-              "name": "redis-data",
-              "persistentVolumeClaim": {
-                  "claimName": "redis-data-redis-stateful-set-0"
-              }
-          },
-          {
-              "name": "kube-api-access-qh7kr",
+              "name": "kube-api-access-2zbx8",
               "projected": {
                   "defaultMode": 420,
                   "sources": [
@@ -138,55 +180,63 @@
       "conditions": [
           {
               "lastProbeTime": null,
-              "lastTransitionTime": "2021-10-09T16:06:14Z",
+              "lastTransitionTime": "2021-10-18T18:50:46Z",
               "status": "True",
               "type": "Initialized"
           },
           {
               "lastProbeTime": null,
-              "lastTransitionTime": "2021-10-09T16:07:14Z",
+              "lastTransitionTime": "2021-10-28T15:43:15Z",
               "status": "True",
               "type": "Ready"
           },
           {
               "lastProbeTime": null,
-              "lastTransitionTime": "2021-10-09T16:07:14Z",
+              "lastTransitionTime": "2021-10-28T15:43:15Z",
               "status": "True",
               "type": "ContainersReady"
           },
           {
               "lastProbeTime": null,
-              "lastTransitionTime": "2021-10-09T16:06:14Z",
+              "lastTransitionTime": "2021-10-18T18:50:45Z",
               "status": "True",
               "type": "PodScheduled"
           }
       ],
       "containerStatuses": [
           {
-              "containerID": "docker://c232d791ffd849bb3a6f2b4d4c30d8fc707fb78097d90e988ba8d29623a8b0e8",
-              "image": "redis:5.0.8-buster",
-              "imageID": "docker-pullable://redis@sha256:96bdb5e2984b15e3cf4de74077f650c911cb26ec0981e0772df35a1a5cb19798",
-              "lastState": {},
-              "name": "redis-container",
+              "containerID": "docker://15a8c7c63d6a16f03225fb0b968e1d359752bb2a8365335e547da2a05593d731",
+              "image": "gcr.io/google-samples/microservices-demo/checkoutservice:v0.3.0",
+              "imageID": "docker-pullable://gcr.io/google-samples/microservices-demo/checkoutservice@sha256:8ccc510a91f2459f89f572bc6bce0a4fb3f629115d509cd1ebb2699ebfa8a62f",
+              "lastState": {
+                  "terminated": {
+                      "containerID": "docker://d5613c6c42c80cec14079eec94b2d6783936b7a6123d86188a7a561f5dece421",
+                      "exitCode": 2,
+                      "finishedAt": "2021-10-28T15:43:13Z",
+                      "reason": "Error",
+                      "startedAt": "2021-10-28T15:31:45Z"
+                  }
+              },
+              "name": "server",
               "ready": true,
-              "restartCount": 0,
+              "restartCount": 122,
               "started": true,
               "state": {
                   "running": {
-                      "startedAt": "2021-10-09T16:07:13Z"
+                      "startedAt": "2021-10-28T15:43:13Z"
                   }
               }
           }
       ],
       "hostIP": "192.168.65.4",
       "phase": "Running",
-      "podIP": "10.1.0.13",
+      "podIP": "10.1.0.188",
       "podIPs": [
           {
-              "ip": "10.1.0.13"
+              "ip": "10.1.0.188"
           }
       ],
-      "qosClass": "BestEffort",
-      "startTime": "2021-10-09T16:06:14Z"
+      "qosClass": "Burstable",
+      "startTime": "2021-10-18T18:50:46Z"
   }
 }

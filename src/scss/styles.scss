@@ -1,15 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
-*{
+$circle-color: rgb(86, 39, 197);
+$backgroundColor: rgb(26, 26, 26);
+
+* {
   color: rgb(255, 255, 255);
-  font-family: 'Calibri', sans-serif;
+  font-family: "Calibri", sans-serif;
 }
-h3{
+h3 {
   color: rgb(255, 255, 255);
-  font-family: 'Calibri', sans-serif;
+  font-family: "Calibri", sans-serif;
 }
-html{
-  background-color: rgb(26, 26, 26);
+html,
+body {
+  // background-color: $backgroundColor;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  background: rgb(18,18,18);
 }
 p {
   text-align: left;
@@ -18,22 +26,29 @@ p {
   font-size: 1.5rem;
 }
 button {
-  // background-color: rgb(26, 26, 26);
   border: 2px solid white;
   background-color: rgb(26, 26, 26);
   border-radius: 5px;
   color: white;
   padding: 7px 14px;
-  font-size: 16px;
+  font-size: 1rem;
   cursor: pointer;
+}
+select {
+  color: black;
+}
+option {
+  color: black;
 }
 button:hover {
   background: #e7e7e7;
   color: black;
 }
-#buttonDiv{
-  display:flex;
-  justify-content: flex-start;
+#buttonDiv {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 }
 h4 {
@@ -43,33 +58,32 @@ h4 {
   font-size: 2em;
 }
 button + h3 {
-  margin-left: 1%;
+  margin-left: 5%;
   color: #932af5;
   font-size: 2em;
 }
 #sidebar {
-  display:flex;
+  display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 200px;
+  width: 20%;
   height: 100%;
   border: 5px solid lightgray;
   box-shadow: 1px 1px 5px rgba(114, 113, 113, 0.915);
-  font-family: 'Calibri', sans-serif;
+  font-family: "Calibri", sans-serif;
 }
-#clusterHeader {
-  display:flex;
+.header {
+  display: flex;
   justify-content: center;
   align-items: center;
-  
 }
-#nodeHeader {
-  display:flex;
-  justify-content: center;
+.nodeSchedulerHeader {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 #circle {
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: space-around;
 }
@@ -77,15 +91,231 @@ button + h3 {
 #pageView {
   display: flex;
   flex-direction: row;
-  #pageCol{
+  #pageCol {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
   }
 }
-#nodeSidebar{
-  display:flex;
+.pageViewTest {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+#nodeSidebar {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 }
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: rgb(18,18,18);
+}
 
+li {
+  float: left;
+}
+
+li .link {
+  display: block;
+  color: whitesmoke;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  color: rgb(18,18,18);
+  background: whitesmoke;
+}
+
+.loader {
+  position: relative;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20%;
+  .text {
+    padding: 5%;
+  }
+  // border-style: solid;
+  // border-color: gray;
+  // border-width: 1px;
+  // border-radius: 2px;
+}
+.outer,
+.middle,
+.inner {
+  border: 3px solid transparent;
+  border-top-color: $circle-color;
+  border-right-color: $circle-color;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+#pageView {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+}
+.outer {
+  width: 3.5em;
+  height: 3.5em;
+  margin-left: -1.75em;
+  margin-top: -1.75em;
+  animation: spin 2s linear infinite;
+}
+
+.middle {
+  width: 2.1em;
+  height: 2.1em;
+  margin-left: -1.05em;
+  margin-top: -1.05em;
+  animation: spin 1.75s linear reverse infinite;
+}
+
+.inner {
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: -0.4em;
+  margin-top: -0.4em;
+  animation: spin 1.5s linear infinite;
+}
+.red {
+  color: red;
+}
+.green {
+  color: rgb(54, 221, 54);
+}
+.networkLabel {
+  color: #932af5;
+  font-size: 1.5em;
+}
+.networkLabelWhite {
+  color: whitesmoke;
+  font-size: 1.5em;
+}
+#podInfoTable{
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 450px;
+  overflow: scroll;
+}
+.legendID {
+  font-size: 1em;
+  border-style: solid;
+  border-width: 2px;
+  border-color: whitesmoke;
+  border-spacing: 7px;
+  // width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  table-layout: relative;
+}
+#policyLegendID {
+  border-style: solid;
+  border-width: 2px;
+  border-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+th,tr {
+  padding-left: 5px;
+  font-size: 1em;
+  width:50%;
+}
+td {
+  width: 50%;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+#policies {
+  color: whitesmoke;
+  height: 25px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1em;
+  background-color: $backgroundColor;
+}
+option {
+  color: whitesmoke;
+}
+.sidebarTest2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  // flex-grow: 0.5;
+  width: 30%;
+  height: 70%;
+  
+}
+.pageViewTest2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 1;
+  width: 100%;
+}
+.imgCircle {
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+  background-color: whitesmoke;
+}
+.inputView {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.uploadButton {
+  margin: auto;
+  text-align: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: whitesmoke;
+  border-radius: 2px;
+}
+.uploadButton:hover {
+  color: black;
+  background-color: rgb(172, 172, 172);
+}
+#cytoscapeDiv{
+  width: 70%;
+  height: 70%;
+  display:flex;
+  flex-grow:1;
+}
+tbody{
+  width:50%;
+  font-size: 1em;
+}
