@@ -234,7 +234,7 @@ function NodeView(props: any) {
         <div>
         <div id='nodeView'
             ref={nodeViewRef}
-            style={ { width: '1500px', height: '750px' }}
+            style={ { width: window.innerWidth * 0.7, height: window.innerHeight * 0.5 }}
           /> 
       </div>
       </div>
