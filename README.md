@@ -10,12 +10,12 @@ A visual overview of Kubernetes clusters - with network policies and aggregated 
 ## Visualize your cluster before it starts running
 Whether the cluster is live or not, upload your YAML config files to **Navigate**. Here you can see the network structure of your cluster, observing
 the connections between your stateful sets, deployments, services, and other Kubernetes objects. <br/><br/> 
-![image](https://user-images.githubusercontent.com/5425746/139333290-b1846724-8d8a-4e68-9e2f-79fe1aaa6f3a.png)
+<img src="https://i.ibb.co/stR0R1t/image.png"/>
 <br/><br/> You can double check for mistakes!<br/><br/>
 Click on the deployment nodes in your graph to zoom into the Node View, seeing the various containers and connections each deployment brings.
 <br/>
 
-<p align="center"><img src="https://media.giphy.com/media/jqBmD2EP2WPrLihOoo/giphy.gif"/></p>
+<p align="center"><img src="https://media.giphy.com/media/2sEebgocxrpw0HJEu7/giphy.gif"/></p>
 
 ## Visualize all your network policies
 Want to check that your network policies are correct? Use the "Network Policies" tab to view them all, one at a time.
