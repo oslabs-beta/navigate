@@ -28,4 +28,4 @@ jobs:
     - name: Install modules
       run: npm install
     - name: Run ESLint
-      run: eslint/github-action@v0
+      run: eslint . --ext .js,.jsx,.ts,.tsx
