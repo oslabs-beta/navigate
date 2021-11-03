@@ -2,7 +2,7 @@
   "name": "navigate",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "dependencies": {
     "@babel/core": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
