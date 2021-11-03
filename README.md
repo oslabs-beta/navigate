@@ -36,4 +36,4 @@ We're actively developing! If you've found a bug or want to help, feel free to t
 
 ## Contributors
 
-<a href="https://github.com/brkg">Brian Kang</a> | <a href="https://github.com/joelparkk">Joel Park</a> | <a href="https://github.com/hemwatie">Hemwatie Persaud</a>
+<a href="https://linkedin.com/in/thebriankang/">Brian Kang</a> | <a href="https://www.linkedin.com/in/joel-park-208571212/">Joel Park</a> | <a href="https://www.linkedin.com/in/hemwatie/">Hemwatie Persaud</a>
