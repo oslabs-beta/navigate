@@ -267,7 +267,7 @@ function ClusterView(props: any) {
           <div
             id="clusterView"
             ref={containerRef}
-            style={{ width: window.innerWidth * .7, height: window.outerHeight *.5}}
+            style={{ width: window.innerWidth * .7, height: window.innerHeight *.5}}
           />
         </div>
       </div>
