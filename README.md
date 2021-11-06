@@ -31,6 +31,16 @@ While the cluster is live, see:
 
 <p align="center"><img src="https://media.giphy.com/media/I5qq9gUm9o67LkU4tf/giphy.gif"></p>
 
+## How to use Navigate
+Here are the steps for getting started after cloning:
+
+1. Run `npm install`, then run `npm run both` in your terminal.
+2. From there, the dev server should launch, and you will be prompted to upload your Kubernetes yaml config files. The app will display your cluster in a network graph without your Kubernetes cluster running. At this point, only deployments and pods can be interacted with in the graph.
+3. To see live deployment and pod log data, your cluster needs to be currently running on your system.
+4. If there are network policy objects within your files, the top left network policy tab will provide a dropdown menu so you can inspect each policy.
+
+Currently, we are working on packaging and distributing our app cross-platform via electron. Right now the alpha version for macOS is out, which you can find on our <a href="http://navigates.io">website</a>.
+
 ## How to contribute
 We're actively developing! If you've found a bug or want to help, feel free to take a look at our <a href="https://github.com/oslabs-beta/navigate/issues">Issues</a>.
 
