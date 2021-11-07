@@ -101,17 +101,4 @@ databaseController.parsePOST = (req, res, next) => {
     }
 }
 
-<<<<<<< HEAD:server/databaseController.ts
-databaseController.checkLive = async function(req: Request, res: Response, next: NextFunction) {
-  //checkLive() is 'kubectl' so this will only throw an error if kubernetes is not running. 
-  //If this is the case, don't try to get live logs
-  await checkClusterLive((err: Error, result: any) => {
-    res.locals.live = !err;
-    next();
-  });
-}
-
-export default databaseController;
-=======
 module.exports = databaseController;
->>>>>>> 3ccc3cb750ecb7045e1342e11497cc827726a7a0:server/databaseController.js
