@@ -195,5 +195,6 @@ module.exports = {
   getNamespaceDeploymentPairs: getNamespaceElementPairs,
   aggregateLogs,
   checkClusterLive,
+  deleteFiles,
   YAMLData
 }
