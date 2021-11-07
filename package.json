@@ -92,7 +92,7 @@
   },
   "scripts": {
     "test": "jest --verbose --unhandled-rejections=strict --detectOpenHandles",
-    "start": "node server/GetLiveData/getKubernetesData.js & ts-node server/server.ts",
+    "start": "node server/GetLiveData/getKubernetesData.js & node server/server.js",
     "build": "NODE_ENV=production webpack",
     "dev": "NODE_ENV=development webpack serve --open",
     "both": "npm run dev & npm run start",
@@ -116,7 +116,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "osp_sqlgenerator"
+            "name": "navigate"
           }
         },
         {
@@ -132,6 +132,13 @@
         {
           "name": "@electron-forge/maker-rpm",
           "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "certificateFile": "./cert.pfx",
+            "certificatePassword": "this-is-a-secret"
+          }
         }
       ]
     }
