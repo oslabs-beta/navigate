@@ -3,7 +3,7 @@ import parser from "./parser";
 import parseSchedulerInformation from "./logAggregator";
 import parseDeploymentInformation from "./parseDeployment";
 import parsePodInformation from "./parsePods"
-import {aggregateLogs, checkLive, YAMLData} from './GetLiveData/getKubernetesData'
+import {aggregateLogs, checkClusterLive, YAMLData} from './GetLiveData/getKubernetesData'
 
 interface someObject {
     [key: string]: any
@@ -13,10 +13,13 @@ const databaseController: someObject = {};
 
 databaseController.getLiveData = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = parser.getJSONFiles();
-    const parsedData = parseSchedulerInformation(data);
-    res.locals.pollingData = parsedData;
-    return next();
+    if(res.locals.live){
+      const data = parser.getJSONFiles();
+      const parsedData = parseSchedulerInformation(data);
+      res.locals.pollingData = parsedData;
+      return next();
+    }
+    else return next();
   } catch (error) {
     console.log('Error inside databaseController.getLiveData: ', error);
     return next();
@@ -25,10 +28,13 @@ databaseController.getLiveData = (req: Request, res: Response, next: NextFunctio
 
 databaseController.getLiveDeploymentData = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = parser.getJSONFiles();
-    const parsedData = parseDeploymentInformation(data);
-    res.locals.podDeployData = parsedData;
-    return next();
+    if(res.locals.live){
+      const data = parser.getJSONFiles();
+      const parsedData = parseDeploymentInformation(data);
+      res.locals.podDeployData = parsedData;
+      return next();
+    }
+    else return next();
   } catch (error) {
     console.log('Error inside databaseController.getLiveDeploymentData: ', error);
     return next();
@@ -37,10 +43,13 @@ databaseController.getLiveDeploymentData = (req: Request, res: Response, next: N
 
 databaseController.getLivePodData = (req: Request, res: Response, next: NextFunction) => {
   try {
-    const data = parser.getJSONFiles();
-    const parsedData = parsePodInformation(data);
-    res.locals.podDeployData = parsedData;
-    return next();
+    if(res.locals.live){
+      const data = parser.getJSONFiles();
+      const parsedData = parsePodInformation(data);
+      res.locals.podDeployData = parsedData;
+      return next();
+    }
+    else return next();
   } catch (error) {
     console.log('Error inside databaseController.getLivePodData: ', error);
     return next();
@@ -55,18 +64,14 @@ databaseController.uploadFiles = async (req: Request, res: Response, next: NextF
     });
     res.locals.uploadedData = JSON.stringify(output);  
     YAMLData.data = output;
-    await checkLive(async (err: Error, result: any) => {
-      if(err){
-        //checkLive() is 'kubectl' so this will only throw an error if kubernetes is not running. 
-        //If this is the case, don't try to get live logs
-        next();
-      }
-      else
-      {
-        await aggregateLogs();
-        return next();
-      }
-    });
+    if(res.locals.live){
+      await aggregateLogs();
+      return next();
+    }
+    else
+    {
+      return next();
+    }
   } catch (error) {
     console.log('Error in databaseController.uploadFiles: ',  error)
     return next();
@@ -75,7 +80,10 @@ databaseController.uploadFiles = async (req: Request, res: Response, next: NextF
 
 databaseController.updateFiles = (req: Request, res: Response, next: NextFunction) => {
   try {
-    aggregateLogs();
+    if(res.locals.live)
+    {
+      aggregateLogs();
+    }
     return next();
   } catch (error) {
     console.log('Error in databaseController.updateFiles: ',  error)
@@ -96,5 +104,13 @@ databaseController.parsePOST = (req: Request, res: Response, next: NextFunction)
     }
 }
 
+databaseController.checkLive = async function(req: Request, res: Response, next: NextFunction) {
+  //checkLive() is 'kubectl' so this will only throw an error if kubernetes is not running. 
+  //If this is the case, don't try to get live logs
+  await checkClusterLive((err: Error, result: any) => {
+    res.locals.live = !err;
+    next();
+  });
+}
 
 export default databaseController;

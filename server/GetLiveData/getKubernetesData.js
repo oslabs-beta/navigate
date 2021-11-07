@@ -168,7 +168,7 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
-function checkLive(callback){
+function checkClusterLive(callback){
   exportObj.runAndSave('kubectl', callback);
 }
 
@@ -178,6 +178,6 @@ module.exports = {
   getElementsOfKind,
   getNamespaceDeploymentPairs: getNamespaceElementPairs,
   aggregateLogs,
-  checkLive,
+  checkClusterLive,
   YAMLData
 }

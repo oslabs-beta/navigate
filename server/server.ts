@@ -21,23 +21,23 @@ app.options("/upload", (req: Request, res: Response) => {
   return res.status(200).send('ok');
 });
 
-app.post("/upload", databaseController.parsePOST, databaseController.uploadFiles,(req: Request, res: Response) => {
+app.post("/upload", databaseController.checkLive, databaseController.parsePOST, databaseController.uploadFiles,(req: Request, res: Response) => {
   return res.status(200).send(res.locals.uploadedData);
 });
 
-app.get("/update", databaseController.updateFiles, (req: Request, res: Response) => {
+app.get("/update", databaseController.checkLive, databaseController.updateFiles, (req: Request, res: Response) => {
   return res.status(200).send('ok');
 });
 
-app.get("/statusConditions", databaseController.getLiveData, (req: Request, res: Response) => {
+app.get("/statusConditions", databaseController.checkLive, databaseController.getLiveData, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.pollingData);
 });
 
-app.get("/getLiveDeploymentData", databaseController.getLiveDeploymentData, (req: Request, res: Response) => {
+app.get("/getLiveDeploymentData", databaseController.checkLive, databaseController.getLiveDeploymentData, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.podDeployData);
 });
 
-app.get("/getLivePodData", databaseController.getLivePodData, (req: Request, res: Response) => {
+app.get("/getLivePodData", databaseController.checkLive, databaseController.getLivePodData, (req: Request, res: Response) => {
   return res.status(200).send(res.locals.podDeployData);
 });
 
