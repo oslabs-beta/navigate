@@ -20,6 +20,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+app.use("/build", express.static(path.join(__dirname, "../build")));
+
+app.get("/", (req, res) => {
+  return res.status(200).sendFile(path.join(__dirname, "../src/index.html"));
+});
+
+
 app.options("/upload", (req, res) => {
   return res.status(200).send('ok');
 });
