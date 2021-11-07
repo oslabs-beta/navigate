@@ -91,6 +91,8 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
   */
 async function aggregateLogs()
 {
+  //first delete any logs from past sessions if necessary
+  deleteFiles('../../navigate_logs');
   //get namespace: [pods] key value pairs
   const namespaces = getNamespacesFromYAML(YAMLData.data);
   const namespacePodKVP = {};
@@ -168,10 +170,24 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
+function deleteFiles(directory){
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+    let file;
+    for (let i = 0; i < files.length; i++) {
+      file = files[i];
+      //hardcode ignore readme
+      if(file.includes('readme')) continue;
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw err;
+      });
+    }
+  });
+}
+
 function checkClusterLive(callback){
   exportObj.runAndSave('kubectl', callback);
 }
-
 
 module.exports = {
   parsePodNames,
