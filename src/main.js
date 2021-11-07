@@ -2,8 +2,6 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const server = require("../server/server");
 
-if (require('electron-squirrel-startup')) return app.quit();
-
 
 function createWindow() {
   // Create the browser window.
