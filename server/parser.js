@@ -52,4 +52,4 @@ const parser = {
   readFile, 
 }
 
-module.export = parser;
+module.exports = parser;

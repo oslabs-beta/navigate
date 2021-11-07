@@ -1,7 +1,7 @@
 // import kDeploymentLive from './kDeploymentLive';
 const kDeploymentLive = require('./kDeploymentLive')
 
-export default function parseDeploymentInformation(jsonObjs){
+function parseDeploymentInformation(jsonObjs){
     const podsInfoObjs = [];
     for(let i = 0; i < jsonObjs.length; i++){
       const ele = jsonObjs[i][0];
@@ -26,3 +26,5 @@ export default function parseDeploymentInformation(jsonObjs){
   }
   return podsInfoObjs;
 }
+
+module.exports = parseDeploymentInformation;

@@ -83,5 +83,4 @@ databaseController.parsePOST = (req, res, next) => {
     }
 }
 
-
-export default databaseController;
+module.exports = databaseController;

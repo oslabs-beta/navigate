@@ -1,5 +1,5 @@
 // import * as kObjects from '../src/kObjects/__index';
-export default class kPodLive {
+class kPodLive {
     namespace;
     kind
 
@@ -82,3 +82,5 @@ export default class kPodLive {
       this.podIP = podIP;
     }
   }
+
+  module.exports = kPodLive;

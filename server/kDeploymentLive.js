@@ -1,5 +1,5 @@
 
-export default class kDeploymentLive {
+class kDeploymentLive {
   namespace;
   kind
   name;
@@ -34,3 +34,4 @@ export default class kDeploymentLive {
     this.schedulerName = schedulerName;
   }
 }
+module.exports = kDeploymentLive;

@@ -1,4 +1,4 @@
-export default function parseSchedulerInformation(jsonObjs){
+function parseSchedulerInformation(jsonObjs){
   try {
     const statusConditions= [];
     for(let i = 0; i < jsonObjs.length; i++){
@@ -45,3 +45,5 @@ function sortStatusConditions(statusConditions){
     console.log('Error in sortStatusConditions: ', error)
   }
 }
+
+module.exports = parseSchedulerInformation;
