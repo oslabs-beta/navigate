@@ -1,27 +1,31 @@
-import * as fs from 'fs';
-import * as YAML from 'js-yaml';
-import * as path from 'path';
+// import * as fs from 'fs';
+// import * as YAML from 'js-yaml';
+// import * as path from 'path';
 
-let data: object[];
+const fs = require('fs');
+const YAML = require('js-yaml');
+const path = require('path');
 
-function getFiles(fileType: RegExp, root: string): Array<object> {
-  const raw: string[] = [];
+let data = [];
+
+function getFiles(fileType, root) {
+  const raw= [];
   fs.readdirSync(root).forEach(file => {
     if(file.match(fileType)) 
       raw.push(file);
   });
-  const fileObjs: object[] = [];
+  const fileObjs= [];
   raw.forEach(file => {
     fileObjs.push(YAML.loadAll(fs.readFileSync(path.join(root, file), 'utf-8')));
   })
   return fileObjs;
 }
 
-function readFile(file: string): object {
+function readFile(file){
   return YAML.loadAll(file);
 }
 
-function getYAMLFiles(localPath: string = '../yaml_files'): object[] {
+function getYAMLFiles(localPath = '../yaml_files') {
   try{
       const root = path.join(__dirname, localPath);
       data = getFiles(/\.ya?ml/, root);
@@ -32,7 +36,7 @@ function getYAMLFiles(localPath: string = '../yaml_files'): object[] {
   return data;
 }
 
-function getJSONFiles(localPath: string = '../navigate_logs'): object[] {
+function getJSONFiles(localPath= '../navigate_logs') {
   try {
     const root = path.join(__dirname, localPath);
     data = getFiles(/\.json/, root)
@@ -48,4 +52,4 @@ const parser = {
   readFile, 
 }
 
-export default parser;
+module.exports = parser;

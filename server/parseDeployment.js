@@ -1,7 +1,8 @@
-import kDeploymentLive from './kDeploymentLive';
+// import kDeploymentLive from './kDeploymentLive';
+const kDeploymentLive = require('./kDeploymentLive')
 
-export default function parseDeploymentInformation(jsonObjs: any): Array<kDeploymentLive>{
-    const podsInfoObjs:  Array<kDeploymentLive> = [];
+function parseDeploymentInformation(jsonObjs){
+    const podsInfoObjs = [];
     for(let i = 0; i < jsonObjs.length; i++){
       const ele = jsonObjs[i][0];
         if(ele.kind === 'Deployment'){
@@ -25,3 +26,5 @@ export default function parseDeploymentInformation(jsonObjs: any): Array<kDeploy
   }
   return podsInfoObjs;
 }
+
+module.exports = parseDeploymentInformation;

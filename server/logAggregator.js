@@ -1,10 +1,10 @@
-export default function parseSchedulerInformation(jsonObjs: any){
+function parseSchedulerInformation(jsonObjs){
   try {
-    const statusConditions: any = [];
+    const statusConditions= [];
     for(let i = 0; i < jsonObjs.length; i++){
       if(jsonObjs[i][0].status === undefined) continue;
       for(let j = 0; j < jsonObjs[i][0].status.conditions.length; j++){
-        let conditionObject: any = {};
+        let conditionObject = {};
         conditionObject.name = jsonObjs[i][0].metadata.name;
         conditionObject.kind = jsonObjs[i][0].kind;
         if(jsonObjs[i][0].kind === 'Deployment'){
@@ -35,9 +35,9 @@ export default function parseSchedulerInformation(jsonObjs: any){
   }
 }
 
-function sortStatusConditions(statusConditions: any){
+function sortStatusConditions(statusConditions){
   try {
-    statusConditions.sort(function(a: any,b: any){
+    statusConditions.sort(function(a,b){
       return a.time.localeCompare(b.time)
     })
     return statusConditions;
@@ -45,3 +45,5 @@ function sortStatusConditions(statusConditions: any){
     console.log('Error in sortStatusConditions: ', error)
   }
 }
+
+module.exports = parseSchedulerInformation;

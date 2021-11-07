@@ -56,23 +56,14 @@ export default function UploadView() {
   return (  
     loaded ? 
     <div>
-      <Router>
-      <NavBar></NavBar>
       <div className="content">
-        <Switch>
-          <Route exact path="/">
             <App 
             jsonFiles={responseArray}
             />
-          </Route>
-          <Route exact path="/networkPolicy">
             <NetworkPolicyView 
             jsonFiles={responseArray}
             />
-          </Route>
-        </Switch>
       </div>
-      </Router>
     </div>
     :
     !showLoading ?

@@ -1,17 +1,14 @@
-import {Request, Response, NextFunction} from 'express';
-import parser from "./parser";
-import parseSchedulerInformation from "./logAggregator";
-import parseDeploymentInformation from "./parseDeployment";
-import parsePodInformation from "./parsePods"
-import {aggregateLogs, checkClusterLive, YAMLData} from './GetLiveData/getKubernetesData'
 
-interface someObject {
-    [key: string]: any
-}
+const parser = require("./parser");
+const parseSchedulerInformation = require("./logAggregator");
+const parseDeploymentInformation = require("./parseDeployment");
+const parsePodInformation = require("./parsePods")
+const {aggregateLogs, YAMLData} = require('./GetLiveData/getKubernetesData');
 
-const databaseController: someObject = {};
 
-databaseController.getLiveData = (req: Request, res: Response, next: NextFunction) => {
+const databaseController = {};
+
+databaseController.getLiveData = (req, res, next) => {
   try {
     if(res.locals.live){
       const data = parser.getJSONFiles();
@@ -26,7 +23,7 @@ databaseController.getLiveData = (req: Request, res: Response, next: NextFunctio
   }
 }
 
-databaseController.getLiveDeploymentData = (req: Request, res: Response, next: NextFunction) => {
+databaseController.getLiveDeploymentData = (req, res, next) => {
   try {
     if(res.locals.live){
       const data = parser.getJSONFiles();
@@ -41,7 +38,7 @@ databaseController.getLiveDeploymentData = (req: Request, res: Response, next: N
   }
 }
 
-databaseController.getLivePodData = (req: Request, res: Response, next: NextFunction) => {
+databaseController.getLivePodData = (req, res, next) => {
   try {
     if(res.locals.live){
       const data = parser.getJSONFiles();
@@ -56,10 +53,10 @@ databaseController.getLivePodData = (req: Request, res: Response, next: NextFunc
   }
 }
 
-databaseController.uploadFiles = async (req: Request, res: Response, next: NextFunction) => {
+databaseController.uploadFiles = async (req, res, next) => {
   try {
-    const output: any = [];
-    req.body.forEach((ele: string) => {
+    const output= [];
+    req.body.forEach((ele) => {
       output.push(parser.readFile(ele));
     });
     res.locals.uploadedData = JSON.stringify(output);  
@@ -78,7 +75,7 @@ databaseController.uploadFiles = async (req: Request, res: Response, next: NextF
   }
 }
 
-databaseController.updateFiles = (req: Request, res: Response, next: NextFunction) => {
+databaseController.updateFiles = (req, res, next) => {
   try {
     if(res.locals.live)
     {
@@ -90,10 +87,10 @@ databaseController.updateFiles = (req: Request, res: Response, next: NextFunctio
   }
 }
 
-databaseController.parsePOST = (req: Request, res: Response, next: NextFunction) => {
+databaseController.parsePOST = (req, res, next) => {
   try {
-    const output: object[] = [];
-    req.body.forEach((ele: string) => {
+    const output = [];
+    req.body.forEach((ele) => {
       output.push(parser.readFile(ele));
     })
     res.locals.output = output
@@ -104,6 +101,7 @@ databaseController.parsePOST = (req: Request, res: Response, next: NextFunction)
     }
 }
 
+<<<<<<< HEAD:server/databaseController.ts
 databaseController.checkLive = async function(req: Request, res: Response, next: NextFunction) {
   //checkLive() is 'kubectl' so this will only throw an error if kubernetes is not running. 
   //If this is the case, don't try to get live logs
@@ -114,3 +112,6 @@ databaseController.checkLive = async function(req: Request, res: Response, next:
 }
 
 export default databaseController;
+=======
+module.exports = databaseController;
+>>>>>>> 3ccc3cb750ecb7045e1342e11497cc827726a7a0:server/databaseController.js

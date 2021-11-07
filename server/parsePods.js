@@ -1,7 +1,8 @@
-import kPodLive from './kPodLive'
+// import kPodLive from './kPodLive'
+const kPodLive = require('./kPodLive');
 
-export default function parsePodInformation(jsonObjs: any): Array<kPodLive>{
-    const podsInfoObjs:  Array<kPodLive> = [];
+function parsePodInformation(jsonObjs){
+    const podsInfoObjs = [];
     for(let i = 0; i < jsonObjs.length; i++){
       const ele = jsonObjs[i][0];
       if(ele.kind === 'Pod'){
@@ -40,3 +41,5 @@ export default function parsePodInformation(jsonObjs: any): Array<kPodLive>{
   }
   return podsInfoObjs;
 }
+
+module.exports = parsePodInformation;
