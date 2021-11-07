@@ -33,7 +33,7 @@ exportObj.runAndSave = (cmd, callback) => {
                 callback(null,stdout); 
               }
               if(stderr){
-                callback(new Error("STDERR"),stderr);
+                callback(stderr);
               }
     
       }  

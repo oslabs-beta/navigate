@@ -168,10 +168,16 @@ async function getPodInfo(namespacePodKVP){
   }
 }
 
+function checkLive(callback){
+  exportObj.runAndSave('kubectl', callback);
+}
+
+
 module.exports = {
   parsePodNames,
   getElementsOfKind,
   getNamespaceDeploymentPairs: getNamespaceElementPairs,
   aggregateLogs,
+  checkLive,
   YAMLData
 }

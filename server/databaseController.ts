@@ -3,7 +3,7 @@ import parser from "./parser";
 import parseSchedulerInformation from "./logAggregator";
 import parseDeploymentInformation from "./parseDeployment";
 import parsePodInformation from "./parsePods"
-import {aggregateLogs, YAMLData} from './GetLiveData/getKubernetesData'
+import {aggregateLogs, checkLive, YAMLData} from './GetLiveData/getKubernetesData'
 
 interface someObject {
     [key: string]: any
@@ -55,8 +55,18 @@ databaseController.uploadFiles = async (req: Request, res: Response, next: NextF
     });
     res.locals.uploadedData = JSON.stringify(output);  
     YAMLData.data = output;
-    await aggregateLogs();
-    return next();
+    await checkLive(async (err: Error, result: any) => {
+      if(err){
+        //checkLive() is 'kubectl' so this will only throw an error if kubernetes is not running. 
+        //If this is the case, don't try to get live logs
+        next();
+      }
+      else
+      {
+        await aggregateLogs();
+        return next();
+      }
+    });
   } catch (error) {
     console.log('Error in databaseController.uploadFiles: ',  error)
     return next();
