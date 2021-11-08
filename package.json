@@ -73,7 +73,7 @@
     "build": "NODE_ENV=production webpack",
     "server": "ts-node server/server.ts",
     "electron": "electron .",
-    "dev": "NODE_ENV=development webpack serve --open",
+    "dev": "export SET NODE_OPTIONS=--openssl-legacy-provider; NODE_ENV=development webpack serve --open",
     "both": "npm run dev & npm run start",
     "compile": "tsc && copyfiles -f src/index.html build/",
     "make-mac": "npx @electron-forge/cli make --platform darwin",
