@@ -17,5 +17,5 @@
     "outDir": "build",
     "sourceMap": true,
   },
-  "include": ["src", "decs.d.ts", "server/**/*"]
+  "include": ["src", "decs.d.ts"]
 }
