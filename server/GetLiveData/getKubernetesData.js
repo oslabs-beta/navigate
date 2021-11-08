@@ -91,7 +91,7 @@ async function parsePodNames (filePath = path.join(__dirname, `../../navigate_lo
   */
 async function aggregateLogs()
 {
-  deleteFiles(path.join(__dirname, '../../navigate_logs'));
+  await deleteFiles(path.join(__dirname, '../../navigate_logs'));
   //get namespace: [pods] key value pairs
   const namespaces = getNamespacesFromYAML(YAMLData.data);
   const namespacePodKVP = {};
