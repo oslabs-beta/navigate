@@ -32,7 +32,7 @@ While the cluster is live, see:
 <p align="center"><img src="https://media.giphy.com/media/I5qq9gUm9o67LkU4tf/giphy.gif"></p>
 
 ## How to use Navigate
-Prerequisites: npm
+Prerequisites: npm <br/>
 Here are the steps for getting started after cloning:
 
 1. Run `npm install`, then run `npm run both` in your terminal.
