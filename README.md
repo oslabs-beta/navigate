@@ -35,7 +35,7 @@ While the cluster is live, see:
 Prerequisites: npm <br/>
 Here are the steps for getting started after cloning:
 
-1. Run `npm install`, then run `npm run both` in your terminal.
+1. Run `npm install`, then run `npm run build` followed by `npm run both` in your terminal.
 2. From there, the dev server should launch, and you will be prompted to upload your Kubernetes yaml config files. The app will display your cluster in a network graph without your Kubernetes cluster running. At this point, only deployments and pods can be interacted with in the graph.
 3. To see live deployment and pod log data, your cluster needs to be currently running on your system.
 4. If there are network policy objects within your files, the top left network policy tab will provide a dropdown menu so you can inspect each policy.
