@@ -33,6 +33,7 @@ While the cluster is live, see:
 
 ## How to use Navigate
 Prerequisites: npm <br/>
+<b>FOR WINDOWS USERS:</b> you will need to run `npm run server & npm run dev` instead - Electron app coming soon. <br/> <br/>
 Here are the steps for getting started after cloning:
 
 1. Run `npm install`, then run `npm run build` followed by `npm run both` in your terminal.
